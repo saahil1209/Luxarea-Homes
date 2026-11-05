@@ -2,7 +2,7 @@ import { USING_SAMPLE_DATA } from '../config'
 
 /** The Luxarea roof mark, redrawn from the logo. tone="light" for dark backgrounds. */
 export function LogoMark({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
-  const c = tone === 'light' ? ['#c49a6c', '#8f7c5f', '#5d6253'] : ['#1f3d3b', '#22625f', '#4e6a68']
+  const c = tone === 'light' ? ['#c49a6c', '#8f7c5f', '#575d4e'] : ['#163a3a', '#276769', '#446463']
   return (
     <svg viewBox="0 0 564 517" aria-hidden="true" focusable="false">
       <path fill={c[0]} d="M0 220 281 0 564 220v37L281 37 0 257z" />

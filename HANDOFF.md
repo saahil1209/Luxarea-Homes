@@ -27,11 +27,18 @@ Everything a new Claude session (or developer) needs to pick this up. Written 5 
 
 **Tested:** hero hover and click, floor card links, form validation and WhatsApp handoff, prefill from service buttons and floor cards, the phone tap-to-3D flow, and the no-JavaScript fallback. All passed with no console errors. The tests ran in a software-rendered headless browser, so check animation smoothness on a real phone.
 
+**Third session (same day):**
+- Official logo files added (`luxarea-explorer/public/brand/`). The redrawn SVG mark already matched them; two shades were corrected.
+- Content taken from luxarea.in: the real team (Viivek Bathija, Shweta Jayakar, Saurabh Dwivedi), the full address and office hours, the extra services (leasing, property management, home loans, valuations), and two FAQs.
+- The share image is now the terrace photo from Luxarea's own Wix uploads. Confirm it's theirs to use.
+- New `privacy.html` and `terms.html` drafts for a lawyer to review. The old Terms page was copied from "Sai Realtors" (Khar office, RERA A51800039192), so its RERA number is **not** used until Luxarea confirms its own.
+- The old site's testimonials are Wix template text (Jane Smith etc.) and were not reused. Its images are stock.
+- GitHub: `saahil1209/luxarea-website` (private). Vercel deploys from it with root directory `luxarea-explorer`.
+
 **Still open:**
-- All the placeholders in section 7. Search the code for `TODO(Luxarea)`.
-- **Privacy and Terms pages**. These are needed before collecting leads (DPDP Act). Footer links were removed until the pages exist.
+- Remaining placeholders: MahaRERA agent number, team photos, real listings, real client stories, the reply-time promise, the 48-hour shortlist promise and fee wording. Search the code for `TODO(Luxarea)`.
 - Section 5d (production).
-- Luxarea's official SVG logos. The two logo images were not re-attached in the second session, so the redrawn mark is still in use.
+- Luxarea's vector (SVG) logo originals, if they exist.
 
  for the new account
 

@@ -5,12 +5,14 @@ export const BRAND = {
   // WhatsApp number in international format, digits only.
   whatsapp: '917718961447',
   email: 'homes@luxarea.in',
-  office: 'Parinee Crescenzo, 1B, G Block, BKC, Mumbai 400051',
+  office: 'Parinee Crescenzo, 1B, 1st Floor, G Block, Bandra Kurla Complex, Bandra East, Mumbai 400051',
+  hours: 'Monday to Saturday, 9 am to 7 pm',
   website: 'https://www.luxarea.in',
   whatsappLink: 'https://wa.me/917718961447',
   phoneLink: 'tel:+917718961447',
-  // TODO(Luxarea): MahaRERA agent registration number. Required on the site by law.
-  reraAgent: 'A519000XXXXX',
+  // TODO(Luxarea): MahaRERA agent registration number for Luxarea Homes Pvt Ltd. Required on the site by law.
+  // The old Terms page quotes A51800039192, but for "Sai Realtors", so it is not used until Luxarea confirms it.
+  reraAgent: 'to be added',
 }
 
 // Sample data switch. Set to false once real listings replace the samples

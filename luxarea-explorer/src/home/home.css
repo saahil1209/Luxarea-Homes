@@ -250,11 +250,15 @@ html:not(.js) .tab-list { display: none; }
 .pledges p { color: #cfd6d2; font-size: 15px; }
 
 /* about */
-.people { display: grid; grid-template-columns: 1fr 1fr 1.1fr; gap: 20px; }
+.people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.people .office { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 16px 40px; align-items: start; }
+.also-note { margin-top: 28px !important; font-size: 16px; color: var(--muted); text-align: center; max-width: 760px !important; }
+.also-note strong { color: var(--ink); font-weight: 700; }
+.contact .consent a, .lead-form .consent a { color: var(--gold-soft); }
 .person { display: flex; flex-direction: column; gap: 8px; background: var(--paper); border: 1px solid var(--rule); border-radius: 14px; padding: 28px; align-self: start; }
 .portrait {
-  width: 112px; height: 112px; border-radius: 50%; margin-bottom: 8px; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(160deg, #4e6a68, #223f3e); color: rgba(245, 241, 232, 0.5); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  width: 96px; height: 96px; border-radius: 50%; margin-bottom: 8px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(160deg, #4e6a68, #223f3e); color: var(--gold-soft); font-family: var(--display); font-size: 30px; letter-spacing: 0.04em;
 }
 .person h3 { font-size: 24px; }
 .role { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
@@ -366,7 +370,7 @@ html:not(.js) .next-step, html:not(.js) .prev-step { display: none; }
   .steps::after { height: calc(var(--progress, 1) * 100%); transition: height 0.15s linear; }
   .step::before { top: 4px; left: -40px; }
   .people { grid-template-columns: 1fr 1fr; }
-  .office { grid-column: 1 / -1; }
+  .people .office { grid-template-columns: 1fr 1fr; }
 }
 
 /* ---------- phone ---------- */
@@ -393,7 +397,7 @@ html:not(.js) .next-step, html:not(.js) .prev-step { display: none; }
 
   .proof-list { grid-template-columns: 1fr 1fr; gap: 18px 14px; }
   .proof-list strong { font-size: 19px; }
-  .service-grid, .quotes, .checks, .pledges, .people { grid-template-columns: 1fr; }
+  .service-grid, .quotes, .checks, .pledges, .people, .people .office { grid-template-columns: 1fr; }
   .service { padding: 24px 22px; }
   .finder, .contact { grid-template-columns: 1fr; }
   .finder-copy, .contact-copy { justify-self: stretch; }
@@ -440,3 +444,17 @@ html:not(.js) .next-step, html:not(.js) .prev-step { display: none; }
   /* Once the live tower is up, the foreground silhouette would cut across it. */
   .hero-stage.is-live ~ .skyline { display: none; }
 }
+
+/* ---------- legal pages ---------- */
+.legal-page { background: var(--cream); }
+.legal { max-width: 760px; margin: 0 auto; padding: calc(var(--header-h) + 56px) var(--gutter-r) 80px var(--gutter); }
+.legal h1 { font-size: clamp(36px, 5vw, 52px); margin: 10px 0 6px; }
+.legal-date { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+.legal h2 { font-size: 24px; margin: 36px 0 10px; }
+.legal p, .legal li { color: #2c3a38; }
+.legal p + p { margin-top: 12px; }
+.legal ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+.legal li::marker { color: var(--gold); }
+.legal a { color: var(--teal); }
+.legal-footer { display: block; padding-bottom: 40px; }
+.legal-footer .footer-legal { border-top: 0; padding-top: 0; }

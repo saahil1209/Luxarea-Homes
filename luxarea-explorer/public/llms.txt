@@ -1,9 +1,10 @@
 # Luxarea Homes
 
-> Luxarea Homes Pvt Ltd is a real-estate advisory based in Bandra Kurla Complex (BKC), Mumbai, with 25 years in business. It represents buyers of luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai. Nothing is sold online: the website exists to start a conversation with a senior advisor.
+> Luxarea Homes Pvt Ltd is a real-estate advisory based in Bandra Kurla Complex (BKC), Mumbai, founded in 1999 by Viivek Bathija (25+ years in business). It represents buyers of luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai. Nothing is sold online: the website exists to start a conversation with a senior advisor.
 
 ## Contact
-- Office: Parinee Crescenzo, 1B, G Block, Bandra Kurla Complex, Mumbai 400051, India
+- Office: Parinee Crescenzo, 1B, 1st Floor, G Block, Bandra Kurla Complex, Bandra East, Mumbai 400051, India
+- Office hours: Monday to Saturday, 9 am to 7 pm
 - Phone and WhatsApp: +91 77189 61447
 - Email: homes@luxarea.in
 - Website: https://www.luxarea.in/
@@ -12,6 +13,13 @@
 - Luxury homes in Mumbai: sea-facing apartments, penthouses and bungalows in South Mumbai, Worli, Bandra and Juhu; new and resale; listed and off-market. Includes a private shortlist, viewings in person or by video, title and approvals checks, and negotiation through to registration.
 - Land in Mumbai and Alibaug: plots in and around Mumbai and in Alibaug, Kihim and Mandwa. Includes checks of NA (non-agricultural) status, the 7/12 extract, a title search, DP remarks, CRZ and FSI/TDR potential.
 - Property in Dubai: apartments and villas in Downtown, Palm Jumeirah, Dubai Hills and Dubai Marina, ready and off-plan. Includes developer track-record and escrow checks, Golden Visa eligibility, LRS remittance planning and DLD registration.
+
+- Also: leasing advisory for premium homes and offices, property management for owners, home-loan introductions, and property valuations.
+
+## Team
+- Viivek Bathija, Founder. Master's in Finance; formerly at HSBC and Fuji Bank; real-estate advisor since 1999.
+- Shweta Jayakar, Head of Buyer Representation. 15 years managing Jet Airways' First Class experience; in real estate since 2019.
+- Saurabh Dwivedi, Strategic Buyer Representation. Mumbai-born; background in branding and marketing.
 
 ## How it works
 1. A 20-minute brief by phone or at the BKC office.
@@ -31,4 +39,5 @@ Buyers' names and numbers are not shared with developers or other brokers. Off-m
 
 ## Pages
 - [Home](https://www.luxarea.in/): services, process, due-diligence checklist, FAQs and contact form.
+- [Privacy](https://www.luxarea.in/privacy.html) and [Terms](https://www.luxarea.in/terms.html)
 - [Residence Finder](https://www.luxarea.in/residences.html): map of residences on Luxarea's register with 3D floor-by-floor views. Currently shows sample listings.

@@ -28,6 +28,8 @@ export default defineConfig({
       input: {
         home: 'index.html',
         residences: 'residences.html',
+        privacy: 'privacy.html',
+        terms: 'terms.html',
       },
       output: {
         // Keep heavy libraries in their own cacheable chunks.

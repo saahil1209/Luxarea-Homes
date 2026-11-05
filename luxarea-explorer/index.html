@@ -15,8 +15,10 @@
     <meta property="og:title" content="Luxarea Homes · Mumbai's finest homes, found quietly" />
     <meta property="og:description" content="Luxury homes in Mumbai, land and Dubai property. 25 years of finding, verifying and negotiating for families. BKC, Mumbai." />
     <meta property="og:url" content="%BRAND.website%/" />
-    <!-- TODO(Luxarea): replace with a real 1200×630 property photograph. -->
+    <!-- Share image: the terrace photo from Luxarea's current site. TODO(Luxarea): confirm it is theirs to use. -->
     <meta property="og:image" content="%BRAND.website%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Luxarea Homes · Mumbai's finest homes, found quietly" />
     <meta name="twitter:description" content="Luxury homes in Mumbai, land and Dubai property, found, verified and negotiated by a senior advisor." />
@@ -38,13 +40,17 @@
             "name": "Luxarea Homes",
             "legalName": "Luxarea Homes Pvt Ltd",
             "url": "%BRAND.website%/",
-            "logo": "%BRAND.website%/favicon.svg",
+            "logo": "%BRAND.website%/brand/luxarea-logo-on-green.png",
+            "image": "%BRAND.website%/og-image.jpg",
+            "foundingDate": "1999",
+            "founder": { "@type": "Person", "name": "Viivek Bathija" },
+            "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "09:00", "closes": "19:00" }],
             "telephone": "%BRAND.phoneDisplay%",
             "email": "%BRAND.email%",
             "description": "Real-estate advisory for luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai. 25 years in business.",
             "address": {
               "@type": "PostalAddress",
-              "streetAddress": "Parinee Crescenzo, 1B, G Block, Bandra Kurla Complex",
+              "streetAddress": "Parinee Crescenzo, 1B, 1st Floor, G Block, Bandra Kurla Complex, Bandra East",
               "addressLocality": "Mumbai",
               "addressRegion": "Maharashtra",
               "postalCode": "400051",
@@ -55,7 +61,7 @@
               { "@type": "Place", "name": "Alibaug" },
               { "@type": "City", "name": "Dubai" }
             ],
-            "knowsAbout": ["Luxury apartments in Mumbai", "Penthouses", "Non-agricultural land in Maharashtra", "Dubai property", "UAE Golden Visa through property", "NRI property purchase in India"]
+            "knowsAbout": ["Luxury apartments in Mumbai", "Leasing advisory", "Property management", "Penthouses", "Non-agricultural land in Maharashtra", "Dubai property", "UAE Golden Visa through property", "NRI property purchase in India"]
           },
           {
             "@type": "WebSite",
@@ -96,6 +102,16 @@
               },
               {
                 "@type": "Question",
+                "name": "Do you help with home loans?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. We connect buyers with reputable banks and financial institutions, and coordinate the loan with the purchase timeline." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can you help me sell or lease my property?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Share the location, size and key features, and we will value it, advise on pricing, and present it discreetly to qualified buyers or tenants. Most residential leases in Mumbai run for 11 months, renewable by agreement." }
+              },
+              {
+                "@type": "Question",
                 "name": "How is Luxarea paid?",
                 "acceptedAnswer": { "@type": "Answer", "text": "Our fee is explained in writing at the first meeting, before you see a single home." }
               }
@@ -114,7 +130,7 @@
           <path fill="#c49a6c" d="M0 220 281 0 564 220v37L281 37 0 257z" />
           <rect fill="#c49a6c" x="420" y="40" width="29" height="95" />
           <path fill="#8f7c5f" d="M0 350 281 130 564 350v37L281 167 0 387z" />
-          <path fill="#5d6253" d="M0 480 281 260 564 480v37L281 297 0 517z" />
+          <path fill="#575d4e" d="M0 480 281 260 564 480v37L281 297 0 517z" />
         </svg>
         <span>LUXAREA</span>
       </a>
@@ -197,8 +213,8 @@
         </ul>
         <div class="marquee" aria-hidden="true">
           <div class="marquee-track">
-            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
-            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
+            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Powai</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
+            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Powai</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
           </div>
         </div>
       </section>
@@ -252,6 +268,8 @@
           </article>
         </div>
       </section>
+
+      <p class="also-note">We also advise on <strong>leasing</strong> premium homes and offices, <strong>manage</strong> properties for owners, connect buyers with banks for <strong>home loans</strong>, and provide <strong>valuations</strong> for sellers.</p>
 
       <!-- ============ FINDER TEASER ============ -->
       <section class="section finder" id="finder" aria-labelledby="finder-title">
@@ -386,29 +404,37 @@
         <div class="section-head reveal">
           <p class="eyebrow">About Luxarea</p>
           <h2 id="about-title">A Mumbai advisory, for 25 years</h2>
-          <p class="section-lede">Luxarea Homes Pvt Ltd advises families on luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, from our office in Bandra Kurla Complex.</p>
+          <p class="section-lede">Viivek Bathija founded the advisory in 1999. Today Luxarea Homes Pvt Ltd advises families and investors on luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, from our office in Bandra Kurla Complex.</p>
         </div>
-        <!-- TODO(Luxarea): founder names, photographs and two-line bios. -->
+        <!-- TODO(Luxarea): team photographs. Initials are shown until then. -->
         <div class="people">
           <article class="person reveal">
-            <div class="portrait" aria-hidden="true"><span>Photo</span></div>
-            <h3>Founder name</h3>
-            <p class="role">Founder &amp; Principal Advisor</p>
-            <p>Two lines on experience, the neighbourhoods they know best, and the kind of families they advise.</p>
+            <div class="portrait" aria-hidden="true"><span>VB</span></div>
+            <h3>Viivek Bathija</h3>
+            <p class="role">Founder</p>
+            <p>A Master's in Finance and early years at HSBC and Fuji Bank, then his own real-estate advisory from 1999. For over two decades he has guided families and investors through Mumbai's most exclusive neighbourhoods.</p>
           </article>
           <article class="person reveal">
-            <div class="portrait" aria-hidden="true"><span>Photo</span></div>
-            <h3>Partner name</h3>
-            <p class="role">Partner · Land &amp; Dubai</p>
-            <p>Two lines on experience with land titles in Maharashtra and with Dubai developers.</p>
+            <div class="portrait" aria-hidden="true"><span>SJ</span></div>
+            <h3>Shweta Jayakar</h3>
+            <p class="role">Head of Buyer Representation</p>
+            <p>Fifteen years running Jet Airways' First Class experience taught her personal service at the highest level. Since 2019 she has brought that care to families buying their homes.</p>
+          </article>
+          <article class="person reveal">
+            <div class="portrait" aria-hidden="true"><span>SD</span></div>
+            <h3>Saurabh Dwivedi</h3>
+            <p class="role">Strategic Buyer Representation</p>
+            <p>Born and raised in Mumbai, with a background in branding and marketing. He advises buyers, sellers and investors on premium homes, commercial spaces and investments.</p>
           </article>
           <aside class="office reveal" aria-label="Office and registration">
             <h3>Visit us</h3>
             <address>
               Luxarea Homes Pvt Ltd<br />
-              Parinee Crescenzo, 1B, G Block<br />
-              Bandra Kurla Complex, Mumbai 400051
+              Parinee Crescenzo, 1B, 1st Floor, G Block<br />
+              Bandra Kurla Complex, Bandra East<br />
+              Mumbai 400051
             </address>
+            <p>%BRAND.hours%</p>
             <p><a href="%BRAND.phoneLink%">%BRAND.phoneDisplay%</a><br /><a href="mailto:%BRAND.email%">%BRAND.email%</a></p>
             <p class="rera">MahaRERA agent registration<br /><strong>%BRAND.reraAgent%</strong></p>
           </aside>
@@ -467,6 +493,14 @@
           <details>
             <summary>How does Luxarea keep my search private?</summary>
             <p>Your name and number are never shared with developers or other brokers. Off-market homes are shown by invitation, under NDA if you prefer, and one senior advisor handles your search from start to finish.</p>
+          </details>
+          <details>
+            <summary>Do you help with home loans?</summary>
+            <p>Yes. We connect buyers with reputable banks and financial institutions, and coordinate the loan with the purchase timeline.</p>
+          </details>
+          <details>
+            <summary>Can you help me sell or lease my property?</summary>
+            <p>Yes. Share the location, size and key features, and we will value it, advise on pricing, and present it discreetly to qualified buyers or tenants. Most residential leases in Mumbai run for 11 months, renewable by agreement.</p>
           </details>
           <details>
             <summary>How is Luxarea paid?</summary>
@@ -548,7 +582,7 @@
             </div>
             <label class="consent">
               <input type="checkbox" name="consent" value="yes" required />
-              <span>I agree that Luxarea Homes may contact me about this enquiry. We never share your details.</span>
+              <span>I agree that Luxarea Homes may contact me about this enquiry. We never share your details. <a href="/privacy.html">Privacy</a></span>
             </label>
             <input type="hidden" name="page" />
             <input type="hidden" name="utm" />
@@ -576,15 +610,16 @@
             <path fill="#c49a6c" d="M0 220 281 0 564 220v37L281 37 0 257z" />
             <rect fill="#c49a6c" x="420" y="40" width="29" height="95" />
             <path fill="#8f7c5f" d="M0 350 281 130 564 350v37L281 167 0 387z" />
-            <path fill="#5d6253" d="M0 480 281 260 564 480v37L281 297 0 517z" />
+            <path fill="#575d4e" d="M0 480 281 260 564 480v37L281 297 0 517z" />
           </svg>
           <span>LUXAREA</span>
         </a>
-        <p>Luxury homes, land and Dubai property, advised from Mumbai for 25 years.</p>
+        <p>Luxury homes, land and Dubai property, advised from Mumbai since 1999.</p>
       </div>
       <address class="footer-col">
         <strong>Office</strong>
-        Parinee Crescenzo, 1B, G Block<br />Bandra Kurla Complex, Mumbai 400051<br />
+        Parinee Crescenzo, 1B, 1st Floor, G Block<br />Bandra Kurla Complex, Bandra East, Mumbai 400051<br />
+        %BRAND.hours%<br />
         <a href="%BRAND.phoneLink%">%BRAND.phoneDisplay%</a>
         <a href="mailto:%BRAND.email%">%BRAND.email%</a>
       </address>
@@ -598,8 +633,7 @@
       </nav>
       <div class="footer-legal">
         <p>MahaRERA agent registration: %BRAND.reraAgent% · <a href="https://maharera.maharashtra.gov.in" rel="noopener" target="_blank">maharera.maharashtra.gov.in</a></p>
-        <!-- TODO(Luxarea): add Privacy and Terms pages and link them here (needed under the DPDP Act before collecting leads). -->
-        <p>© Luxarea Homes Pvt Ltd</p>
+        <p>© Luxarea Homes Pvt Ltd · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
       </div>
     </footer>
 
