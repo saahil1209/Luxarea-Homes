@@ -1,17 +1,613 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Luxarea Homes · Residences</title>
-    <meta name="description" content="Explore Luxarea Homes' curated luxury residences across Mumbai, floor by floor." />
-    <meta name="theme-color" content="#0E0F0D" />
+    <title>Luxarea Homes · Luxury Homes, Land &amp; Dubai Property Advisors in Mumbai</title>
+    <meta name="description" content="Luxarea Homes is a BKC-based real-estate advisory with 25 years in Mumbai. We find, verify and negotiate luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, quietly and on your behalf." />
+    <link rel="canonical" href="%BRAND.website%/" />
+    <meta name="theme-color" content="#223f3e" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Luxarea Homes" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="Luxarea Homes · Mumbai's finest homes, found quietly" />
+    <meta property="og:description" content="Luxury homes in Mumbai, land and Dubai property. 25 years of finding, verifying and negotiating for families. BKC, Mumbai." />
+    <meta property="og:url" content="%BRAND.website%/" />
+    <!-- TODO(Luxarea): replace with a real 1200×630 property photograph. -->
+    <meta property="og:image" content="%BRAND.website%/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Luxarea Homes · Mumbai's finest homes, found quietly" />
+    <meta name="twitter:description" content="Luxury homes in Mumbai, land and Dubai property, found, verified and negotiated by a senior advisor." />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&text=LUXAREA&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/home/home.css" />
+    <script>document.documentElement.classList.add('js')</script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "RealEstateAgent",
+            "@id": "%BRAND.website%/#agency",
+            "name": "Luxarea Homes",
+            "legalName": "Luxarea Homes Pvt Ltd",
+            "url": "%BRAND.website%/",
+            "logo": "%BRAND.website%/favicon.svg",
+            "telephone": "%BRAND.phoneDisplay%",
+            "email": "%BRAND.email%",
+            "description": "Real-estate advisory for luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai. 25 years in business.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Parinee Crescenzo, 1B, G Block, Bandra Kurla Complex",
+              "addressLocality": "Mumbai",
+              "addressRegion": "Maharashtra",
+              "postalCode": "400051",
+              "addressCountry": "IN"
+            },
+            "areaServed": [
+              { "@type": "City", "name": "Mumbai" },
+              { "@type": "Place", "name": "Alibaug" },
+              { "@type": "City", "name": "Dubai" }
+            ],
+            "knowsAbout": ["Luxury apartments in Mumbai", "Penthouses", "Non-agricultural land in Maharashtra", "Dubai property", "UAE Golden Visa through property", "NRI property purchase in India"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "%BRAND.website%/#website",
+            "url": "%BRAND.website%/",
+            "name": "Luxarea Homes",
+            "inLanguage": "en-IN",
+            "publisher": { "@id": "%BRAND.website%/#agency" }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "%BRAND.website%/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Can NRIs and OCI card holders buy property in India?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. NRIs and OCI card holders can buy residential and commercial property in India without RBI approval. They cannot buy agricultural land, plantation property or farmhouses. Payment must come from abroad through normal banking channels or from an NRE, NRO or FCNR account." }
+              },
+              {
+                "@type": "Question",
+                "name": "How much can a resident Indian send abroad to buy property in Dubai?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Under the RBI's Liberalised Remittance Scheme, each resident individual can remit up to USD 250,000 per financial year, so family members can pool their limits. Tax collected at source (TCS) applies to remittances above ₹10 lakh in a year and can be claimed against your income tax." }
+              },
+              {
+                "@type": "Question",
+                "name": "Does buying property in Dubai qualify for the UAE Golden Visa?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Property worth AED 2 million or more can qualify an investor for the 10-year UAE Golden Visa. The rules that apply are those in force when you apply, so we check eligibility for your specific purchase before you commit." }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I buy agricultural land near Mumbai or in Alibaug?",
+                "acceptedAnswer": { "@type": "Answer", "text": "In Maharashtra, agricultural land can generally be bought only by agriculturists, so most buyers purchase non-agricultural (NA) plots. Before any purchase we verify the NA order, the 7/12 extract, the title chain and whether the plot falls under coastal regulation (CRZ)." }
+              },
+              {
+                "@type": "Question",
+                "name": "How does Luxarea keep my search private?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Your name and number are never shared with developers or other brokers. Off-market homes are shown by invitation, under NDA if you prefer, and one senior advisor handles your search from start to finish." }
+              },
+              {
+                "@type": "Question",
+                "name": "How is Luxarea paid?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Our fee is explained in writing at the first meeting, before you see a single home." }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="/" aria-label="Luxarea Homes, home">
+        <svg viewBox="0 0 564 517" aria-hidden="true" focusable="false">
+          <path fill="#c49a6c" d="M0 220 281 0 564 220v37L281 37 0 257z" />
+          <rect fill="#c49a6c" x="420" y="40" width="29" height="95" />
+          <path fill="#8f7c5f" d="M0 350 281 130 564 350v37L281 167 0 387z" />
+          <path fill="#5d6253" d="M0 480 281 260 564 480v37L281 297 0 517z" />
+        </svg>
+        <span>LUXAREA</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/residences.html">Residence Finder</a>
+        <a href="#homes">Mumbai Homes</a>
+        <a href="#land">Land</a>
+        <a href="#dubai">Dubai</a>
+        <a href="#about">About</a>
+      </nav>
+      <a class="btn btn-gold header-cta" href="#contact">Speak to an advisor</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-sky" aria-hidden="true"></div>
+        <div class="hero-stage" id="hero-stage">
+          <svg class="poster" viewBox="0 0 200 520" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="pg" x1="0" x2="1">
+                <stop offset="0" stop-color="#18232d" />
+                <stop offset="0.55" stop-color="#22303a" />
+                <stop offset="1" stop-color="#121a20" />
+              </linearGradient>
+            </defs>
+            <rect x="40" y="476" width="120" height="30" rx="8" fill="#c49a6c" />
+            <g id="poster-floors"><rect x="48" y="57.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="56.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="69.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="70.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.33"/><rect x="45" y="68.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="81.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="80.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="93.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="94.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.25"/><rect x="45" y="92.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="105.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="104.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="117.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="116.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="129.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="130.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.24"/><rect x="45" y="128.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="141.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="140.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="153.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="154.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.22"/><rect x="45" y="152.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="165.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="164.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="177.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="178.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.25"/><rect x="45" y="176.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="189.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="190.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.27"/><rect x="45" y="188.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="201.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="200.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="213.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="212.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="225.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="226.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.30"/><rect x="45" y="224.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="237.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="238.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.40"/><rect x="45" y="236.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="249.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="248.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="261.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="260.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="273.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="272.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="285.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="284.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="297.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="296.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="309.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="310.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.23"/><rect x="45" y="308.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="321.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="320.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="333.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="332.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="345.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="346.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.32"/><rect x="45" y="344.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="357.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="358.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.30"/><rect x="45" y="356.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="369.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="368.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="381.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="380.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="393.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="394.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.36"/><rect x="45" y="392.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="405.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="404.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="417.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="416.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="429.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="428.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="441.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="45" y="440.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="453.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="454.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.24"/><rect x="45" y="452.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/><rect x="48" y="465.6" width="104" height="10.0" rx="4" fill="url(#pg)"/><rect x="50" y="466.2" width="100" height="8.6" rx="3" fill="#ffc98a" opacity="0.24"/><rect x="45" y="464.0" width="110" height="1.8" rx="0.9" fill="#cbc3ad"/></g>
+            <rect x="46" y="40" width="108" height="14" rx="3" fill="#e6c79e" />
+          </svg>
+          <div class="tower-tip" id="hero-tip" role="status" aria-live="polite"></div>
+          <button class="tower-start" id="tower-start" type="button" hidden>Explore the tower in 3D</button>
+          <div class="floor-card" id="floor-card" hidden>
+            <p class="eyebrow" id="fc-eyebrow"></p>
+            <p class="fc-name" id="fc-name"></p>
+            <p class="fc-spec" id="fc-spec"></p>
+            <a class="btn btn-gold" id="fc-finder" href="/residences.html">See this floor in the Residence Finder</a>
+            <a class="btn btn-ghost" id="fc-ask" href="#contact">Ask about this residence</a>
+            <button class="fc-close" id="fc-close" type="button" aria-label="Close and return to the tower">✕</button>
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <p class="eyebrow">Luxarea Homes · Bandra Kurla Complex, Mumbai</p>
+          <h1 id="hero-title">Mumbai's finest homes, found quietly.</h1>
+          <p class="lede">For 25 years we have found, verified and negotiated homes for Mumbai's families. Homes in the city, land in and around Mumbai and Alibaug, and property in Dubai.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold btn-lg" href="#contact">Speak to an advisor</a>
+            <a class="btn btn-ghost btn-lg" href="/residences.html">Open the Residence Finder</a>
+          </div>
+          <p class="reply-note">
+            <!-- TODO(Luxarea): confirm the reply-time promise you can keep. -->
+            A senior advisor replies personally on WhatsApp or by phone, usually the same working day.
+          </p>
+          <p class="hero-hint" aria-hidden="true">Hover a floor of the tower to preview it. Click to open it.</p>
+        </div>
+
+        <div class="skyline" aria-hidden="true">
+          <svg class="necklace" viewBox="0 0 1440 120" preserveAspectRatio="none" focusable="false">
+            <path d="M0 96 C 260 40, 520 30, 760 52 S 1200 92, 1440 70" fill="none" stroke="rgba(255,201,138,0.15)" stroke-width="2" />
+            <g id="necklace-lights" fill="#ffc98a"><circle cx="0" cy="96.0" r="1.4" opacity="0.55"/><circle cx="23" cy="91.2" r="1.8" opacity="0.65"/><circle cx="46" cy="86.6" r="2.1" opacity="0.75"/><circle cx="69" cy="82.2" r="1.4" opacity="0.85"/><circle cx="92" cy="78.1" r="1.8" opacity="0.55"/><circle cx="115" cy="74.2" r="2.1" opacity="0.65"/><circle cx="138" cy="70.6" r="1.4" opacity="0.75"/><circle cx="160" cy="67.1" r="1.8" opacity="0.85"/><circle cx="183" cy="63.9" r="2.1" opacity="0.55"/><circle cx="206" cy="60.9" r="1.4" opacity="0.65"/><circle cx="229" cy="58.2" r="1.8" opacity="0.75"/><circle cx="252" cy="55.6" r="2.1" opacity="0.85"/><circle cx="274" cy="53.3" r="1.4" opacity="0.55"/><circle cx="297" cy="51.2" r="1.8" opacity="0.65"/><circle cx="320" cy="49.2" r="2.1" opacity="0.75"/><circle cx="342" cy="47.5" r="1.4" opacity="0.85"/><circle cx="365" cy="46.0" r="1.8" opacity="0.55"/><circle cx="388" cy="44.8" r="2.1" opacity="0.65"/><circle cx="410" cy="43.7" r="1.4" opacity="0.75"/><circle cx="432" cy="42.8" r="1.8" opacity="0.85"/><circle cx="455" cy="42.1" r="2.1" opacity="0.55"/><circle cx="477" cy="41.6" r="1.4" opacity="0.65"/><circle cx="499" cy="41.3" r="1.8" opacity="0.75"/><circle cx="521" cy="41.2" r="2.1" opacity="0.85"/><circle cx="544" cy="41.2" r="1.4" opacity="0.55"/><circle cx="566" cy="41.5" r="1.8" opacity="0.65"/><circle cx="588" cy="42.0" r="2.1" opacity="0.75"/><circle cx="609" cy="42.6" r="1.4" opacity="0.85"/><circle cx="631" cy="43.4" r="1.8" opacity="0.55"/><circle cx="653" cy="44.4" r="2.1" opacity="0.65"/><circle cx="674" cy="45.6" r="1.4" opacity="0.75"/><circle cx="696" cy="46.9" r="1.8" opacity="0.85"/><circle cx="717" cy="48.5" r="2.1" opacity="0.55"/><circle cx="739" cy="50.1" r="1.4" opacity="0.65"/><circle cx="760" cy="52.0" r="1.4" opacity="0.55"/><circle cx="781" cy="53.9" r="1.8" opacity="0.65"/><circle cx="802" cy="55.8" r="2.1" opacity="0.75"/><circle cx="823" cy="57.7" r="1.4" opacity="0.85"/><circle cx="843" cy="59.5" r="1.8" opacity="0.55"/><circle cx="864" cy="61.3" r="2.1" opacity="0.65"/><circle cx="884" cy="63.1" r="1.4" opacity="0.75"/><circle cx="904" cy="64.8" r="1.8" opacity="0.85"/><circle cx="924" cy="66.4" r="2.1" opacity="0.55"/><circle cx="944" cy="68.0" r="1.4" opacity="0.65"/><circle cx="963" cy="69.5" r="1.8" opacity="0.75"/><circle cx="983" cy="70.9" r="2.1" opacity="0.85"/><circle cx="1003" cy="72.2" r="1.4" opacity="0.55"/><circle cx="1022" cy="73.5" r="1.8" opacity="0.65"/><circle cx="1042" cy="74.6" r="2.1" opacity="0.75"/><circle cx="1061" cy="75.7" r="1.4" opacity="0.85"/><circle cx="1081" cy="76.6" r="1.8" opacity="0.55"/><circle cx="1100" cy="77.5" r="2.1" opacity="0.65"/><circle cx="1119" cy="78.2" r="1.4" opacity="0.75"/><circle cx="1139" cy="78.9" r="1.8" opacity="0.85"/><circle cx="1158" cy="79.3" r="2.1" opacity="0.55"/><circle cx="1178" cy="79.7" r="1.4" opacity="0.65"/><circle cx="1197" cy="79.9" r="1.8" opacity="0.75"/><circle cx="1217" cy="80.0" r="2.1" opacity="0.85"/><circle cx="1237" cy="79.9" r="1.4" opacity="0.55"/><circle cx="1256" cy="79.7" r="1.8" opacity="0.65"/><circle cx="1276" cy="79.4" r="2.1" opacity="0.75"/><circle cx="1296" cy="78.8" r="1.4" opacity="0.85"/><circle cx="1316" cy="78.1" r="1.8" opacity="0.55"/><circle cx="1336" cy="77.2" r="2.1" opacity="0.65"/><circle cx="1357" cy="76.2" r="1.4" opacity="0.75"/><circle cx="1377" cy="74.9" r="1.8" opacity="0.85"/><circle cx="1398" cy="73.5" r="2.1" opacity="0.55"/><circle cx="1419" cy="71.8" r="1.4" opacity="0.65"/></g>
+          </svg>
+          <svg class="sealink" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" focusable="false">
+            <g fill="none" stroke="rgba(223,193,156,0.42)" stroke-width="1.1" id="sealink-cables"><path d="M590 61 L560 180.6"/><path d="M590 61 L620 180.0"/><path d="M590 68 L530 180.8"/><path d="M590 68 L650 179.7"/><path d="M590 75 L500 181.1"/><path d="M590 75 L680 179.4"/><path d="M590 82 L470 181.4"/><path d="M590 82 L710 179.1"/><path d="M590 89 L440 181.7"/><path d="M590 89 L740 178.8"/><path d="M590 96 L410 182.0"/><path d="M590 96 L770 178.5"/><path d="M590 103 L380 182.3"/><path d="M590 103 L800 178.2"/><path d="M590 110 L350 182.6"/><path d="M590 110 L830 177.9"/><path d="M590 117 L320 182.9"/><path d="M590 117 L860 177.6"/><path d="M890 55 L860 177.6"/><path d="M890 55 L920 177.1"/><path d="M890 62 L830 177.9"/><path d="M890 62 L950 176.8"/><path d="M890 69 L800 178.2"/><path d="M890 69 L980 176.5"/><path d="M890 76 L770 178.5"/><path d="M890 76 L1010 176.2"/><path d="M890 83 L740 178.8"/><path d="M890 83 L1040 175.9"/><path d="M890 90 L710 179.1"/><path d="M890 90 L1070 175.6"/><path d="M890 97 L680 179.4"/><path d="M890 97 L1100 175.3"/><path d="M890 104 L650 179.7"/><path d="M890 104 L1130 175.0"/><path d="M890 111 L620 180.0"/><path d="M890 111 L1160 174.7"/></g>
+            <path d="M0 186 L1440 172" stroke="#0b1514" stroke-width="10" /><path d="M0 181 L1440 167" stroke="rgba(255,201,138,0.55)" stroke-width="1.2" />
+            <path d="M0 220 L0 192 L1440 178 L1440 220 Z" fill="#0b1514" />
+            <path d="M578 184 L590 40 L602 184 Z M878 180 L890 34 L902 180 Z" fill="#0b1514" />
+          </svg>
+        </div>
+      </section>
+
+      <!-- ============ PROOF ============ -->
+      <section class="proof" aria-label="About Luxarea in brief">
+        <ul class="proof-list">
+          <li><strong>25 years</strong><span>in Mumbai real estate</span></li>
+          <li><strong>BKC</strong><span>office at Parinee Crescenzo</span></li>
+          <li><strong>Mumbai · Alibaug · Dubai</strong><span>homes, land and overseas</span></li>
+          <li><strong>Off-market register</strong><span>homes shared by invitation</span></li>
+        </ul>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
+            <span>Worli Sea Face</span><span>Malabar Hill</span><span>Altamount Road</span><span>Bandra West</span><span>Juhu</span><span>Lower Parel</span><span>Prabhadevi</span><span>Cuffe Parade</span><span>Breach Candy</span><span>Kihim</span><span>Mandwa</span><span>Alibaug</span><span>Downtown Dubai</span><span>Palm Jumeirah</span><span>Dubai Hills</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SERVICES ============ -->
+      <section class="section services" aria-labelledby="services-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">How we help</p>
+          <h2 id="services-title">Three ways we work for you</h2>
+          <p class="section-lede">We represent the buyer. Every option is checked before you see it, and you are told plainly when something isn't right.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service reveal" id="homes">
+            <p class="service-num">01</p>
+            <h3>Luxury homes in Mumbai</h3>
+            <p>Sea-facing apartments, penthouses and bungalows in South Mumbai, Worli, Bandra and Juhu, new and resale, listed and off-market.</p>
+            <ul>
+              <li>A private shortlist matched to your brief</li>
+              <li>Viewings in person or by video walkthrough</li>
+              <li>Title, approvals and carpet area verified</li>
+              <li>Negotiation through to registration</li>
+            </ul>
+            <p class="for">For families upgrading, first homes in the city, and NRIs buying from abroad.</p>
+            <a class="btn btn-outline" href="#contact" data-intent="home">Discuss a home in Mumbai</a>
+          </article>
+          <article class="service reveal" id="land">
+            <p class="service-num">02</p>
+            <h3>Land in Mumbai and Alibaug</h3>
+            <p>Plots for a weekend home, a family bungalow or development, in and around Mumbai and across Alibaug, Kihim and Mandwa.</p>
+            <ul>
+              <li>NA status, 7/12 extract and title search</li>
+              <li>DP remarks, CRZ and road access checked</li>
+              <li>FSI and TDR potential explained</li>
+              <li>Architect and approvals introductions</li>
+            </ul>
+            <p class="for">For families planning a second home, and buyers holding land for the long term.</p>
+            <a class="btn btn-outline" href="#contact" data-intent="land">Discuss land</a>
+          </article>
+          <article class="service reveal" id="dubai">
+            <p class="service-num">03</p>
+            <h3>Property in Dubai</h3>
+            <p>Apartments and villas in Downtown, Palm Jumeirah, Dubai Hills and Dubai Marina, ready and off-plan, advised from Mumbai.</p>
+            <ul>
+              <li>Developer track record and escrow checked</li>
+              <li>Golden Visa eligibility worked out up front</li>
+              <li>LRS remittance planned across the family</li>
+              <li>DLD registration and handover managed</li>
+            </ul>
+            <p class="for">For resident Indians investing abroad and families relocating to the UAE.</p>
+            <a class="btn btn-outline" href="#contact" data-intent="dubai">Discuss Dubai</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============ FINDER TEASER ============ -->
+      <section class="section finder" id="finder" aria-labelledby="finder-title">
+        <div class="finder-copy reveal">
+          <p class="eyebrow">Residence Finder</p>
+          <h2 id="finder-title">Walk the register, floor by floor.</h2>
+          <p class="section-lede">Search the homes on Luxarea's register on a map, open any tower in 3D, and see each floor's plan, carpet area and availability. Every floor has its own link, so you can send it to the family.</p>
+          <ul class="finder-areas">
+            <li>Worli</li><li>Malabar Hill</li><li>Bandra</li><li>Juhu</li><li>Lower Parel</li><li>Alibaug</li>
+          </ul>
+          <a class="btn btn-gold btn-lg" href="/residences.html">Open the Residence Finder</a>
+          <p class="fine">The Finder currently shows sample listings while the live register is being added.</p>
+        </div>
+        <figure class="finder-map reveal" aria-label="Map of Mumbai and Alibaug with residences on Luxarea's register">
+          <svg viewBox="0 0 260 560" id="teaser-map" role="img" aria-labelledby="teaser-map-title">
+            <title id="teaser-map-title">Map of Mumbai and Alibaug</title>
+            <rect width="260" height="560" fill="#1a3534" />
+            <path class="land" d="M70 0 L78 30 L86 60 L80 100 L82 140 L77 180 L72 220 L62 230 L58 250 L80 258 L84 270 L78 285 L70 300 L82 300 L102 280 L120 255 L122 220 L136 190 L150 160 L180 110 L190 60 L195 0 Z" />
+            <path class="land" d="M260 210 L240 228 L215 280 L195 320 L150 365 L130 395 L128 440 L125 490 L130 520 L140 560 L260 560 Z" />
+            <text x="14" y="380" class="map-label">Arabian Sea</text>
+            <text x="150" y="255" class="map-label">Mumbai Harbour</text>
+            <text x="112" y="132" class="map-place">Mumbai</text>
+            <text x="168" y="548" class="map-place">Alibaug</text>
+            <g id="teaser-pins"></g>
+          </svg>
+        </figure>
+      </section>
+
+      <!-- ============ PROCESS ============ -->
+      <section class="section process" id="process" aria-labelledby="process-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">What happens next</p>
+          <h2 id="process-title">Five steps, from first call to registration</h2>
+          <p class="section-lede">The first conversation commits you to nothing. Most families take three to twelve months to decide, and we work at your pace.</p>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="step-time">Day 1 · 20 minutes</span>
+            <h3>A short brief</h3>
+            <p>A call or meeting at our BKC office about what you need, who will decide, and your budget and timing.</p>
+          </li>
+          <li class="step reveal">
+            <!-- TODO(Luxarea): confirm the 48-hour shortlist promise. -->
+            <span class="step-time">Within 48 hours</span>
+            <h3>A private shortlist</h3>
+            <p>Homes that fit, including off-market ones, with floor plans, carpet areas and honest notes on each.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-time">Weeks 1–4</span>
+            <h3>Viewings</h3>
+            <p>Accompanied visits at times that suit the family, or live video walkthroughs if you are abroad.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-time">Before any token</span>
+            <h3>Due diligence</h3>
+            <p>Title, approvals, society and dues checked with your lawyer, so nothing surfaces after you pay.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-time">To the keys</span>
+            <h3>Negotiation and registration</h3>
+            <p>We negotiate price and terms, then manage the agreement, stamp duty, registration and handover.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============ VERIFY ============ -->
+      <section class="section verify" id="verify" aria-labelledby="verify-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Due diligence</p>
+          <h2 id="verify-title">What we verify before you commit</h2>
+          <p class="section-lede">At this price the risk is rarely the price. It is title, approvals and paperwork. Here is what we check, in plain terms.</p>
+        </div>
+        <div class="tabs reveal" data-tabs>
+          <div class="tab-list" role="tablist" aria-label="What we verify">
+            <button type="button" role="tab" id="tab-homes" aria-controls="panel-homes" aria-selected="true">Homes</button>
+            <button type="button" role="tab" id="tab-land" aria-controls="panel-land" aria-selected="false">Land</button>
+            <button type="button" role="tab" id="tab-dubai" aria-controls="panel-dubai" aria-selected="false">Dubai</button>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-homes" aria-labelledby="tab-homes">
+            <h3 class="panel-title">Homes in Mumbai</h3>
+            <dl class="checks">
+              <div><dt>Title chain</dt><dd>Ownership traced back through every sale, with your lawyer's title report.</dd></div>
+              <div><dt>MahaRERA registration</dt><dd>Project number, approved plans and declared possession date checked on MahaRERA.</dd></div>
+              <div><dt>OC and CC</dt><dd>Occupation and commencement certificates in place for the building and the floor.</dd></div>
+              <div><dt>Society NOC and dues</dt><dd>Society consent for transfer, and no maintenance or sinking-fund arrears.</dd></div>
+              <div><dt>Encumbrance</dt><dd>No mortgage, lien or pending litigation on the flat.</dd></div>
+              <div><dt>Measured carpet area</dt><dd>The RERA carpet area compared with what is actually built.</dd></div>
+            </dl>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-land" aria-labelledby="tab-land">
+            <h3 class="panel-title">Land in Mumbai and Alibaug</h3>
+            <dl class="checks">
+              <div><dt>7/12 extract</dt><dd>The land record showing owner, area and land use, matched to the seller.</dd></div>
+              <div><dt>Title search</dt><dd>A 30-year search for prior sales, mortgages and claims.</dd></div>
+              <div><dt>NA order</dt><dd>Non-agricultural permission in place, since agricultural land is generally limited to agriculturists.</dd></div>
+              <div><dt>DP remarks</dt><dd>The Development Plan zoning, reservations and proposed roads affecting the plot.</dd></div>
+              <div><dt>CRZ</dt><dd>Whether coastal regulation limits what you can build, which matters in Alibaug.</dd></div>
+              <div><dt>FSI and TDR</dt><dd>How much you can build today, and what more is possible.</dd></div>
+            </dl>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-dubai" aria-labelledby="tab-dubai">
+            <h3 class="panel-title">Property in Dubai</h3>
+            <dl class="checks">
+              <div><dt>DLD title deed</dt><dd>Ownership confirmed with the Dubai Land Department, or the Oqood registration for off-plan.</dd></div>
+              <div><dt>Escrow account</dt><dd>Off-plan payments go into the project's registered escrow account, not to the developer directly.</dd></div>
+              <div><dt>Developer track record</dt><dd>Past projects, delivery delays and handover quality.</dd></div>
+              <div><dt>Golden Visa eligibility</dt><dd>Whether the purchase qualifies under the rules at the time you apply.</dd></div>
+              <div><dt>LRS limits</dt><dd>Remittance planned within each family member's USD 250,000 annual limit, with TCS accounted for.</dd></div>
+              <div><dt>Service charges</dt><dd>Annual community charges and likely rental yield, so the numbers are real.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DISCRETION ============ -->
+      <section class="section discretion" id="discretion" aria-labelledby="discretion-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Our discretion pledge</p>
+          <h2 id="discretion-title">Your search stays yours.</h2>
+        </div>
+        <!-- TODO(Luxarea): confirm each pledge before launch. -->
+        <ul class="pledges">
+          <li class="reveal"><h3>Your number stays with us</h3><p>We never share your name or number with developers or other brokers.</p></li>
+          <li class="reveal"><h3>Off-market by invitation</h3><p>Private homes are shown only to invited buyers, under NDA if you prefer.</p></li>
+          <li class="reveal"><h3>One senior advisor</h3><p>The same person handles your search from the first call to the keys.</p></li>
+          <li class="reveal"><h3>We tell you when not to buy</h3><p>If the title, the building or the price is wrong, you will hear it from us first.</p></li>
+        </ul>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section class="section about" id="about" aria-labelledby="about-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">About Luxarea</p>
+          <h2 id="about-title">A Mumbai advisory, for 25 years</h2>
+          <p class="section-lede">Luxarea Homes Pvt Ltd advises families on luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, from our office in Bandra Kurla Complex.</p>
+        </div>
+        <!-- TODO(Luxarea): founder names, photographs and two-line bios. -->
+        <div class="people">
+          <article class="person reveal">
+            <div class="portrait" aria-hidden="true"><span>Photo</span></div>
+            <h3>Founder name</h3>
+            <p class="role">Founder &amp; Principal Advisor</p>
+            <p>Two lines on experience, the neighbourhoods they know best, and the kind of families they advise.</p>
+          </article>
+          <article class="person reveal">
+            <div class="portrait" aria-hidden="true"><span>Photo</span></div>
+            <h3>Partner name</h3>
+            <p class="role">Partner · Land &amp; Dubai</p>
+            <p>Two lines on experience with land titles in Maharashtra and with Dubai developers.</p>
+          </article>
+          <aside class="office reveal" aria-label="Office and registration">
+            <h3>Visit us</h3>
+            <address>
+              Luxarea Homes Pvt Ltd<br />
+              Parinee Crescenzo, 1B, G Block<br />
+              Bandra Kurla Complex, Mumbai 400051
+            </address>
+            <p><a href="%BRAND.phoneLink%">%BRAND.phoneDisplay%</a><br /><a href="mailto:%BRAND.email%">%BRAND.email%</a></p>
+            <p class="rera">MahaRERA agent registration<br /><strong>%BRAND.reraAgent%</strong></p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============ VOICES ============ -->
+      <section class="section voices" aria-labelledby="voices-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Client voices</p>
+          <h2 id="voices-title">What families tell us</h2>
+        </div>
+        <!-- TODO(Luxarea): replace with real stories, shared with the client's permission. -->
+        <div class="quotes">
+          <figure class="quote reveal">
+            <span class="sample-tag">Sample</span>
+            <blockquote><p>“They told us not to buy the first flat we loved, and showed us why. The one we bought instead had a clean title and a better view.”</p></blockquote>
+            <figcaption>A family in Worli</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <span class="sample-tag">Sample</span>
+            <blockquote><p>“We were in Singapore the whole time. Every viewing was on video, and the paperwork was ready when we flew in to register.”</p></blockquote>
+            <figcaption>NRI buyers, Bandra West</figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <span class="sample-tag">Sample</span>
+            <blockquote><p>“The Alibaug plot had a CRZ issue nobody had mentioned. Luxarea found it before we paid the token.”</p></blockquote>
+            <figcaption>A family buying land in Kihim</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ FAQ ============ -->
+      <section class="section faq" id="faq" aria-labelledby="faq-title">
+        <div class="section-head reveal">
+          <p class="eyebrow">Questions</p>
+          <h2 id="faq-title">What buyers ask us first</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Can NRIs and OCI card holders buy property in India?</summary>
+            <p>Yes. NRIs and OCI card holders can buy residential and commercial property in India without RBI approval. They cannot buy agricultural land, plantation property or farmhouses. Payment must come from abroad through normal banking channels or from an NRE, NRO or FCNR account.</p>
+          </details>
+          <details>
+            <summary>How much can a resident Indian send abroad to buy property in Dubai?</summary>
+            <p>Under the RBI's Liberalised Remittance Scheme, each resident individual can remit up to USD 250,000 per financial year, so family members can pool their limits. Tax collected at source (TCS) applies to remittances above ₹10 lakh in a year and can be claimed against your income tax.</p>
+          </details>
+          <details>
+            <summary>Does buying property in Dubai qualify for the UAE Golden Visa?</summary>
+            <p>Property worth AED 2 million or more can qualify an investor for the 10-year UAE Golden Visa. The rules that apply are those in force when you apply, so we check eligibility for your specific purchase before you commit.</p>
+          </details>
+          <details>
+            <summary>Can I buy agricultural land near Mumbai or in Alibaug?</summary>
+            <p>In Maharashtra, agricultural land can generally be bought only by agriculturists, so most buyers purchase non-agricultural (NA) plots. Before any purchase we verify the NA order, the 7/12 extract, the title chain and whether the plot falls under coastal regulation (CRZ).</p>
+          </details>
+          <details>
+            <summary>How does Luxarea keep my search private?</summary>
+            <p>Your name and number are never shared with developers or other brokers. Off-market homes are shown by invitation, under NDA if you prefer, and one senior advisor handles your search from start to finish.</p>
+          </details>
+          <details>
+            <summary>How is Luxarea paid?</summary>
+            <!-- TODO(Luxarea): confirm fee wording. -->
+            <p>Our fee is explained in writing at the first meeting, before you see a single home.</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section class="section contact" id="contact" aria-labelledby="contact-title">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">Speak to an advisor</p>
+          <h2 id="contact-title">Tell us what you're looking for.</h2>
+          <p class="section-lede">Two short steps. A senior advisor replies personally, on the channel you choose. Nothing is shared outside Luxarea.</p>
+          <ul class="contact-direct">
+            <li><a href="%BRAND.whatsappLink%" rel="noopener" target="_blank">WhatsApp %BRAND.phoneDisplay%</a></li>
+            <li><a href="%BRAND.phoneLink%">Call %BRAND.phoneDisplay%</a></li>
+            <li><a href="mailto:%BRAND.email%">%BRAND.email%</a></li>
+          </ul>
+        </div>
+
+        <form class="lead-form reveal" id="lead-form" action="mailto:%BRAND.email%" method="post" enctype="text/plain" novalidate>
+          <ol class="form-progress" aria-hidden="true"><li class="is-on">What you need</li><li>How to reach you</li></ol>
+
+          <fieldset class="form-step" data-step="1">
+            <legend class="sr-only">Step 1 of 2: what you need</legend>
+            <div class="field">
+              <p class="field-label" id="lbl-what">What are you looking for?</p>
+              <div class="chips" role="radiogroup" aria-labelledby="lbl-what">
+                <label class="chip"><input type="radio" name="intent" value="A home in Mumbai" data-intent="home" required /><span>A home in Mumbai</span></label>
+                <label class="chip"><input type="radio" name="intent" value="Land" data-intent="land" /><span>Land</span></label>
+                <label class="chip"><input type="radio" name="intent" value="Property in Dubai" data-intent="dubai" /><span>Property in Dubai</span></label>
+                <label class="chip"><input type="radio" name="intent" value="Selling or leasing" data-intent="sell" /><span>Selling or leasing</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <p class="field-label" id="lbl-budget">Budget</p>
+              <div class="chips" role="radiogroup" aria-labelledby="lbl-budget">
+                <label class="chip"><input type="radio" name="budget" value="Under ₹10 Cr" /><span>Under ₹10 Cr</span></label>
+                <label class="chip"><input type="radio" name="budget" value="₹10–25 Cr" /><span>₹10–25 Cr</span></label>
+                <label class="chip"><input type="radio" name="budget" value="₹25–50 Cr" /><span>₹25–50 Cr</span></label>
+                <label class="chip"><input type="radio" name="budget" value="₹50 Cr and above" /><span>₹50 Cr+</span></label>
+                <label class="chip"><input type="radio" name="budget" value="Not sure yet" /><span>Not sure yet</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <p class="field-label" id="lbl-who">Who is this for?</p>
+              <div class="chips" role="radiogroup" aria-labelledby="lbl-who">
+                <label class="chip"><input type="radio" name="for" value="Me" /><span>Me</span></label>
+                <label class="chip"><input type="radio" name="for" value="My family" /><span>My family</span></label>
+                <label class="chip"><input type="radio" name="for" value="Someone I represent" /><span>Someone I represent</span></label>
+              </div>
+            </div>
+            <button type="button" class="btn btn-gold btn-lg next-step">Continue</button>
+          </fieldset>
+
+          <fieldset class="form-step" data-step="2">
+            <legend class="sr-only">Step 2 of 2: how to reach you</legend>
+            <div class="field">
+              <label class="field-label" for="f-name">Your name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-phone">WhatsApp or mobile number</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91" required />
+            </div>
+            <div class="field">
+              <p class="field-label" id="lbl-channel">Best way to reach you</p>
+              <div class="chips" role="radiogroup" aria-labelledby="lbl-channel">
+                <label class="chip"><input type="radio" name="channel" value="WhatsApp" checked /><span>WhatsApp</span></label>
+                <label class="chip"><input type="radio" name="channel" value="Phone call" /><span>Phone call</span></label>
+                <label class="chip"><input type="radio" name="channel" value="Email" /><span>Email</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="f-note">Anything else <span class="opt">(optional)</span></label>
+              <textarea id="f-note" name="note" rows="3" placeholder="Areas you like, timing, or a residence you saw in the Finder"></textarea>
+            </div>
+            <label class="consent">
+              <input type="checkbox" name="consent" value="yes" required />
+              <span>I agree that Luxarea Homes may contact me about this enquiry. We never share your details.</span>
+            </label>
+            <input type="hidden" name="page" />
+            <input type="hidden" name="utm" />
+            <input type="hidden" name="referrer" />
+            <p class="form-error" id="form-error" role="alert"></p>
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost prev-step">Back</button>
+              <button type="submit" class="btn btn-gold btn-lg">Send to an advisor</button>
+            </div>
+            <p class="fine">Who replies: a senior advisor, personally. Where: the channel you choose above. When: usually the same working day.</p>
+          </fieldset>
+
+          <div class="form-done" id="form-done" hidden tabindex="-1">
+            <h3>Thank you. Your enquiry is with us.</h3>
+            <p>A senior advisor will reply on <span id="done-channel">WhatsApp</span>, usually the same working day. If WhatsApp opened, press send there to reach us straight away.</p>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <a class="wordmark" href="/" aria-label="Luxarea Homes, home">
+          <svg viewBox="0 0 564 517" aria-hidden="true" focusable="false">
+            <path fill="#c49a6c" d="M0 220 281 0 564 220v37L281 37 0 257z" />
+            <rect fill="#c49a6c" x="420" y="40" width="29" height="95" />
+            <path fill="#8f7c5f" d="M0 350 281 130 564 350v37L281 167 0 387z" />
+            <path fill="#5d6253" d="M0 480 281 260 564 480v37L281 297 0 517z" />
+          </svg>
+          <span>LUXAREA</span>
+        </a>
+        <p>Luxury homes, land and Dubai property, advised from Mumbai for 25 years.</p>
+      </div>
+      <address class="footer-col">
+        <strong>Office</strong>
+        Parinee Crescenzo, 1B, G Block<br />Bandra Kurla Complex, Mumbai 400051<br />
+        <a href="%BRAND.phoneLink%">%BRAND.phoneDisplay%</a>
+        <a href="mailto:%BRAND.email%">%BRAND.email%</a>
+      </address>
+      <nav class="footer-col" aria-label="Footer">
+        <strong>Explore</strong>
+        <a href="/residences.html">Residence Finder</a>
+        <a href="#homes">Mumbai Homes</a>
+        <a href="#land">Land</a>
+        <a href="#dubai">Dubai</a>
+        <a href="#faq">Questions</a>
+      </nav>
+      <div class="footer-legal">
+        <p>MahaRERA agent registration: %BRAND.reraAgent% · <a href="https://maharera.maharashtra.gov.in" rel="noopener" target="_blank">maharera.maharashtra.gov.in</a></p>
+        <!-- TODO(Luxarea): add Privacy and Terms pages and link them here (needed under the DPDP Act before collecting leads). -->
+        <p>© Luxarea Homes Pvt Ltd</p>
+      </div>
+    </footer>
+
+    <nav class="mobile-bar" aria-label="Quick contact">
+      <a href="%BRAND.whatsappLink%" rel="noopener" target="_blank">WhatsApp us</a>
+      <a href="#contact" data-channel="Phone call">Request a call</a>
+    </nav>
+
+    <script type="module" src="/src/home/main.ts"></script>
   </body>
 </html>

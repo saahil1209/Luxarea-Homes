@@ -1,10 +1,39 @@
 # Luxarea website project: handoff
 
-Everything a new Claude session (or developer) needs to pick this up. Written 5 Nov 2026.
+Everything a new Claude session (or developer) needs to pick this up. Written 5 Nov 2026; updated the same day after the home page was built (see section 0).
 
 ---
 
-## 1. Starter prompt for the new account
+## 0. Status update (second session, 5 Nov 2026)
+
+**Done since the first handoff:**
+- **Finder tested** in a browser (desktop, laptop, phone) and fixed:
+  - Deep links to a floor (`#/p/sea-ledger/f/24`) now frame the floor plan in the free space beside the panel. Before, the panel size was measured before the 3D scene existed, so it was ignored.
+  - The floor plan fills the view and its labels no longer overlap. Villas get extra margin.
+  - Overlapping map price pins shrink to dots; hover or tap a dot for its price (pricier homes keep the full pin).
+  - The phone header now shows "Speak to an advisor". The logo wordmark is no longer underlined.
+  - Room labels no longer draw on top of the floor panel on phones.
+  - Sold floors no longer show "SOLD" twice.
+  - The Finder menu matches the home page.
+- **Home page built** (`index.html`, `src/home/main.ts`, `src/home/home.css`), with all 14 sections in 5a. Static HTML, no React. Works without JavaScript (one plain form, all tabs visible).
+  - The 3D tower loads when the browser is idle on desktop, and on tap on phones or with Save-Data. It pauses when off screen.
+  - Clicking a floor opens a card that links to that floor in the Finder, or prefills the contact form with that residence.
+- **Brand tokens in HTML**: write `%BRAND.phoneDisplay%`, `%BRAND.reraAgent%` etc. in any HTML page, and the values come from `src/config.ts` at build time.
+- **Lead destination**: `LEAD_ENDPOINT` in `src/config.ts`. If it's empty, the form opens WhatsApp prefilled. If it's set, the form POSTs JSON there.
+- **SEO**: title, description, canonical, Open Graph and Twitter tags, JSON-LD (`RealEstateAgent`, `WebSite`, `FAQPage`), plus `public/robots.txt`, `public/sitemap.xml` and `public/llms.txt`.
+- **`public/og-image.jpg`** is a stand-in (a render of the hero). Replace it with a real property photo.
+- **Size**: the home page loads about 12 KB HTML, 6 KB CSS and 7 KB JS (gzipped) before the tower. Three.js (~129 KB gzipped) loads after.
+- The project is now a git repository.
+
+**Tested:** hero hover and click, floor card links, form validation and WhatsApp handoff, prefill from service buttons and floor cards, the phone tap-to-3D flow, and the no-JavaScript fallback. All passed with no console errors. The tests ran in a software-rendered headless browser, so check animation smoothness on a real phone.
+
+**Still open:**
+- All the placeholders in section 7. Search the code for `TODO(Luxarea)`.
+- **Privacy and Terms pages**. These are needed before collecting leads (DPDP Act). Footer links were removed until the pages exist.
+- Section 5d (production).
+- Luxarea's official SVG logos. The two logo images were not re-attached in the second session, so the redrawn mark is still in use.
+
+ for the new account
 
 Unzip this package into a folder, open that folder in Claude Code, attach the **two Luxarea logo images** (see section 6), then paste:
 
@@ -67,7 +96,7 @@ npm run build      # type-check + production build into dist/
 
 ---
 
-## 5. What's left (in order)
+## 5. What was left at the first handoff (5a–5c now done; see section 0)
 
 ### 5a. Home page (`index.html` + `src/home/main.ts` + `src/home/home.css`)
 **Current state:** `index.html` is still the *old* entry and loads the React app. Replace it with a **static, content-rich HTML page** (no React) so search engines and AI crawlers read everything. Enhance it with small vanilla TypeScript. `vite.config.ts` already builds both `index.html` and `residences.html`.

@@ -304,7 +304,7 @@ export class TowerScene {
     const [W, D] = this.property.footprint
     const aspect = this.freeAspect()
     // Fit the plate (plus a margin for labels) into the free area, so the plan reads at a glance.
-    const half = Math.max(W, D) * 0.74
+    const half = Math.max(W, D) * (this.property.form === 'villa' ? 1.15 : 0.74)
     const vfov = THREE.MathUtils.degToRad(this.camera.fov)
     const t = Math.tan(vfov / 2)
     const dist = Math.max(half / (t * this.freeHeightRatio()), half / (t * aspect), 6.5)
@@ -373,6 +373,18 @@ export class TowerScene {
     if (x || y) this.camera.setViewOffset(w, h, x, y, w, h)
     else this.camera.clearViewOffset()
     this.camera.updateProjectionMatrix()
+  }
+
+  /** Stop drawing while the scene is off screen (the home-page hero). */
+  setPaused(paused: boolean) {
+    if (this.disposed || paused === (this.raf === 0)) return
+    if (paused) {
+      cancelAnimationFrame(this.raf)
+      this.raf = 0
+    } else {
+      this.clock.getDelta()
+      this.loop()
+    }
   }
 
   /** Hover from outside the canvas (the floor strip). */

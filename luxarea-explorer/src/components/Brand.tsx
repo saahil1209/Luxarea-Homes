@@ -27,8 +27,10 @@ export function SiteNav() {
     <nav className="topnav" aria-label="Main">
       <a href="/">Home</a>
       <a href="/residences.html" aria-current="page">Residence Finder</a>
-      <a href="/#land">Mumbai Land</a>
+      <a href="/#homes">Mumbai Homes</a>
+      <a href="/#land">Land</a>
       <a href="/#dubai">Dubai</a>
+      <a href="/#about">About</a>
       <a className="topnav-cta" href="/#contact">
         Speak to an advisor
       </a>

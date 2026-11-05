@@ -1,0 +1,5 @@
+# Luxarea Homes
+User-agent: *
+Allow: /
+
+Sitemap: https://www.luxarea.in/sitemap.xml
