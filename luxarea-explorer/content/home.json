@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-05T00:00:00.000Z",
+  "updatedBy": "initial import",
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero",
+      "visible": true,
+      "eyebrow": "Luxarea Homes · Bandra Kurla Complex, Mumbai",
+      "title": "Mumbai's finest homes, found quietly.",
+      "lede": "For 25 years we have found, verified and negotiated homes for Mumbai's families. Homes in the city, land in and around Mumbai and Alibaug, and property in Dubai.",
+      "primaryCta": "Speak to an advisor",
+      "secondaryCta": "Open the Residence Finder",
+      "replyNote": "A senior advisor replies personally on WhatsApp or by phone, usually the same working day."
+    },
+    {
+      "id": "proof",
+      "type": "proof",
+      "visible": true,
+      "items": [
+        {
+          "title": "25 years",
+          "text": "in Mumbai real estate"
+        },
+        {
+          "title": "BKC",
+          "text": "office at Parinee Crescenzo"
+        },
+        {
+          "title": "Mumbai · Alibaug · Dubai",
+          "text": "homes, land and overseas"
+        },
+        {
+          "title": "Off-market register",
+          "text": "homes shared by invitation"
+        }
+      ],
+      "places": [
+        "Worli Sea Face",
+        "Malabar Hill",
+        "Altamount Road",
+        "Bandra West",
+        "Juhu",
+        "Powai",
+        "Lower Parel",
+        "Prabhadevi",
+        "Cuffe Parade",
+        "Breach Candy",
+        "Kihim",
+        "Mandwa",
+        "Alibaug",
+        "Downtown Dubai",
+        "Palm Jumeirah",
+        "Dubai Hills"
+      ]
+    },
+    {
+      "id": "services",
+      "type": "services",
+      "visible": true,
+      "eyebrow": "How we help",
+      "title": "Three ways we work for you",
+      "lede": "We represent the buyer. Every option is checked before you see it, and you are told plainly when something isn't right.",
+      "items": [
+        {
+          "anchor": "homes",
+          "intent": "home",
+          "title": "Luxury homes in Mumbai",
+          "text": "Sea-facing apartments, penthouses and bungalows in South Mumbai, Worli, Bandra and Juhu, new and resale, listed and off-market.",
+          "bullets": [
+            "A private shortlist matched to your brief",
+            "Viewings in person or by video walkthrough",
+            "Title, approvals and carpet area verified",
+            "Negotiation through to registration"
+          ],
+          "forWho": "For families upgrading, first homes in the city, and NRIs buying from abroad.",
+          "cta": "Discuss a home in Mumbai"
+        },
+        {
+          "anchor": "land",
+          "intent": "land",
+          "title": "Land in Mumbai and Alibaug",
+          "text": "Plots for a weekend home, a family bungalow or development, in and around Mumbai and across Alibaug, Kihim and Mandwa.",
+          "bullets": [
+            "NA status, 7/12 extract and title search",
+            "DP remarks, CRZ and road access checked",
+            "FSI and TDR potential explained",
+            "Architect and approvals introductions"
+          ],
+          "forWho": "For families planning a second home, and buyers holding land for the long term.",
+          "cta": "Discuss land"
+        },
+        {
+          "anchor": "dubai",
+          "intent": "dubai",
+          "title": "Property in Dubai",
+          "text": "Apartments and villas in Downtown, Palm Jumeirah, Dubai Hills and Dubai Marina, ready and off-plan, advised from Mumbai.",
+          "bullets": [
+            "Developer track record and escrow checked",
+            "Golden Visa eligibility worked out up front",
+            "LRS remittance planned across the family",
+            "DLD registration and handover managed"
+          ],
+          "forWho": "For resident Indians investing abroad and families relocating to the UAE.",
+          "cta": "Discuss Dubai"
+        }
+      ],
+      "alsoNote": "We also advise on **leasing** premium homes and offices, **manage** properties for owners, connect buyers with banks for **home loans**, and provide **valuations** for sellers."
+    },
+    {
+      "id": "finder",
+      "type": "finder",
+      "visible": true,
+      "eyebrow": "Residence Finder",
+      "title": "Walk the register, floor by floor.",
+      "lede": "Search the homes on Luxarea's register on a map, open any tower in 3D, and see each floor's plan, carpet area and availability. Every floor has its own link, so you can send it to the family.",
+      "areas": [
+        "Worli",
+        "Malabar Hill",
+        "Bandra",
+        "Juhu",
+        "Lower Parel",
+        "Alibaug"
+      ],
+      "cta": "Open the Residence Finder",
+      "note": "The Finder currently shows sample listings while the live register is being added."
+    },
+    {
+      "id": "process",
+      "type": "process",
+      "visible": true,
+      "eyebrow": "What happens next",
+      "title": "Five steps, from first call to registration",
+      "lede": "The first conversation commits you to nothing. Most families take three to twelve months to decide, and we work at your pace.",
+      "steps": [
+        {
+          "time": "Day 1 · 20 minutes",
+          "title": "A short brief",
+          "text": "A call or meeting at our BKC office about what you need, who will decide, and your budget and timing."
+        },
+        {
+          "time": "Within 48 hours",
+          "title": "A private shortlist",
+          "text": "Homes that fit, including off-market ones, with floor plans, carpet areas and honest notes on each."
+        },
+        {
+          "time": "Weeks 1–4",
+          "title": "Viewings",
+          "text": "Accompanied visits at times that suit the family, or live video walkthroughs if you are abroad."
+        },
+        {
+          "time": "Before any token",
+          "title": "Due diligence",
+          "text": "Title, approvals, society and dues checked with your lawyer, so nothing surfaces after you pay."
+        },
+        {
+          "time": "To the keys",
+          "title": "Negotiation and registration",
+          "text": "We negotiate price and terms, then manage the agreement, stamp duty, registration and handover."
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "type": "verify",
+      "visible": true,
+      "eyebrow": "Due diligence",
+      "title": "What we verify before you commit",
+      "lede": "At this price the risk is rarely the price. It is title, approvals and paperwork. Here is what we check, in plain terms.",
+      "tabs": [
+        {
+          "label": "Homes",
+          "title": "Homes in Mumbai",
+          "checks": [
+            {
+              "term": "Title chain",
+              "text": "Ownership traced back through every sale, with your lawyer's title report."
+            },
+            {
+              "term": "MahaRERA registration",
+              "text": "Project number, approved plans and declared possession date checked on MahaRERA."
+            },
+            {
+              "term": "OC and CC",
+              "text": "Occupation and commencement certificates in place for the building and the floor."
+            },
+            {
+              "term": "Society NOC and dues",
+              "text": "Society consent for transfer, and no maintenance or sinking-fund arrears."
+            },
+            {
+              "term": "Encumbrance",
+              "text": "No mortgage, lien or pending litigation on the flat."
+            },
+            {
+              "term": "Measured carpet area",
+              "text": "The RERA carpet area compared with what is actually built."
+            }
+          ]
+        },
+        {
+          "label": "Land",
+          "title": "Land in Mumbai and Alibaug",
+          "checks": [
+            {
+              "term": "7/12 extract",
+              "text": "The land record showing owner, area and land use, matched to the seller."
+            },
+            {
+              "term": "Title search",
+              "text": "A 30-year search for prior sales, mortgages and claims."
+            },
+            {
+              "term": "NA order",
+              "text": "Non-agricultural permission in place, since agricultural land is generally limited to agriculturists."
+            },
+            {
+              "term": "DP remarks",
+              "text": "The Development Plan zoning, reservations and proposed roads affecting the plot."
+            },
+            {
+              "term": "CRZ",
+              "text": "Whether coastal regulation limits what you can build, which matters in Alibaug."
+            },
+            {
+              "term": "FSI and TDR",
+              "text": "How much you can build today, and what more is possible."
+            }
+          ]
+        },
+        {
+          "label": "Dubai",
+          "title": "Property in Dubai",
+          "checks": [
+            {
+              "term": "DLD title deed",
+              "text": "Ownership confirmed with the Dubai Land Department, or the Oqood registration for off-plan."
+            },
+            {
+              "term": "Escrow account",
+              "text": "Off-plan payments go into the project's registered escrow account, not to the developer directly."
+            },
+            {
+              "term": "Developer track record",
+              "text": "Past projects, delivery delays and handover quality."
+            },
+            {
+              "term": "Golden Visa eligibility",
+              "text": "Whether the purchase qualifies under the rules at the time you apply."
+            },
+            {
+              "term": "LRS limits",
+              "text": "Remittance planned within each family member's USD 250,000 annual limit, with TCS accounted for."
+            },
+            {
+              "term": "Service charges",
+              "text": "Annual community charges and likely rental yield, so the numbers are real."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "discretion",
+      "type": "discretion",
+      "visible": true,
+      "eyebrow": "Our discretion pledge",
+      "title": "Your search stays yours.",
+      "items": [
+        {
+          "title": "Your number stays with us",
+          "text": "We never share your name or number with developers or other brokers."
+        },
+        {
+          "title": "Off-market by invitation",
+          "text": "Private homes are shown only to invited buyers, under NDA if you prefer."
+        },
+        {
+          "title": "One senior advisor",
+          "text": "The same person handles your search from the first call to the keys."
+        },
+        {
+          "title": "We tell you when not to buy",
+          "text": "If the title, the building or the price is wrong, you will hear it from us first."
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "type": "about",
+      "visible": true,
+      "eyebrow": "About Luxarea",
+      "title": "A Mumbai advisory, for 25 years",
+      "lede": "Viivek Bathija founded the advisory in 1999. Today Luxarea Homes Pvt Ltd advises families and investors on luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, from our office in Bandra Kurla Complex.",
+      "people": [
+        {
+          "name": "Viivek Bathija",
+          "role": "Founder",
+          "bio": "A Master's in Finance and early years at HSBC and Fuji Bank, then his own real-estate advisory from 1999. For over two decades he has guided families and investors through Mumbai's most exclusive neighbourhoods.",
+          "photo": ""
+        },
+        {
+          "name": "Shweta Jayakar",
+          "role": "Head of Buyer Representation",
+          "bio": "Fifteen years running Jet Airways' First Class experience taught her personal service at the highest level. Since 2019 she has brought that care to families buying their homes.",
+          "photo": ""
+        },
+        {
+          "name": "Saurabh Dwivedi",
+          "role": "Strategic Buyer Representation",
+          "bio": "Born and raised in Mumbai, with a background in branding and marketing. He advises buyers, sellers and investors on premium homes, commercial spaces and investments.",
+          "photo": ""
+        }
+      ],
+      "showOffice": true
+    },
+    {
+      "id": "voices",
+      "type": "voices",
+      "visible": true,
+      "eyebrow": "Client voices",
+      "title": "What families tell us",
+      "quotes": [
+        {
+          "text": "They told us not to buy the first flat we loved, and showed us why. The one we bought instead had a clean title and a better view.",
+          "by": "A family in Worli",
+          "sample": true
+        },
+        {
+          "text": "We were in Singapore the whole time. Every viewing was on video, and the paperwork was ready when we flew in to register.",
+          "by": "NRI buyers, Bandra West",
+          "sample": true
+        },
+        {
+          "text": "The Alibaug plot had a CRZ issue nobody had mentioned. Luxarea found it before we paid the token.",
+          "by": "A family buying land in Kihim",
+          "sample": true
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "type": "faq",
+      "visible": true,
+      "eyebrow": "Questions",
+      "title": "What buyers ask us first",
+      "items": [
+        {
+          "q": "Can NRIs and OCI card holders buy property in India?",
+          "a": "Yes. NRIs and OCI card holders can buy residential and commercial property in India without RBI approval. They cannot buy agricultural land, plantation property or farmhouses. Payment must come from abroad through normal banking channels or from an NRE, NRO or FCNR account."
+        },
+        {
+          "q": "How much can a resident Indian send abroad to buy property in Dubai?",
+          "a": "Under the RBI's Liberalised Remittance Scheme, each resident individual can remit up to USD 250,000 per financial year, so family members can pool their limits. Tax collected at source (TCS) applies to remittances above ₹10 lakh in a year and can be claimed against your income tax."
+        },
+        {
+          "q": "Does buying property in Dubai qualify for the UAE Golden Visa?",
+          "a": "Property worth AED 2 million or more can qualify an investor for the 10-year UAE Golden Visa. The rules that apply are those in force when you apply, so we check eligibility for your specific purchase before you commit."
+        },
+        {
+          "q": "Can I buy agricultural land near Mumbai or in Alibaug?",
+          "a": "In Maharashtra, agricultural land can generally be bought only by agriculturists, so most buyers purchase non-agricultural (NA) plots. Before any purchase we verify the NA order, the 7/12 extract, the title chain and whether the plot falls under coastal regulation (CRZ)."
+        },
+        {
+          "q": "How does Luxarea keep my search private?",
+          "a": "Your name and number are never shared with developers or other brokers. Off-market homes are shown by invitation, under NDA if you prefer, and one senior advisor handles your search from start to finish."
+        },
+        {
+          "q": "Do you help with home loans?",
+          "a": "Yes. We connect buyers with reputable banks and financial institutions, and coordinate the loan with the purchase timeline."
+        },
+        {
+          "q": "Can you help me sell or lease my property?",
+          "a": "Yes. Share the location, size and key features, and we will value it, advise on pricing, and present it discreetly to qualified buyers or tenants. Most residential leases in Mumbai run for 11 months, renewable by agreement."
+        },
+        {
+          "q": "How is Luxarea paid?",
+          "a": "Our fee is explained in writing at the first meeting, before you see a single home."
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "visible": true,
+      "eyebrow": "Speak to an advisor",
+      "title": "Tell us what you're looking for.",
+      "lede": "Two short steps. A senior advisor replies personally, on the channel you choose. Nothing is shared outside Luxarea.",
+      "replyPromise": "Who replies: a senior advisor, personally. Where: the channel you choose above. When: usually the same working day."
+    }
+  ]
+}

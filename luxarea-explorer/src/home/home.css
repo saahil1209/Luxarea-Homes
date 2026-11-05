@@ -458,3 +458,4 @@ html:not(.js) .next-step, html:not(.js) .prev-step { display: none; }
 .legal a { color: var(--teal); }
 .legal-footer { display: block; padding-bottom: 40px; }
 .legal-footer .footer-legal { border-top: 0; padding-top: 0; }
+.portrait { background-size: cover; background-position: center; }

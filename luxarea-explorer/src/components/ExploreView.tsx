@@ -4,7 +4,11 @@ import { BRAND } from '../config'
 import { SampleBadge, SiteNav, Wordmark } from './Brand'
 import MapView from './MapView'
 
-const LOCALITIES = ['All', 'Worli', 'Malabar Hill', 'Bandra', 'Juhu', 'Lower Parel', 'Alibaug']
+/** Area chips come from the listings themselves ("Carter Road, Bandra West" → "Bandra West"). */
+function localities(): string[] {
+  const names = PROPERTIES.map((p) => (p.locality.split(',').pop() ?? p.locality).trim().replace(/ Sea Face$/, ''))
+  return ['All', ...new Set(names)]
+}
 const BUDGETS = [
   { id: 'any', label: 'Any budget', test: () => true },
   { id: 'u15', label: 'Under ₹15 Cr', test: (cr: number | null) => cr != null && cr < 15 },
@@ -56,7 +60,7 @@ export default function ExploreView({ unlocked, unlock, go }: Props) {
 
           <div className="filters" role="group" aria-label="Filter residences">
             <div className="chips" role="radiogroup" aria-label="Locality">
-              {LOCALITIES.map((l) => (
+              {localities().map((l) => (
                 <button key={l} type="button" role="radio" aria-checked={locality === l} className="chip" onClick={() => setLocality(l)}>
                   {l}
                 </button>

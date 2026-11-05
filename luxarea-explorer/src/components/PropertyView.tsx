@@ -219,6 +219,17 @@ export default function PropertyView({ property: p, floor, go }: Props) {
           <ul className="highlights">
             {selected.residence.highlights.map((h) => <li key={h}>{h}</li>)}
           </ul>
+          {p.photos?.length ? (
+            <div className="gallery" aria-label="Photos">
+              {p.photos.slice(0, 3).map((ph, i) => (
+                <figure key={ph.url} className="ph ph-photo" style={{ backgroundImage: `url("${ph.url}")` }}>
+                  {ph.caption && <figcaption>{ph.caption}</figcaption>}
+                  {i === 2 && p.photos!.length > 3 && <span className="ph-more">+{p.photos!.length - 3}</span>}
+                </figure>
+              ))}
+            </div>
+          ) : (
+          <>
           <div className="gallery" aria-label="Photos">
             {['Living room at dusk', 'Master suite', isVilla ? 'Pool terrace' : 'View from the deck'].map((t, i) => (
               <figure key={t} className={`ph ph-${i}`}>
@@ -227,6 +238,8 @@ export default function PropertyView({ property: p, floor, go }: Props) {
             ))}
           </div>
           <p className="ph-note">Photos and walkthrough video for this residence go here.</p>
+          </>
+          )}
           <div className="fp-actions">
             {selected.status !== 'sold' ? (
               <button type="button" className="btn-gold" onClick={() => setEnquire(true)}>Request a private viewing</button>

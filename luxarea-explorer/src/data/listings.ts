@@ -39,6 +39,12 @@ export interface Property {
   confidential?: boolean
   amenities: string[]
   residences: ResidenceType[]
+  /** Fictional demo data: availability is generated, not real. */
+  sample?: boolean
+  /** Per-floor status and price set by the team. Keys are floor numbers. */
+  floorOverrides?: Record<string, { status?: Status; priceCr?: number | null }>
+  /** Photo URLs (uploaded in /admin). */
+  photos?: { url: string; caption: string }[]
 }
 
 export interface FloorInfo {
@@ -48,7 +54,7 @@ export interface FloorInfo {
   priceCr: number | null
 }
 
-export const PROPERTIES: Property[] = [
+export const SAMPLE_PROPERTIES: Property[] = [
   {
     id: 'sea-ledger',
     name: 'The Sea Ledger',
@@ -180,6 +186,16 @@ export const PROPERTIES: Property[] = [
   },
 ]
 
+for (const p of SAMPLE_PROPERTIES) p.sample = true
+
+/** What the Finder shows. Starts as the samples; replaced by setProperties() with data from the store. */
+export const PROPERTIES: Property[] = [...SAMPLE_PROPERTIES]
+
+export function setProperties(list: Property[]) {
+  PROPERTIES.splice(0, PROPERTIES.length, ...list)
+  floorCache = new WeakMap()
+}
+
 // Deterministic pseudo-random so the sample availability doesn't change between reloads.
 function seeded(seed: string) {
   let h = 2166136261
@@ -193,25 +209,29 @@ function seeded(seed: string) {
   }
 }
 
-const floorCache = new Map<string, FloorInfo[]>()
+// Keyed by the object, so an edited copy of a listing is recalculated.
+let floorCache = new WeakMap<Property, FloorInfo[]>()
 
 /** Every sellable floor of a property, lowest first. */
 export function floorsOf(p: Property): FloorInfo[] {
-  const cached = floorCache.get(p.id)
+  const cached = floorCache.get(p)
   if (cached) return cached
   const rand = seeded(p.id)
   const out: FloorInfo[] = []
   for (const r of p.residences) {
     for (let f = r.floors[0]; f <= r.floors[1]; f++) {
       const roll = rand()
-      const status: Status = p.form === 'villa' ? 'available' : roll < 0.34 ? 'sold' : roll < 0.44 ? 'reserved' : 'available'
+      const generated: Status = !p.sample || p.form === 'villa' ? 'available' : roll < 0.34 ? 'sold' : roll < 0.44 ? 'reserved' : 'available'
       // Floor-rise premium of about 0.8% per floor above the band's first floor.
-      const priceCr = r.basePriceCr == null ? null : p.form === 'villa' ? r.basePriceCr : Math.round(r.basePriceCr * (1 + 0.008 * (f - r.floors[0])) * 10) / 10
+      const generatedPrice = r.basePriceCr == null ? null : p.form === 'villa' ? r.basePriceCr : Math.round(r.basePriceCr * (1 + 0.008 * (f - r.floors[0])) * 10) / 10
+      const o = p.floorOverrides?.[String(f)]
+      const status = o?.status ?? generated
+      const priceCr = o && 'priceCr' in o && o.priceCr !== undefined ? o.priceCr : generatedPrice
       out.push({ floor: f, residence: r, status, priceCr })
     }
   }
   out.sort((a, b) => a.floor - b.floor)
-  floorCache.set(p.id, out)
+  floorCache.set(p, out)
   return out
 }
 

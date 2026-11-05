@@ -4,6 +4,7 @@
 import { PROPERTIES, floorsOf, formatCr, fromPrice } from '../data/listings'
 import { BRAND, LEAD_ENDPOINT } from '../config'
 
+function init() {
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector<T>(sel)
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => [...root.querySelectorAll<T>(sel)]
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -378,3 +379,22 @@ form.addEventListener('submit', async (e) => {
   done.hidden = false
   done.focus()
 })
+}
+
+// Demo mode only: if the team published content from /admin in this browser,
+// show it in place of the built-in page. In Supabase mode the build already
+// contains the published content, so this never runs.
+let demoFlag: string | null = null
+try {
+  demoFlag = import.meta.env.VITE_DATA_MODE !== 'supabase' ? localStorage.getItem('luxarea-demo-content') : null
+} catch {
+  /* storage blocked */
+}
+if (demoFlag) {
+  import('./demoContent')
+    .then((m) => m.applyDemoContent())
+    .catch(() => {})
+    .finally(init)
+} else {
+  init()
+}
