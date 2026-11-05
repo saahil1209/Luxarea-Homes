@@ -141,6 +141,7 @@ export class TowerScene {
     el.addEventListener('pointerleave', this.onPointerLeave)
     el.addEventListener('pointerenter', () => (this.pointerInside = true))
 
+    if (import.meta.env.DEV) (window as unknown as { __tower: TowerScene }).__tower = this
     this.resizeObs = new ResizeObserver(() => this.resize())
     this.resizeObs.observe(container)
     this.resize()
@@ -302,9 +303,11 @@ export class TowerScene {
   private floorGoal(fm: FloorMesh) {
     const [W, D] = this.property.footprint
     const aspect = this.freeAspect()
-    const span = Math.max(W, D) * 1.35 / this.freeHeightRatio()
+    // Fit the plate (plus a margin for labels) into the free area, so the plan reads at a glance.
+    const half = Math.max(W, D) * 0.74
     const vfov = THREE.MathUtils.degToRad(this.camera.fov)
-    const dist = Math.max(span / Math.tan(vfov / 2), (span * 1.1) / (Math.tan(vfov / 2) * aspect)) * 0.85
+    const t = Math.tan(vfov / 2)
+    const dist = Math.max(half / (t * this.freeHeightRatio()), half / (t * aspect), 6.5)
     const target = new THREE.Vector3(0, fm.baseY + this.floorH * 0.3, 0)
     const dir = new THREE.Vector3(0.45, 0.95, 0.75).normalize()
     return { pos: target.clone().add(dir.multiplyScalar(dist)), target }

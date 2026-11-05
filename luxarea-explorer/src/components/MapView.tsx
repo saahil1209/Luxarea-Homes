@@ -32,6 +32,7 @@ export default function MapView({ properties, unlocked, activeId, onHover, onOpe
     })
     m.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right')
     m.scrollZoom.setWheelZoomRate(1 / 600)
+    m.on('moveend', () => declutter(m, markers.current))
     map.current = m
     const ro = new ResizeObserver(() => m.resize())
     ro.observe(box.current)
@@ -63,6 +64,7 @@ export default function MapView({ properties, unlocked, activeId, onHover, onOpe
       const el = document.createElement('button')
       el.type = 'button'
       el.dataset.locked = String(locked)
+      el.dataset.price = String(fromPrice(p) ?? 0)
       el.className = locked ? 'pin pin-private' : 'pin'
       el.setAttribute('aria-label', locked ? `Private residence in ${p.locality}` : `${p.name}, ${p.locality}`)
       el.innerHTML = locked
@@ -88,6 +90,7 @@ export default function MapView({ properties, unlocked, activeId, onHover, onOpe
       if (m.loaded()) fit(true)
       else m.once('load', () => fit(false))
     }
+    declutter(m, markers.current)
   }, [properties, unlocked])
 
   useEffect(() => {
@@ -95,4 +98,21 @@ export default function MapView({ properties, unlocked, activeId, onHover, onOpe
   }, [activeId])
 
   return <div ref={box} className="map" role="region" aria-label="Map of residences" />
+}
+
+/**
+ * Price pins that would overlap shrink to dots (hover or tap a dot to see its price).
+ * Pricier homes keep the full pin, since they are the ones people come to see.
+ */
+function declutter(m: maplibregl.Map, markers: Map<string, { marker: maplibregl.Marker; el: HTMLElement }>) {
+  const placed: { x: number; y: number }[] = []
+  const pins = [...markers.values()]
+    .filter(({ el }) => el.dataset.locked !== 'true')
+    .map(({ marker, el }) => ({ el, pt: m.project(marker.getLngLat()), price: Number(el.dataset.price || 0) }))
+    .sort((a, b) => b.price - a.price)
+  for (const { el, pt } of pins) {
+    const clash = placed.some((q) => Math.abs(q.x - pt.x) < 92 && Math.abs(q.y - pt.y) < 40)
+    el.classList.toggle('pin-compact', clash)
+    if (!clash) placed.push({ x: pt.x, y: pt.y })
+  }
 }

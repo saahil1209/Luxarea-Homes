@@ -29,7 +29,9 @@ export function SiteNav() {
       <a href="/residences.html" aria-current="page">Residence Finder</a>
       <a href="/#land">Mumbai Land</a>
       <a href="/#dubai">Dubai</a>
-      <a className="topnav-cta" href="/#contact">Speak to an advisor</a>
+      <a className="topnav-cta" href="/#contact">
+        Speak to an advisor
+      </a>
     </nav>
   )
 }

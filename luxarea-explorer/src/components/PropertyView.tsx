@@ -64,8 +64,18 @@ export default function PropertyView({ property: p, floor, go }: Props) {
       }
     }
     measure()
+    // The scene is created in a later effect, so measure again once it exists,
+    // and whenever a panel changes size (fonts loading, content changing).
+    const raf = requestAnimationFrame(measure)
+    const ro = new ResizeObserver(measure)
+    if (introRef.current) ro.observe(introRef.current)
+    if (panelRef.current) ro.observe(panelRef.current)
     window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
+    return () => {
+      cancelAnimationFrame(raf)
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
   }, [selected])
 
   useEffect(() => {
@@ -199,7 +209,7 @@ export default function PropertyView({ property: p, floor, go }: Props) {
           </div>
           <h2>{selected.residence.name}</h2>
           <p className={`status status-${selected.status}`}>{STATUS_LABEL[selected.status]}</p>
-          <p className="fp-price">{selected.status === 'sold' ? 'Sold' : formatCr(selected.priceCr)}</p>
+          {selected.status !== 'sold' && <p className="fp-price">{formatCr(selected.priceCr)}</p>}
           <dl className="specs">
             {!isVilla && <div><dt>Configuration</dt><dd>{selected.residence.bhk} BHK</dd></div>}
             <div><dt>Carpet area (RERA)</dt><dd>{selected.residence.carpetSqft.toLocaleString('en-IN')} sq ft</dd></div>

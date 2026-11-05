@@ -56,7 +56,7 @@ p { margin: 0; }
 }
 .topbar-light { background: var(--green); color: var(--cream); }
 .wordmark {
-  background: none; border: 0; padding: 0; color: inherit;
+  background: none; border: 0; padding: 0; color: inherit; text-decoration: none;
   display: flex; align-items: center; gap: 12px; white-space: nowrap;
 }
 .wordmark svg { width: 30px; height: auto; flex: none; }
@@ -159,6 +159,9 @@ p { margin: 0; }
 .pin:hover .pin-price, .pin.is-active .pin-price { background: var(--gold); color: var(--ink); }
 .pin:hover .pin-name, .pin.is-active .pin-name { opacity: 1; transform: none; }
 .pin:hover, .pin.is-active { z-index: 5; }
+.pin-compact .pin-price { font-size: 0; width: 14px; height: 14px; padding: 0; border: 2px solid var(--cream); }
+.pin-compact .pin-price::after { display: none; }
+.pin-compact:hover .pin-price, .pin-compact.is-active .pin-price { font-size: 13px; width: auto; height: auto; padding: 6px 11px; border: 0; }
 .pin-private { width: 120px; height: 120px; justify-content: center; cursor: default; }
 .pin-ring {
   position: absolute; inset: 0; border-radius: 50%; border: 1.5px dashed var(--ink);
@@ -180,7 +183,7 @@ p { margin: 0; }
 .stage { position: absolute; inset: 0; }
 .stage canvas { display: block; cursor: grab; touch-action: none; }
 .stage canvas:active { cursor: grabbing; }
-.plan-labels { position: absolute; inset: 0; pointer-events: none; }
+.plan-labels { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .room-label {
   display: flex; flex-direction: column; align-items: center; gap: 1px;
   background: rgba(14, 15, 13, 0.82); color: var(--cream); padding: 4px 8px; border-radius: 6px;
@@ -331,7 +334,13 @@ p { margin: 0; }
 
 /* ---------- small screens ---------- */
 @media (max-width: 860px) {
-  .topnav { display: none; }
+  .topnav { gap: 0; }
+  .topnav a:not(.topnav-cta) { display: none; }
+  .topnav .topnav-cta { padding: 8px 14px; font-size: 12px; }
+  .topbar-light { gap: 12px; }
+  .wordmark span { font-size: 16px; letter-spacing: 0.3em; }
+  .wordmark svg { width: 26px; }
+  .topbar-light .sample-badge { font-size: 9px; padding: 2px 7px; }
   .explore { height: auto; min-height: 100%; }
   .explore-body { display: flex; flex-direction: column; }
   .map { order: -1; height: 42vh; min-height: 280px; position: sticky; top: 0; z-index: 1; }
@@ -358,6 +367,10 @@ p { margin: 0; }
   }
   .floor-panel h2 { font-size: 28px; }
   .tower-tip { display: none; }
+}
+
+@media (max-width: 420px) {
+  .wordmark span { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
