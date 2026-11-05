@@ -8,7 +8,7 @@
       "type": "hero",
       "visible": true,
       "eyebrow": "Luxarea Homes · Bandra Kurla Complex, Mumbai",
-      "title": "Mumbai's finest homes, found quietly.",
+      "title": "Mumbai's finest homes, found *quietly*.",
       "lede": "For 25 years we have found, verified and negotiated homes for Mumbai's families. Homes in the city, land in and around Mumbai and Alibaug, and property in Dubai.",
       "primaryCta": "Speak to an advisor",
       "secondaryCta": "Open the Residence Finder",
@@ -60,7 +60,7 @@
       "type": "services",
       "visible": true,
       "eyebrow": "How we help",
-      "title": "Three ways we work for you",
+      "title": "Three ways we work *for you*",
       "lede": "We represent the buyer. Every option is checked before you see it, and you are told plainly when something isn't right.",
       "items": [
         {
@@ -113,7 +113,7 @@
       "type": "finder",
       "visible": true,
       "eyebrow": "Residence Finder",
-      "title": "Walk the register, floor by floor.",
+      "title": "Walk the register, *floor by floor*.",
       "lede": "Search the homes on Luxarea's register on a map, open any tower in 3D, and see each floor's plan, carpet area and availability. Every floor has its own link, so you can send it to the family.",
       "areas": [
         "Worli",
@@ -131,7 +131,7 @@
       "type": "process",
       "visible": true,
       "eyebrow": "What happens next",
-      "title": "Five steps, from first call to registration",
+      "title": "Five steps, from first call to *registration*",
       "lede": "The first conversation commits you to nothing. Most families take three to twelve months to decide, and we work at your pace.",
       "steps": [
         {
@@ -266,7 +266,7 @@
       "type": "discretion",
       "visible": true,
       "eyebrow": "Our discretion pledge",
-      "title": "Your search stays yours.",
+      "title": "Your search stays *yours*.",
       "items": [
         {
           "title": "Your number stays with us",
@@ -291,7 +291,7 @@
       "type": "about",
       "visible": true,
       "eyebrow": "About Luxarea",
-      "title": "A Mumbai advisory, for 25 years",
+      "title": "A Mumbai advisory, for *25 years*",
       "lede": "Viivek Bathija founded the advisory in 1999. Today Luxarea Homes Pvt Ltd advises families and investors on luxury homes in Mumbai, land in and around Mumbai and Alibaug, and property in Dubai, from our office in Bandra Kurla Complex.",
       "people": [
         {
@@ -385,7 +385,7 @@
       "type": "contact",
       "visible": true,
       "eyebrow": "Speak to an advisor",
-      "title": "Tell us what you're looking for.",
+      "title": "Tell us what you're *looking for*.",
       "lede": "Two short steps. A senior advisor replies personally, on the channel you choose. Nothing is shared outside Luxarea.",
       "replyPromise": "Who replies: a senior advisor, personally. Where: the channel you choose above. When: usually the same working day."
     }

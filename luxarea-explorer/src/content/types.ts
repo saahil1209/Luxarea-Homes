@@ -60,7 +60,7 @@ export interface SectionMeta {
 
 const head: Field[] = [
   { key: 'eyebrow', label: 'Small label above the heading', kind: 'text' },
-  { key: 'title', label: 'Heading', kind: 'text' },
+  { key: 'title', label: 'Heading', kind: 'text', hint: 'Put *asterisks* around a word or two to set them in copper italics.' },
 ]
 
 export const SECTION_META: Record<SectionType, SectionMeta> = {

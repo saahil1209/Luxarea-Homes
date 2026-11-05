@@ -5,6 +5,7 @@ import { renderMain } from '../content/render'
 import { BRAND } from '../config'
 import indexHtml from '../../index.html?raw'
 import homeCss from '../home/home.css?inline'
+import motionCss from '../home/motion.css?inline'
 import { Check, Grip, Sortable, StringList, Text, useToast } from './ui'
 
 // ---------- preview document ----------
@@ -29,7 +30,9 @@ function previewDoc(content: HomeContent) {
   let html = indexHtml
     .replace(/<script[\s\S]*?<\/script>/g, '')
     .replace('<!--HOME_JSONLD-->', '')
+    .replace(/<link rel="stylesheet" href="\/src\/home\/motion\.css" \/>/, '')
     .replace(/<link rel="stylesheet" href="\/src\/home\/home\.css" \/>/, `<style>${homeCss}
+${motionCss}
       [data-section] { cursor: pointer; }
       [data-section]:hover { outline: 2px dashed rgba(196,154,108,.8); outline-offset: -4px; }
       .lx-sel { outline: 3px solid #c49a6c !important; outline-offset: -4px; }

@@ -1,0 +1,194 @@
+/* Luxarea motion layer.
+   Principles: slow, confident deceleration (no bounce); only transform and
+   opacity animate; hover effects only on devices with a real pointer;
+   everything quietens under prefers-reduced-motion; content is visible
+   without JavaScript (html.js is set inline in <head>, and html.motion-fallback
+   un-hides everything if the script never arrives). */
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --copper-ink: #94693b; /* copper that passes contrast on cream */
+  interpolate-size: allow-keywords;
+}
+
+::selection { background: rgba(196, 154, 108, 0.35); color: inherit; }
+
+/* ---------- typography refinements ---------- */
+h1 { letter-spacing: -0.015em; }
+h2 { letter-spacing: -0.01em; }
+.split .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.split .wi { display: inline-block; }
+.accent { font-style: italic; color: var(--copper-ink); }
+.hero .accent, .finder .accent, .discretion .accent, .contact .accent { color: var(--gold-soft); }
+
+/* ---------- film grain on dark sections ---------- */
+.hero::after, .finder::before, .discretion::before, .contact::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.hero::after { z-index: 2; }
+.finder, .discretion, .contact { position: relative; isolation: isolate; }
+.finder > *, .discretion > *, .contact > * { position: relative; z-index: 1; }
+
+/* ---------- hero intro (plays at first paint, no JS needed) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero .split .wi { transform: translateY(108%); animation: word-up 1.1s var(--ease-expo) forwards; animation-delay: calc(180ms + var(--i) * 70ms); }
+  .js .hero .intro { opacity: 0; transform: translateY(16px); filter: blur(6px); animation: fade-up 1s var(--ease-expo) forwards; animation-delay: calc(520ms + var(--d) * 110ms); }
+  .js .hero .eyebrow.intro { animation-delay: 80ms; }
+  .js .hero-stage .poster { opacity: 0; transform: translate(-50%, -46%) scale(0.97); animation: poster-in 1.6s var(--ease-expo) 200ms forwards; }
+  .js .skyline svg { opacity: 0; animation: fade-in 1.8s var(--ease-out) 400ms forwards; }
+}
+@keyframes word-up { to { transform: translateY(0); } }
+@keyframes fade-up { to { opacity: 1; transform: none; filter: none; } }
+@keyframes fade-in { to { opacity: 1; } }
+@keyframes poster-in { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@media (max-width: 760px) {
+  @keyframes poster-in { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+}
+
+/* cursor glow in the hero */
+.hero-glow {
+  position: absolute; left: 0; top: 0; width: 720px; height: 720px; margin: -360px 0 0 -360px; z-index: -1; pointer-events: none;
+  background: radial-gradient(circle, rgba(214, 160, 105, 0.22), rgba(214, 160, 105, 0.06) 40%, transparent 68%);
+  opacity: 0; transition: opacity 0.8s var(--ease-out); will-change: transform;
+}
+.hero.has-pointer .hero-glow { opacity: 1; }
+
+/* scroll cue */
+.scroll-cue { position: absolute; left: 50%; bottom: 26px; z-index: 3; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--night-muted); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; transition: opacity 0.4s; }
+.scroll-cue i { width: 1px; height: 44px; background: linear-gradient(var(--gold), transparent); transform-origin: top; }
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue i { animation: cue 2.4s var(--ease-in-out) infinite; }
+}
+@keyframes cue { 0% { transform: scaleY(0); opacity: 1; } 55% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+.is-scrolled .scroll-cue { opacity: 0; }
+@media (max-width: 760px) { .scroll-cue { display: none; } }
+
+/* ---------- reveals ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease-expo), transform 1.1s var(--ease-expo); }
+  .js .reveal.is-in { opacity: 1; transform: none; }
+  .js .section-head.reveal { transform: none; opacity: 1; }
+  .js .section-head .split .wi { transform: translateY(108%); transition: transform 1s var(--ease-expo); transition-delay: calc(var(--i) * 45ms); }
+  .js .section-head.is-in .split .wi { transform: none; }
+  .js .section-head .eyebrow, .js .section-head .section-lede { opacity: 0; transform: translateY(12px); transition: opacity 0.8s var(--ease-out) 0.15s, transform 0.9s var(--ease-expo) 0.15s; }
+  .js .section-head.is-in .eyebrow, .js .section-head.is-in .section-lede { opacity: 1; transform: none; }
+  .js .section-head .section-lede { transition-delay: 0.3s; }
+  .js .finder-copy .split .wi, .js .contact-copy .split .wi { transform: translateY(108%); transition: transform 1s var(--ease-expo); transition-delay: calc(var(--i) * 45ms); }
+  .js .finder-copy.is-in .split .wi, .js .contact-copy.is-in .split .wi { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 0; transition: opacity 0.4s ease; }
+  .js .reveal.is-in { opacity: 1; }
+}
+/* If the script never runs, show everything. */
+.motion-fallback .reveal, .motion-fallback .split .wi, .motion-fallback .section-head * { opacity: 1 !important; transform: none !important; }
+
+/* ---------- buttons ---------- */
+.btn { position: relative; overflow: hidden; transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.16s var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn-gold::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.btn-arrow::after { content: '→'; display: inline-block; margin-left: 2px; transition: transform 0.35s var(--ease-out); }
+.btn-gold.btn-arrow::after { position: static; background: none; transform: none; inset: auto; }
+.magnetic { will-change: transform; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-gold:hover::after { transform: translateX(120%); transition: transform 0.9s var(--ease-out); }
+  .btn-arrow:hover::after { transform: translateX(4px); }
+  .btn-gold.btn-arrow:hover::after { transform: translateX(4px); }
+}
+
+/* ---------- header ---------- */
+.site-header { transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s var(--ease-out); }
+.site-header.is-hidden { transform: translateY(-100%); }
+.nav a { position: relative; }
+.nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform 0.45s var(--ease-out); }
+.nav a.is-active::after { transform: scaleX(1); transform-origin: left; }
+.nav a[aria-current] { box-shadow: none; }
+.nav a[aria-current]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ---------- cards: lift + copper spotlight ---------- */
+.service, .checks div, .quote, .person, .office {
+  position: relative; isolation: isolate;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out), border-color 0.3s ease;
+}
+.service::before, .checks div::before, .quote::before, .person::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none; opacity: 0;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(196, 154, 108, 0.16), transparent 60%);
+  transition: opacity 0.4s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .service:hover, .quote:hover, .person:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -18px rgba(16, 33, 32, 0.28); border-color: rgba(196, 154, 108, 0.55); }
+  .checks div:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -16px rgba(16, 33, 32, 0.25); border-color: rgba(196, 154, 108, 0.55); }
+  .service:hover::before, .checks div:hover::before, .quote:hover::before, .person:hover::before { opacity: 1; }
+}
+.portrait { transition: transform 0.6s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .person:hover .portrait { transform: scale(1.04); } }
+
+/* proof strip */
+.proof-list strong { font-variant-numeric: tabular-nums; }
+@media (hover: hover) and (pointer: fine) { .marquee:hover .marquee-track { animation-play-state: paused; } }
+
+/* finder map tilt */
+.finder-map.tilt { perspective: 900px; }
+.finder-map.tilt svg { transform-style: preserve-3d; will-change: transform; transition: box-shadow 0.5s ease; }
+.finder-map.tilt:hover svg { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6); }
+.tpin circle.halo { transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .finder-map.is-in .tpin circle.halo { animation: halo 3.2s var(--ease-out) infinite; }
+  .finder-map.is-in .tpin:nth-child(2n) circle.halo { animation-delay: 1.1s; }
+  .finder-map.is-in .tpin:nth-child(3n) circle.halo { animation-delay: 2.2s; }
+}
+@keyframes halo { 0% { transform: scale(0.6); opacity: 0.9; } 70%, 100% { transform: scale(1.9); opacity: 0; } }
+
+/* process: dots fill as you pass them */
+.step::before { transition: background-color 0.5s ease, transform 0.6s var(--ease-out), box-shadow 0.6s ease; }
+.step.is-passed::before { background: var(--gold); transform: scale(1.15); box-shadow: 0 0 0 6px rgba(196, 154, 108, 0.18); }
+.steps::after { transition: none; }
+
+/* verify tabs: sliding ink + soft panel change */
+.tab-list { position: relative; }
+.tab-ink { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100px; background: var(--gold); transform-origin: left; transition: transform 0.45s var(--ease-in-out); pointer-events: none; }
+.js .tab-list button[aria-selected='true'] { border-color: transparent; }
+.tab-list button { transition: color 0.25s ease; }
+.tab-panel:not([hidden]) { animation: panel-in 0.45s var(--ease-out); }
+@keyframes panel-in { from { opacity: 0; transform: translateY(6px); filter: blur(2px); } }
+
+/* discretion watermark */
+.discretion { overflow: hidden; }
+.watermark { position: absolute; right: -6%; top: 8%; width: min(46vw, 560px); height: auto; z-index: 0 !important; fill: rgba(196, 154, 108, 0.06); pointer-events: none; will-change: transform; }
+
+/* faq: smooth open where supported (Chrome 131+), instant elsewhere */
+.faq-list details::details-content { block-size: 0; overflow-y: clip; transition: block-size 0.45s var(--ease-out), content-visibility 0.45s allow-discrete; }
+.faq-list details[open]::details-content { block-size: auto; }
+.faq-list summary { transition: color 0.25s ease; }
+@media (hover: hover) and (pointer: fine) { .faq-list summary:hover { color: var(--copper-ink); } }
+
+/* contact chips + steps */
+.chip span { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.16s var(--ease-out); }
+.chip:active span { transform: scale(0.96); }
+.form-step[data-active='true'] { animation: step-in 0.5s var(--ease-out); }
+@keyframes step-in { from { opacity: 0; transform: translateX(14px); filter: blur(2px); } }
+.form-done:not([hidden]) { animation: fade-up 0.8s var(--ease-expo) both; }
+
+/* mobile bar */
+.mobile-bar { transition: transform 0.45s var(--ease-out); }
+
+/* ---------- smooth scrolling (Lenis) ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow, .watermark { display: none; }
+  .btn:active, .chip:active span { transform: none; }
+}

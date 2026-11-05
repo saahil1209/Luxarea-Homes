@@ -3,15 +3,14 @@
 // teaser pins, tabs, and the two-step contact form.
 import { PROPERTIES, floorsOf, formatCr, fromPrice } from '../data/listings'
 import { BRAND, LEAD_ENDPOINT } from '../config'
+import { initMotion } from './motion'
 
 function init() {
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector<T>(sel)
 const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => [...root.querySelectorAll<T>(sel)]
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const isPhone = () => window.innerWidth <= 760
 
 // ---------- header + mobile bar ----------
-const header = $('.site-header')!
 const hero = $('.hero')!
 const mobileBar = $('.mobile-bar')!
 const contact = $('#contact')!
@@ -27,56 +26,9 @@ new IntersectionObserver(([e]) => {
   syncBars()
 }).observe(contact)
 
-// ---------- reveal on scroll ----------
-const revealObs = new IntersectionObserver(
-  (entries) => {
-    for (const e of entries) {
-      if (!e.isIntersecting) continue
-      e.target.classList.add('is-in')
-      revealObs.unobserve(e.target)
-    }
-  },
-  { rootMargin: '0px 0px -8% 0px' },
-)
-$$('.reveal').forEach((el) => {
-  // Stagger siblings a little.
-  const sibs = el.parentElement ? [...el.parentElement.children].filter((c) => c.classList.contains('reveal')) : []
-  const idx = sibs.indexOf(el)
-  if (idx > 0) el.style.transitionDelay = `${Math.min(idx, 4) * 80}ms`
-  revealObs.observe(el)
-})
-
-// ---------- scroll-driven: header, parallax, process line ----------
-const necklace = $('.necklace')
-const sealink = $('.sealink')
+// ---------- motion: reveals, parallax, smooth scroll, hovers ----------
+initMotion()
 const stage = $('#hero-stage')!
-const steps = $('.steps')
-let ticking = false
-function onScroll() {
-  ticking = false
-  const y = window.scrollY
-  header.classList.toggle('is-solid', y > 24)
-  const heroH = hero.offsetHeight
-  if (!reduceMotion && y < heroH * 1.2) {
-    // Foreground moves faster than the page, the tower slower: depth.
-    if (sealink) sealink.style.transform = `translate3d(0, ${-y * 0.35}px, 0)`
-    if (necklace) necklace.style.transform = `translate3d(0, ${-y * 0.12}px, 0)`
-    if (!isPhone()) stage.style.transform = `translate3d(0, ${y * 0.25}px, 0)`
-  }
-  if (steps) {
-    const r = steps.getBoundingClientRect()
-    const vh = window.innerHeight
-    const p = Math.min(1, Math.max(0, (vh * 0.75 - r.top) / r.height))
-    steps.style.setProperty('--progress', reduceMotion ? '1' : p.toFixed(3))
-  }
-}
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    ticking = true
-    requestAnimationFrame(onScroll)
-  }
-}, { passive: true })
-onScroll()
 
 // ---------- hero: lazy 3D tower ----------
 const FLAGSHIP = PROPERTIES.find((p) => p.id === 'sea-ledger') ?? PROPERTIES.find((p) => !p.confidential)!
