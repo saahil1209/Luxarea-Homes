@@ -1,0 +1,423 @@
+<title>MapZ Launch Audit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column like a survey report — summary sheet first, then a tickable register of findings grouped by area. */
+:root{
+  --paper:#F2F5F2; --surface:#FFFFFF; --ink:#16211C; --muted:#56655E; --rule:#D5DDD8;
+  --accent:#1D4E89; --accent-soft:#E3ECF7;
+  --crit:#A61E14; --crit-soft:#FDECEA; --high:#8A4E05; --high-soft:#FDF3E2; --med:#3D5A80; --med-soft:#E9EFF6; --ok:#17803D;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1412; --surface:#151D1A; --ink:#E4EBE7; --muted:#9AA9A2; --rule:#29342F;
+  --accent:#8DB6EE; --accent-soft:#1B2A3D;
+  --crit:#F58A80; --crit-soft:#3A1A17; --high:#F2B84B; --high-soft:#33260F; --med:#9DB9DD; --med-soft:#1C2633; --ok:#56D38A;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1412; --surface:#151D1A; --ink:#E4EBE7; --muted:#9AA9A2; --rule:#29342F;
+  --accent:#8DB6EE; --accent-soft:#1B2A3D;
+  --crit:#F58A80; --crit-soft:#3A1A17; --high:#F2B84B; --high-soft:#33260F; --med:#9DB9DD; --med-soft:#1C2633; --ok:#56D38A;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--f-display);font-stretch:85%;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.65rem;font-weight:750}
+h3{font-size:1.1rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+code,.mono{font-family:var(--f-mono);font-size:.84em}
+code{background:var(--accent-soft);padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:14px;border-bottom:2px solid var(--ink);padding-bottom:24px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:.9rem;color:var(--muted)}
+.lede{font-size:1.1rem;max-width:68ch}
+.verdict{background:var(--crit-soft);border:1px solid var(--crit);border-radius:6px;padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.verdict ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.counts{display:flex;flex-wrap:wrap;gap:10px}
+.count{display:flex;align-items:baseline;gap:8px;padding:6px 12px;border-radius:999px;font-size:.9rem;background:var(--paper);border:1px solid var(--rule)}
+.count b{font-family:var(--f-display);font-size:1.25rem;font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:16px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:8px}
+.sec-head .prog{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.intro{color:var(--muted);max-width:70ch}
+.tbl{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+td:first-child{font-weight:600;white-space:nowrap}
+.filters{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);padding-block:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--rule)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.filters span{font-size:.85rem;color:var(--muted);margin-right:4px}
+.fbtn{font:600 .85rem var(--f-body);padding:6px 14px;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.fbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fbtn:focus-visible,.item input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.total{margin-left:auto;font-family:var(--f-mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+ul.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.item{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+.item input{width:20px;height:20px;margin-top:3px;accent-color:var(--ok);cursor:pointer}
+.item .hd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;cursor:pointer;min-width:0}
+.item .hd strong{font-size:1.02rem;line-height:1.35}
+.item .bd{grid-column:2;display:flex;flex-direction:column;gap:8px;min-width:0;font-size:.95rem}
+.item .bd p{max-width:72ch}
+.lbl{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.sev{font-family:var(--f-mono);font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:4px;white-space:nowrap}
+.sev.crit{background:var(--crit-soft);color:var(--crit)}
+.sev.high{background:var(--high-soft);color:var(--high)}
+.sev.med{background:var(--med-soft);color:var(--med)}
+.tag{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);border:1px solid var(--rule);padding:3px 8px;border-radius:4px;white-space:nowrap}
+.item.done{opacity:.72}
+.item.done .hd strong{text-decoration:line-through;text-decoration-thickness:1px}
+.item[hidden]{display:none!important}
+.note{background:var(--accent-soft);border-radius:6px;padding:16px 20px;font-size:.95rem;display:flex;flex-direction:column;gap:8px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.88rem}
+.flow span{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:6px 10px}
+.flow i{font-style:normal;color:var(--muted)}
+.sources{font-size:.85rem;color:var(--muted)}
+.sources ol{padding-left:1.3em;margin:8px 0 0;display:flex;flex-direction:column;gap:4px}
+.sources a{overflow-wrap:anywhere}
+footer{font-size:.85rem;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px}
+@media (max-width:560px){.item{padding:14px}.total{margin-left:0;width:100%}}
+@media (prefers-reduced-motion:no-preference){.item{transition:opacity .15s}}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Launch-readiness audit · mapz.in · 4 Nov 2026</span>
+  <h1>MapZ Launch Audit</h1>
+  <p class="lede">MapZ is a web GIS platform for real-estate developers. It turns plotted layouts, Google Sheets inventory, documents and 360° photos into a shareable interactive map, and answers plain-English questions with AI. This audit lists everything that has to be fixed, bought, signed or set up before it can run as a paying business in India.</p>
+  <div class="meta">
+    <span>Method: passive review of the public site, its JavaScript bundle and its public API responses</span>
+    <span>Not tested: logged-in app, database rules, server code</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <h2>Verdict: not ready to charge customers yet</h2>
+  <p>The product is far along. The front end is polished and the feature set is clear. The gaps are in the business layer: licences, legal paperwork, payments, and a few data-exposure issues that could hurt the first developer who trusts it with buyer records. Fix these four first:</p>
+  <ol>
+    <li>Satellite imagery is pulled straight from Google's tile servers with no API key or licence.</li>
+    <li>The public demo map is set to show buyer names, photos and sale deeds to anyone with the link.</li>
+    <li>The public map API hands every visitor the developer's Google Sheet IDs, so raw sheets may be readable.</li>
+    <li>There is no Terms of Service page and no named legal entity, and the contact address is a Gmail account.</li>
+  </ol>
+  <div class="counts" id="counts"></div>
+</div>
+
+<section>
+  <div class="sec-head"><h2>What the site is built on</h2></div>
+  <p class="intro">Everything below was read from the live site's code and network traffic.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Found on mapz.in</th><th>Status for launch</th></tr></thead>
+    <tbody>
+      <tr><td>Front end</td><td>React single-page app built with Vite</td><td>Fine</td></tr>
+      <tr><td>Hosting</td><td>Vercel. Pages served from Mumbai, but the API call traced ran through a US data centre (<code>iad1</code>)</td><td>Needs Pro plan and India region</td></tr>
+      <tr><td>Database, auth</td><td>Supabase (Postgres, Realtime), Supabase public key in the bundle</td><td>Verify row-level security and paid plan</td></tr>
+      <tr><td>Login</td><td>Google Sign-In only, plus a separate super-admin Google login</td><td>Add email login and admin MFA</td></tr>
+      <tr><td>Data sources</td><td>Google Sheets and Drive (via Picker), Teable, NocoDB, CSV, KML, GPX, GeoTIFF, ZIP (25 MB upload cap)</td><td>Needs Google OAuth verification</td></tr>
+      <tr><td>Maps</td><td>Leaflet for 2D, MapLibre for 3D</td><td>Fine</td></tr>
+      <tr><td>Basemaps</td><td>Google Streets, Satellite and Hybrid straight from <code>mt1.google.com</code>; OpenStreetMap's own tile servers; CARTO light</td><td>Blocker: unlicensed</td></tr>
+      <tr><td>360° photos</td><td>Pannellum 2.5.6 loaded from jsDelivr</td><td>Self-host or pin with SRI</td></tr>
+      <tr><td>AI</td><td>Google Gemini for "Ask MapZ"; browser speech recognition (en-IN) for voice</td><td>Needs paid tier and guardrails</td></tr>
+      <tr><td>Email</td><td>Brevo for enquiry notifications</td><td>Needs domain authentication</td></tr>
+      <tr><td>Leads</td><td>"I'm Interested" form plus WhatsApp click-to-chat</td><td>Add bot protection</td></tr>
+      <tr><td>Plans</td><td>Essential and Plus tiers, add-ons for report generation (₹5,000/yr) and white-labelling, all defined in browser code</td><td>No pricing page</td></tr>
+      <tr><td>Billing</td><td>Only a manual "billing reference" field in the admin screen. No payment gateway</td><td>Missing</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<div class="filters" role="toolbar" aria-label="Filter findings">
+  <span>Show</span>
+  <button class="fbtn" type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+  <button class="fbtn" type="button" id="f-crit" data-f="crit" aria-pressed="false">Blockers</button>
+  <button class="fbtn" type="button" id="f-high" data-f="high" aria-pressed="false">High</button>
+  <button class="fbtn" type="button" id="f-med" data-f="med" aria-pressed="false">Medium</button>
+  <button class="fbtn" type="button" id="f-open" data-f="open" aria-pressed="false">Not done</button>
+  <span class="total" id="total"></span>
+</div>
+
+<!-- ============ 1 BLOCKERS ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>Launch blockers</h2><span class="prog"></span></div>
+  <ul class="items">
+    <li class="item" data-sev="crit"><input type="checkbox" id="c-tiles"><label class="hd" for="c-tiles"><span class="sev crit">Blocker</span><strong>Replace the unlicensed Google satellite tiles</strong></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>The map fetches tiles directly from <code>mt1.google.com/vt/lyrs=s…</code> with no API key. The public demo map uses Google Satellite as its default basemap. Google only licenses its imagery through Maps Platform APIs with billing turned on. Google can block the requests without warning, which would leave every customer's public map blank, and the business carries the licence risk.</p>
+        <p><span class="lbl">Fix</span>Move satellite and street layers to a licensed source: Google's Map Tiles API (2D tiles, API key, metered with a free monthly allowance), Esri World Imagery through an ArcGIS Location Platform account, MapTiler Satellite or Mapbox Satellite. Build the provider's per-map-view cost into plan pricing.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="c-pii"><label class="hd" for="c-pii"><span class="sev crit">Blocker</span><strong>Take buyer personal data off the public demo</strong></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>The public demo at <code>/public/map/public</code> (340 views) is configured to show these fields to anyone: <code>Vendee_Name</code>, <code>Person_s_Photo</code>, <code>Sale_Deed_Attachment</code>, <code>Document_no</code>, <code>Patta_No</code>, <code>Date_of_Registration</code>. I did not open the records. If they belong to real buyers, this publishes their names, photos and title documents without their consent. It is also the first thing a prospective developer sees.</p>
+        <p><span class="lbl">Fix</span>Swap the demo to made-up data today. In the product, make personal fields private by default. Show a warning when a developer publishes a column whose name looks like a name, phone, photo, Aadhaar, PAN or deed.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="c-sheetid"><label class="hd" for="c-sheetid"><span class="sev crit">Blocker</span><strong>Stop sending Google Sheet IDs to public visitors</strong></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span><code>GET /api/public/map/{token}</code> returns each layer's <code>source_config.spreadsheetId</code> to anonymous visitors. Many developers share their sheets as "anyone with the link". Anyone holding the ID can then open the whole raw sheet, every column and not just the fields chosen for the map. The homepage promises that view-only sharing protects raw spreadsheets, and this undoes that promise.</p>
+        <p><span class="lbl">Fix</span>Keep source IDs, sheet names and table IDs on the server. The server should fetch the data, drop every column not on the map's allowed list, and return only those fields. Cache the result for a short time.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="c-entity"><label class="hd" for="c-entity"><span class="sev crit">Blocker</span><strong>Form the company and publish real legal pages</strong></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>The footer links to Terms of Service, but <code>/terms</code> is a 404. The privacy policy says the registered entity and address are "subject to final corporate confirmation". The public contact is a Gmail address. Payment gateways, Google's OAuth review and enterprise buyers all check for these.</p>
+        <p><span class="lbl">Fix</span>Incorporate (see the legal section), then publish Terms of Service, a full Privacy Policy, Refund and Cancellation policy, About, Contact and Pricing pages under the company's name. Move all contact to <code>@mapz.in</code> addresses.</p>
+      </div></li>
+  </ul>
+</section>
+
+<!-- ============ 2 LEGAL ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>Legal and compliance (India)</h2><span class="prog"></span></div>
+  <p class="intro">This is a checklist to take to a lawyer and a CA, not legal advice. Items marked "confirm" depend on how they read your specific setup.</p>
+  <ul class="items">
+    <li class="item" data-sev="high"><input type="checkbox" id="l-inc"><label class="hd" for="l-inc"><span class="sev high">High</span><strong>Company registrations</strong><span class="tag">Business</span></label>
+      <div class="bd">
+        <p>Private Limited company (better if you plan to raise money) or LLP. Then PAN, TAN and a current bank account. GST registration becomes compulsory once turnover passes ₹20 lakh, but register early anyway: developers want GST invoices to claim input credit. Also Karnataka Shops &amp; Establishments registration and Professional Tax. Udyam (MSME) and DPIIT startup recognition are optional, and DPIIT can bring tax benefits.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-tm"><label class="hd" for="l-tm"><span class="sev high">High</span><strong>Trademark and domains</strong><span class="tag">Business</span></label>
+      <div class="bd">
+        <p>"MapZ" is short and common in mapping. Run a search in Classes 9 and 42 on the IP India portal before spending on the brand, then file. The code uses both <code>mapz.in</code> and <code>mapz.online</code>. Pick one canonical domain and redirect the other.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="l-dpdp"><label class="hd" for="l-dpdp"><span class="sev crit">Blocker</span><strong>Data protection: DPDP Act 2023 and Rules 2025</strong><span class="tag">Privacy</span></label>
+      <div class="bd">
+        <p>The Rules were notified in November 2025. Most duties (notice, consent, security, breach reporting, deletion) apply from about May 2027, but enterprise customers will ask about them now. There are two roles. For buyer data inside a developer's map, the developer is the Data Fiduciary and MapZ is their Data Processor, so every customer contract needs a Data Processing Agreement. For MapZ's own users and enquiry leads, MapZ is the Fiduciary and must give notice, take consent, publish a grievance contact, report breaches, and delete data on request. Penalties for failing to protect data go up to ₹250 crore.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-privacy"><label class="hd" for="l-privacy"><span class="sev high">High</span><strong>Rewrite the privacy policy to cover the whole product</strong><span class="tag">Privacy</span></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>The current policy only covers people who submit an enquiry.</p>
+        <p><span class="lbl">Add</span>Account holders and the Google data you access, including Google's required "Limited Use" disclosure. Gemini processing of questions. Every sub-processor and where it stores data (Supabase, Vercel, Brevo, Google). Cookies from the YouTube embed. Browser voice input, which sends audio to Google in Chrome. Retention periods for maps and uploaded files. A named grievance officer.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-it"><label class="hd" for="l-it"><span class="sev high">High</span><strong>IT Act intermediary duties and CERT-In rules</strong><span class="tag">Privacy</span></label>
+      <div class="bd">
+        <p>MapZ hosts content its customers upload (documents, photos), so the IT Rules 2021 apply. Publish a grievance officer's name and contact. Acknowledge complaints within 24 hours and resolve them within 15 days. Ban unlawful content in the Terms. CERT-In's 2022 directions require reporting cyber incidents within 6 hours and keeping system logs for 180 days in India.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="l-geo"><label class="hd" for="l-geo"><span class="sev crit">Blocker</span><strong>Geospatial data localisation</strong><span class="tag">Confirm</span></label>
+      <div class="bd">
+        <p>India's 2021 geospatial guidelines (kept in the 2022 National Geospatial Policy) say map data more accurate than 1 m horizontal or 3 m vertical must be owned by an Indian entity and stored and processed in India. Plot surveys and drone orthomosaics are usually centimetre-level. The API call I traced ran through Vercel's US region.</p>
+        <p><span class="lbl">Fix</span>Put the Supabase project and storage in Mumbai (<code>ap-south-1</code>) and pin Vercel functions to <code>bom1</code>. Ask counsel whether customer GeoTIFFs and survey layers count as finer-than-threshold data.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-rera"><label class="hd" for="l-rera"><span class="sev high">High</span><strong>RERA advertising rules on public maps</strong><span class="tag">Real estate</span></label>
+      <div class="bd">
+        <p>A public project map with prices and availability is marketing. Under Section 11(2) of the RERA Act, promoter ads must show the project's registration number and the authority's website. Maharashtra, Kerala, UP and Tamil Nadu also require a QR code, and MahaRERA has penalised hundreds of projects for leaving it out. Karnataka has reportedly done the same, so confirm with K-RERA.</p>
+        <p><span class="lbl">Fix</span>Make the RERA number and QR code a required field in the public map header. The Terms should make the developer responsible for ad compliance.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-accuracy"><label class="hd" for="l-accuracy"><span class="sev high">High</span><strong>Liability for map accuracy</strong><span class="tag">Contracts</span></label>
+      <div class="bd">
+        <p>Buyers will rely on plot dimensions, facing and survey numbers. If a plot turns out smaller than shown, the buyer may blame the platform. Put a short notice on every public map saying it is indicative and not a survey or title document. The Terms should require the developer to confirm their data is accurate and that they hold rights to it. Cap MapZ's liability at 12 months of fees and get an indemnity from customers for their content.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="l-contracts"><label class="hd" for="l-contracts"><span class="sev high">High</span><strong>Contract set</strong><span class="tag">Contracts</span></label>
+      <div class="bd">
+        <p>Click-through Terms of Service for self-serve plans. A Master Subscription Agreement and Order Form for larger deals. A Data Processing Agreement. An Acceptable Use Policy. A Refund and Cancellation policy. An SLA, but only if you promise uptime. A cookie notice.</p>
+      </div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="l-drone"><label class="hd" for="l-drone"><span class="sev med">Medium</span><strong>Drone imagery and 360° photos</strong><span class="tag">Confirm</span></label>
+      <div class="bd">
+        <p>If MapZ flies drones for clients, the Drone Rules 2021 apply: a registered drone (UIN), a certified remote pilot, and Digital Sky permission in yellow and red zones. If customers upload their own imagery, the Terms should put rights and permits on them. Blur faces and number plates in 360° shots used on public maps.</p>
+      </div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="l-oss"><label class="hd" for="l-oss"><span class="sev med">Medium</span><strong>Open-source and data attributions</strong><span class="tag">Contracts</span></label>
+      <div class="bd">
+        <p>Leaflet, MapLibre, Pannellum, JSZip and the other bundled libraries are permissively licensed, but they need a licences page. OpenStreetMap data needs visible "© OpenStreetMap contributors" credit, and every imagery provider has its own attribution rule.</p>
+      </div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="l-ins"><label class="hd" for="l-ins"><span class="sev med">Medium</span><strong>Insurance</strong><span class="tag">Business</span></label>
+      <div class="bd"><p>Cyber liability plus professional indemnity (errors and omissions) cover. Enterprise developers often ask for both before signing.</p></div></li>
+  </ul>
+</section>
+
+<!-- ============ 3 APIS ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>APIs, services and plugins</h2><span class="prog"></span></div>
+  <ul class="items">
+    <li class="item" data-sev="crit"><input type="checkbox" id="a-pay"><label class="hd" for="a-pay"><span class="sev crit">Blocker</span><strong>Payments and GST invoicing</strong><span class="tag">Missing</span></label>
+      <div class="bd">
+        <p>There is no checkout. Use Razorpay Subscriptions or Cashfree. Razorpay checks the website for About, Contact, Pricing, Terms, Privacy and Refund pages and asks for a sample invoice before it activates the account. Card auto-debit above ₹15,000 needs the customer to approve each charge under RBI's e-mandate rules. Sell larger annual plans on invoice, paid by bank transfer or UPI AutoPay. Generate GST invoices automatically with Zoho Books or Razorpay Invoices.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="a-oauth"><label class="hd" for="a-oauth"><span class="sev crit">Blocker</span><strong>Google OAuth app verification</strong><span class="tag">Google</span></label>
+      <div class="bd">
+        <p>Reading customers' Sheets and Drive needs Google to verify the app. Without it, users see an "unverified app" warning and there is a cap on users. Request <code>drive.file</code> through the Picker (already loaded on the site) instead of full Drive access. Full Drive is a "restricted" scope that needs a paid CASA security assessment every year. The Sheets scope is "sensitive": you need a verified domain, the full privacy policy and a short demo video.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="a-gemini"><label class="hd" for="a-gemini"><span class="sev crit">Blocker</span><strong>Gemini on a paid tier</strong><span class="tag">AI</span></label>
+      <div class="bd">
+        <p>On Gemini's free tier, Google may use prompts to improve its products. Customer project data must not go there. Link billing to the Google Cloud project or use Vertex AI so paid-tier data terms apply. Set a budget alert and a hard monthly cap.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="a-host"><label class="hd" for="a-host"><span class="sev high">High</span><strong>Hosting and database plans</strong><span class="tag">Infra</span></label>
+      <div class="bd">
+        <p>Vercel's Hobby plan forbids commercial use, so confirm the project is on Pro and set the function region to Mumbai. Supabase's free tier pauses idle projects and has no backups. Use Pro with point-in-time recovery in the Mumbai region. I couldn't see which plans are in use now.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="a-base"><label class="hd" for="a-base"><span class="sev high">High</span><strong>Street basemaps</strong><span class="tag">Maps</span></label>
+      <div class="bd">
+        <p>OpenStreetMap's own tile servers run on donated capacity. Their usage policy limits heavy and app-scale use and lets them block traffic. The default basemap points straight at them. Switch to MapTiler or Stadia Maps, or host your own Protomaps file on cheap storage. Check CARTO's terms before using its free basemaps commercially. I couldn't confirm them.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="a-email"><label class="hd" for="a-email"><span class="sev high">High</span><strong>Email deliverability</strong><span class="tag">Email</span></label>
+      <div class="bd">
+        <p>Authenticate <code>mapz.in</code> in Brevo with SPF, DKIM and a DMARC policy so lead alerts don't land in spam. Send from <code>notifications@mapz.in</code>, which the privacy policy already promises. Keep any marketing email on a separate subdomain.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="a-bot"><label class="hd" for="a-bot"><span class="sev high">High</span><strong>Bot protection on public forms</strong><span class="tag">Security</span></label>
+      <div class="bd"><p>Add Cloudflare Turnstile (free) to the enquiry form and to Ask MapZ on public maps. A bot posting fake leads, or running up AI calls on the account, is the most likely early abuse.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="a-login"><label class="hd" for="a-login"><span class="sev med">Medium</span><strong>Login options beyond Google</strong><span class="tag">Auth</span></label>
+      <div class="bd"><p>Many developers' staff use Microsoft 365 or plain email. Add email magic links (built into Supabase Auth) and Microsoft sign-in. Require MFA for the super-admin account.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="a-mon"><label class="hd" for="a-mon"><span class="sev med">Medium</span><strong>Monitoring and analytics</strong><span class="tag">Ops</span></label>
+      <div class="bd"><p>Sentry for front-end and API errors. An uptime check on the public map and API. Vercel log drains kept 180 days for CERT-In. Product analytics such as PostHog, only after cookie consent.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="a-support"><label class="hd" for="a-support"><span class="sev med">Medium</span><strong>Support stack</strong><span class="tag">Ops</span></label>
+      <div class="bd"><p>A help desk (Zoho Desk or Freshdesk), a help centre with import guides, a status page, and the WhatsApp Business API once chat volume grows past one phone.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="a-embed"><label class="hd" for="a-embed"><span class="sev med">Medium</span><strong>Third-party embeds</strong><span class="tag">Privacy</span></label>
+      <div class="bd"><p>Switch the YouTube embed to <code>youtube-nocookie.com</code>. Self-host Pannellum, or load it with a pinned integrity hash, instead of pulling it live from jsDelivr.</p></div></li>
+  </ul>
+</section>
+
+<!-- ============ 4 SECURITY ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>Security</h2><span class="prog"></span></div>
+  <p class="intro">"Found" means seen on the live site. "Verify" means it needs the source code or database to confirm, and I didn't probe those.</p>
+  <ul class="items">
+    <li class="item" data-sev="crit"><input type="checkbox" id="s-proxy"><label class="hd" for="s-proxy"><span class="sev crit">Blocker</span><strong>Lock down the data proxy endpoints</strong><span class="tag">Verify</span></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>Public, logged-out map pages call <code>POST /api/proxy/sheets</code> (and there are matching <code>teable</code>, <code>nocodb</code> and <code>drive</code> routes) with a JSON body chosen by the browser.</p>
+        <p><span class="lbl">Fix</span>Make sure each request is tied to a valid share token, is limited to that map's layers and allowed fields, and can never use a customer's stored Google, Teable or NocoDB credentials to fetch something else. If not, anyone can use the server to read other customers' data.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="s-gate"><label class="hd" for="s-gate"><span class="sev crit">Blocker</span><strong>Enforce paid features on the server</strong><span class="tag">Verify</span></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>Which features each plan unlocks (Ask MapZ, linked data, enquiries, reports, white-label) is worked out in browser code.</p>
+        <p><span class="lbl">Fix</span>Every paid API must check the organisation's plan on the server. Otherwise a free user can edit one variable and get Plus.</p>
+      </div></li>
+    <li class="item" data-sev="crit"><input type="checkbox" id="s-rls"><label class="hd" for="s-rls"><span class="sev crit">Blocker</span><strong>Supabase row-level security on every table and bucket</strong><span class="tag">Verify</span></label>
+      <div class="bd"><p>The Supabase public key in the bundle is normal, but it is only safe if row-level security is on for every table and storage bucket and each policy limits rows to the user's organisation. Run Supabase's Security Advisor and fix everything it flags.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="s-headers"><label class="hd" for="s-headers"><span class="sev high">High</span><strong>Security headers</strong><span class="tag">Found</span></label>
+      <div class="bd">
+        <p><span class="lbl">Found</span>Only HSTS is set. There is no Content-Security-Policy, framing rule, <code>X-Content-Type-Options</code>, <code>Referrer-Policy</code> or <code>Permissions-Policy</code>. The homepage also sends <code>Access-Control-Allow-Origin: *</code>.</p>
+        <p><span class="lbl">Fix</span>Add them in <code>vercel.json</code>. Allow framing only on <code>/public/map/*</code>, since public maps are meant to be embedded, and block it everywhere else to prevent clickjacking on the admin. Make sure API routes never return a wildcard CORS header on requests that carry credentials.</p>
+      </div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="s-secrets"><label class="hd" for="s-secrets"><span class="sev high">High</span><strong>Encrypt stored customer credentials</strong><span class="tag">Verify</span></label>
+      <div class="bd"><p>Google refresh tokens and customers' Teable and NocoDB API tokens should be encrypted at rest (Supabase Vault), never sent to the browser, and revoked when a customer disconnects. The disconnect endpoint already exists.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="s-upload"><label class="hd" for="s-upload"><span class="sev high">High</span><strong>Safe file uploads</strong><span class="tag">Verify</span></label>
+      <div class="bd"><p>Uploads go up to 25 MB and include ZIP, KML, GPX, GeoTIFF and PDF. Check the real file type on the server, cap unzipped size to stop zip bombs, and malware-scan PDFs. Serve user files from a separate domain or as downloads so an uploaded file can't run scripts on <code>mapz.in</code>.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="s-tokens"><label class="hd" for="s-tokens"><span class="sev high">High</span><strong>Unguessable links for private maps</strong><span class="tag">Found</span></label>
+      <div class="bd"><p>The demo uses the slug <code>public</code>, and custom slugs are a selling point. That's fine for maps meant to be public. Unlisted maps should get long random tokens, with an optional password and an expiry date.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="s-rate"><label class="hd" for="s-rate"><span class="sev med">Medium</span><strong>Rate limits everywhere</strong><span class="tag">Verify</span></label>
+      <div class="bd"><p>The enquiry form is rate-limited, according to the privacy policy. Apply the same to login, Ask MapZ, the proxy routes and the public map API.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="s-admin"><label class="hd" for="s-admin"><span class="sev med">Medium</span><strong>Super-admin access</strong><span class="tag">Verify</span></label>
+      <div class="bd"><p><code>/api/auth/super-admin-google</code> should accept a fixed list of accounts only, require MFA, and log every action. An edit-history API exists, which is a good start.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="s-vapt"><label class="hd" for="s-vapt"><span class="sev med">Medium</span><strong>Penetration test, backups and incident plan</strong><span class="tag">Ops</span></label>
+      <div class="bd"><p>Large developers and any government work will ask for a VAPT report from a CERT-In empanelled auditor. Do a restore drill from backup. Write a one-page incident plan that covers the 6-hour CERT-In report and DPDP breach notices.</p></div></li>
+  </ul>
+</section>
+
+<!-- ============ 5 AI ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>Ask MapZ: AI guardrails and token cost</h2><span class="prog"></span></div>
+  <div class="note">
+    <h3>The safe, cheap shape for this feature</h3>
+    <div class="flow"><span>Question</span><i>→</i><span>Rule-based fast path</span><i>→</i><span>Cache</span><i>→</i><span>Gemini returns a filter as JSON</span><i>→</i><span>Server validates it</span><i>→</i><span>App runs the filter</span><i>→</i><span>Map highlights plots</span></div>
+    <p>The model only translates words into a filter like <code>Status = VACANT AND Phase = 2</code>. It never sees the rows, never writes SQL and never invents the answer. The count on screen comes from your own code.</p>
+  </div>
+  <ul class="items">
+    <li class="item" data-sev="crit"><input type="checkbox" id="g-schema"><label class="hd" for="g-schema"><span class="sev crit">Blocker</span><strong>Send the schema, never the rows</strong><span class="tag">Guardrail</span></label>
+      <div class="bd"><p>Give the model field names, types and a short list of each field's real values (Status: VACANT, BOOKED, SOLD). Leave out every column not on the map's allowed list. This keeps buyer names and documents out of the AI provider entirely, and it is also the largest token saving.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="g-json"><label class="hd" for="g-json"><span class="sev high">High</span><strong>Structured output with server-side validation</strong><span class="tag">Guardrail</span></label>
+      <div class="bd"><p>Use Gemini's response schema so it must return JSON. Reject any field not in the layer, any operator not on your list, and any value of the wrong type. When it fails, say "I couldn't turn that into a filter" and show example questions.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="g-inject"><label class="hd" for="g-inject"><span class="sev high">High</span><strong>Treat spreadsheet text as untrusted</strong><span class="tag">Guardrail</span></label>
+      <div class="bd"><p>A cell can contain "ignore your instructions…". Sample values go into the prompt as quoted data, never into the system instructions. Questions that aren't about the map get a fixed reply with no free-form chat.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="g-quota"><label class="hd" for="g-quota"><span class="sev high">High</span><strong>Quotas, limits and a kill switch</strong><span class="tag">Cost</span></label>
+      <div class="bd"><p>Set a daily cap per organisation and per visitor IP, and a 300-character question limit. Use a short timeout and log usage per organisation so it can be billed. Keep a switch that turns AI off for one map or for everyone. If anonymous visitors on public maps can use Ask MapZ, that is your largest cost exposure, so put Turnstile in front of it.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="g-fast"><label class="hd" for="g-fast"><span class="sev high">High</span><strong>Answer common questions without the model</strong><span class="tag">Tokens</span></label>
+      <div class="bd"><p>"Available plots", "sold", "phase 2", "east facing" and "corner plots" can be matched with keyword rules against the layer's real values. Most questions on a plotted layout are like this, and these cost nothing.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="g-cache"><label class="hd" for="g-cache"><span class="sev med">Medium</span><strong>Cache, and keep the prompt prefix stable</strong><span class="tag">Tokens</span></label>
+      <div class="bd"><p>Cache results by normalised question plus a hash of the layer's schema. Put instructions and schema first and the question last, so Gemini's context caching reuses the shared prefix. Shorten long column names like <code>North_to_South_on_Eastern_side_in_feet_and_inches</code> to short aliases in the prompt. Drop geometry, photo and attachment fields.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="g-model"><label class="hd" for="g-model"><span class="sev med">Medium</span><strong>Smallest model, short output</strong><span class="tag">Tokens</span></label>
+      <div class="bd"><p>Turning text into a filter is a small task. Use the cheapest current Gemini Flash-Lite model at temperature 0 with a 150-token output cap. Handle distance questions ("within 500 m", "faces the park") with real geometry code such as Turf.js or PostGIS. The model only names which operation to run.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="g-ux"><label class="hd" for="g-ux"><span class="sev med">Medium</span><strong>Show the filter, add the disclaimer, disclose voice input</strong><span class="tag">Guardrail</span></label>
+      <div class="bd"><p>Show the applied filter as removable chips so people can see what was searched. Note that answers aren't legal or valuation advice. Voice input uses the browser's speech service, which sends audio to Google in Chrome and doesn't work in Firefox. Say so next to the mic button.</p></div></li>
+  </ul>
+</section>
+
+<!-- ============ 6 BUSINESS ============ -->
+<section data-sec>
+  <div class="sec-head"><h2>Business plumbing still missing</h2><span class="prog"></span></div>
+  <ul class="items">
+    <li class="item" data-sev="high"><input type="checkbox" id="b-pricing"><label class="hd" for="b-pricing"><span class="sev high">High</span><strong>Pricing page, trial and signup</strong></label>
+      <div class="bd"><p>The Essential and Plus plans and the ₹5,000 report add-on exist only inside the app's code. The site's only call to action is "Contact Us". Publish prices, or "from ₹X per project", and offer a free trial on one sample project.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="b-billing"><label class="hd" for="b-billing"><span class="sev high">High</span><strong>Subscription lifecycle</strong></label>
+      <div class="bd"><p>Upgrades, downgrades, renewal reminders, retrying failed payments, grace periods, and what happens to public maps when a plan lapses. Decide all of this before the first renewal date, not after.</p></div></li>
+    <li class="item" data-sev="high"><input type="checkbox" id="b-export"><label class="hd" for="b-export"><span class="sev high">High</span><strong>Data export and deletion</strong></label>
+      <div class="bd"><p>Let customers export their layers (GeoJSON, CSV) and media whenever they like. Delete everything within a set time after they cancel. DPDP requires the deletion, and enterprise buyers ask about both.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="b-seo"><label class="hd" for="b-seo"><span class="sev med">Medium</span><strong>SEO and link previews</strong></label>
+      <div class="bd"><p><code>/sitemap.xml</code> returns the app page instead of a sitemap. The social preview image uses a relative path, so WhatsApp and LinkedIn previews may not show it. Use a full <code>https://</code> URL. Every public project map is also a page that could rank for "plots in [area]" with the developer's permission.</p></div></li>
+    <li class="item" data-sev="med"><input type="checkbox" id="b-onboard"><label class="hd" for="b-onboard"><span class="sev med">Medium</span><strong>Onboarding</strong></label>
+      <div class="bd"><p>A sample project, a sheet template with the expected columns and geometry format, and a 2-minute setup video. Converting CAD layouts to polygons will be the hardest step for most developers. Consider doing it for them as a paid service.</p></div></li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head"><h2>What this audit could not see</h2></div>
+  <p class="intro">This was a look from the outside only. To finish the security items marked "Verify", I'd need the repository and read access to the Supabase project. That would cover row-level security policies, server-side plan checks, proxy authorisation, token storage, upload handling and the logged-in app.</p>
+</section>
+
+<div class="sources">
+  <h3>Sources</h3>
+  <ol>
+    <li><a href="https://www.storyboard18.com/digital/breaking-govt-notifies-final-dpdp-rules-sets-staggered-rollout-with-key-obligations-for-data-fiduciaries-84201.htm" target="_blank" rel="noopener">DPDP Rules 2025 phased rollout (Storyboard18)</a></li>
+    <li><a href="https://static.pib.gov.in/WriteReadData/specificdocs/documents/2025/nov/doc20251117695301.pdf" target="_blank" rel="noopener">DPDP Rules explainer (PIB)</a></li>
+    <li><a href="https://khaitanco.com/thought-leaderships/New-Guidelines-on-Liberalisation-of-Acquisition-and-Production-of-Geospatial-Data" target="_blank" rel="noopener">Geospatial data guidelines 2021 (Khaitan &amp; Co)</a></li>
+    <li><a href="https://www.scconline.com/blog/post/2021/03/04/india-geospatial-data-guidelines-2021/" target="_blank" rel="noopener">Geospatial guidelines summary (SCC Online)</a></li>
+    <li><a href="https://developers.google.com/maps/documentation/tile/usage-and-billing" target="_blank" rel="noopener">Google Map Tiles API usage and billing</a></li>
+    <li><a href="https://simonwillison.net/2024/Oct/17/gemini-terms-of-service" target="_blank" rel="noopener">Gemini API free vs paid data terms (Simon Willison)</a></li>
+    <li><a href="https://discuss.ai.google.dev/t/clarification-on-gemini-api-free-tier-vs-paid-tier-after-billing-activation/96995" target="_blank" rel="noopener">Gemini paid-tier data terms (Google AI forum)</a></li>
+    <li><a href="https://docs.nango.dev/integrations/google-security-review" target="_blank" rel="noopener">Google OAuth security review and CASA (Nango)</a></li>
+    <li><a href="https://razorpay.com/docs/payments/dashboard/account-settings/business-website-details/" target="_blank" rel="noopener">Razorpay business website requirements</a></li>
+    <li><a href="https://vercel.com/docs/plans/hobby" target="_blank" rel="noopener">Vercel Hobby plan (non-commercial only)</a></li>
+    <li><a href="https://vercel.com/docs/limits/fair-use-guidelines" target="_blank" rel="noopener">Vercel fair use guidelines</a></li>
+    <li><a href="https://wiki.openstreetmap.org/wiki/Tile_usage_policy" target="_blank" rel="noopener">OpenStreetMap tile usage policy</a></li>
+    <li><a href="https://therealtytoday.com/news/regulatory/maharera-makes-qr-code-registration-number-mandatory-in-ads-50000-penalty-for-violations/" target="_blank" rel="noopener">MahaRERA QR code and registration number in ads</a></li>
+    <li><a href="https://www.rprealtyplus.com/newsviews/k-rera-makes-qr-codes-mandatory-in-real-estate-ads-from-sept-111940.html" target="_blank" rel="noopener">K-RERA QR codes in real-estate ads (RP Realty Plus)</a></li>
+    <li><a href="https://rera.ap.gov.in/RERA/Views/AdvertisementGuidelines.aspx" target="_blank" rel="noopener">RERA Act Section 11(2) advertisement provisions</a></li>
+  </ol>
+</div>
+
+<footer>Your ticks are saved in this browser only. This is not legal advice. Take the legal section to a lawyer and a CA before acting on it.</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='mapz-audit-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  var items=[].slice.call(document.querySelectorAll('.item')), filter='all';
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  function render(){
+    var c={crit:0,high:0,med:0}, open={crit:0,high:0,med:0}, done=0, shown=0;
+    items.forEach(function(li){
+      var cb=li.querySelector('input'), sev=li.dataset.sev, d=!!state[cb.id];
+      cb.checked=d; li.classList.toggle('done',d);
+      c[sev]++; if(!d)open[sev]++; else done++;
+      var vis = filter==='all' || filter===sev || (filter==='open' && !d);
+      li.hidden=!vis; if(vis)shown++;
+    });
+    document.querySelectorAll('[data-sec]').forEach(function(s){
+      var all=s.querySelectorAll('.item'), dn=s.querySelectorAll('.item.done'), vis=s.querySelectorAll('.item:not([hidden])');
+      s.querySelector('.prog').textContent=dn.length+' / '+all.length+' done';
+      s.hidden = vis.length===0;
+    });
+    document.getElementById('counts').innerHTML=
+      '<span class="count"><b style="color:var(--crit)">'+open.crit+'</b> blockers open</span>'+
+      '<span class="count"><b style="color:var(--high)">'+open.high+'</b> high open</span>'+
+      '<span class="count"><b style="color:var(--med)">'+open.med+'</b> medium open</span>'+
+      '<span class="count"><b style="color:var(--ok)">'+done+'</b> done of '+items.length+'</span>';
+    document.getElementById('total').textContent='Showing '+shown+' of '+items.length;
+  }
+  items.forEach(function(li){
+    li.querySelector('input').addEventListener('change',function(e){state[e.target.id]=e.target.checked;save();render();});
+  });
+  document.querySelectorAll('.fbtn').forEach(function(b){
+    b.addEventListener('click',function(){
+      filter=b.dataset.f;
+      document.querySelectorAll('.fbtn').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
+      render();
+    });
+  });
+  render();
+})();
+</script>

@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "luxarea-explorer", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--prefix", "luxarea-explorer"], "port": 5183 }
+  ]
+}
