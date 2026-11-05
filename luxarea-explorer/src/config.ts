@@ -10,9 +10,8 @@ export const BRAND = {
   website: 'https://www.luxarea.in',
   whatsappLink: 'https://wa.me/917718961447',
   phoneLink: 'tel:+917718961447',
-  // TODO(Luxarea): MahaRERA agent registration number for Luxarea Homes Pvt Ltd. Required on the site by law.
-  // The old Terms page quotes A51800039192, but for "Sai Realtors", so it is not used until Luxarea confirms it.
-  reraAgent: 'to be added',
+  // MahaRERA agent registration number, confirmed by Luxarea on 5 Nov 2026. Required on the site by law.
+  reraAgent: 'A51800039192',
 }
 
 // Sample data switch. Set to false once real listings replace the samples

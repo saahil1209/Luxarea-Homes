@@ -31,12 +31,12 @@ Everything a new Claude session (or developer) needs to pick this up. Written 5 
 - Official logo files added (`luxarea-explorer/public/brand/`). The redrawn SVG mark already matched them; two shades were corrected.
 - Content taken from luxarea.in: the real team (Viivek Bathija, Shweta Jayakar, Saurabh Dwivedi), the full address and office hours, the extra services (leasing, property management, home loans, valuations), and two FAQs.
 - The share image is now the terrace photo from Luxarea's own Wix uploads. Confirm it's theirs to use.
-- New `privacy.html` and `terms.html` drafts for a lawyer to review. The old Terms page was copied from "Sai Realtors" (Khar office, RERA A51800039192), so its RERA number is **not** used until Luxarea confirms its own.
+- New `privacy.html` and `terms.html` drafts for a lawyer to review. The old Terms page was copied from "Sai Realtors" (Khar office, RERA A51800039192), Luxarea has since confirmed A51800039192 is theirs, and it is now on the site.
 - The old site's testimonials are Wix template text (Jane Smith etc.) and were not reused. Its images are stock.
 - GitHub: `saahil1209/luxarea-website` (private). Vercel deploys from it with root directory `luxarea-explorer`.
 
 **Still open:**
-- Remaining placeholders: MahaRERA agent number, team photos, real listings, real client stories, the reply-time promise, the 48-hour shortlist promise and fee wording. Search the code for `TODO(Luxarea)`.
+- Remaining placeholders: team photos, real listings, real client stories, the reply-time promise, the 48-hour shortlist promise and fee wording. Search the code for `TODO(Luxarea)`.
 - Section 5d (production).
 - Luxarea's vector (SVG) logo originals, if they exist.
 
