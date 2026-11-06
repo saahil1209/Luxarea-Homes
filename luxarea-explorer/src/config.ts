@@ -22,7 +22,8 @@ export const USING_SAMPLE_DATA = true
 // In production these must be checked on a server, not shipped in the app.
 export const DEMO_INVITE_CODES = ['LUX-PRIVATE']
 
-// Where the home-page contact form sends leads. Leave empty to fall back to
-// opening WhatsApp with the enquiry prefilled. Set to a CRM or form endpoint
-// (it receives a JSON POST) once Luxarea has one.
-export const LEAD_ENDPOINT = ''
+// Where the home-page contact form saves leads: set VITE_LEAD_ENDPOINT=/api/lead
+// in Vercel once Supabase is connected (leads then appear in admin → Leads).
+// Empty: the form only opens WhatsApp with the enquiry prefilled.
+// (import.meta.env is undefined when vite.config.ts loads this file in Node.)
+export const LEAD_ENDPOINT: string = import.meta.env?.VITE_LEAD_ENDPOINT ?? ''

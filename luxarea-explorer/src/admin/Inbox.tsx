@@ -13,6 +13,7 @@ export function factsOf(e: Extracted): [string, string][] {
   if (e.floor) out.push(['Floor', String(e.floor)])
   if (e.totalFloors) out.push(['Storeys', String(e.totalFloors)])
   if (e.priceCr !== undefined) out.push(['Price', e.priceCr == null ? 'On request' : `₹${e.priceCr} Cr`])
+  if (e.priceAed) out.push(['Price', `AED ${e.priceAed.toLocaleString('en-IN')}`])
   if (e.possession) out.push(['Possession', e.possession])
   if (e.developer) out.push(['Developer', e.developer])
   if (e.rera) out.push(['RERA', e.rera])
@@ -114,6 +115,10 @@ export default function Inbox({ store, go, onChange }: { store: Store; go: (h: s
                     {open[d.id] ? 'Hide original message' : 'Show original message'}
                   </button>
                 )}
+                {d.media.length > 0 && (
+                  <div className="facts">{d.media.map((u, i) => <a key={u} href={u} target="_blank" rel="noopener"><img src={u} alt={`Photo ${i + 1}`} style={{ width: 84, height: 64, objectFit: 'cover', borderRadius: 8, border: '1px solid var(--rule)' }} /></a>)}</div>
+                )}
+                {d.note && <p className="small muted" style={{ gridColumn: '1 / -1' }}>{d.note}</p>}
                 {linked && <p className="small">Linked to <a href={`#/listings/${linked.id}`}>{linked.name}</a></p>}
                 <div className="draft-actions">
                   {d.status === 'new' && (

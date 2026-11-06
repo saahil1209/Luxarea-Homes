@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { Property } from './listings'
 import type { HomeContent } from '../content/types'
 import homeJson from '../../content/home.json'
-import { newId, resizeImage, toProperty, type Draft, type Listing, type Store, type User } from './store'
+import { newId, resizeImage, toProperty, type Draft, type Lead, type Listing, type Store, type User } from './store'
 
 interface ListingRow { id: string; data: Property; status: Listing['status']; confidential: boolean; source_draft_id: string | null; updated_at: string; updated_by: string | null }
 interface DraftRow { id: string; source: Draft['source']; received_at: string; from_label: string | null; source_url: string | null; raw_text: string; media: string[]; extracted: Draft['extracted']; status: Draft['status']; listing_id: string | null; note: string | null }
@@ -58,9 +58,31 @@ export function createSupabaseStore(): Store {
       must(await sb.from('listings').delete().eq('id', id))
     },
     async listPublished() {
-      // Off-market listings are filtered out by row-level security.
+      // Off-market listings are hidden by row-level security; the public gets
+      // only a teaser for each (area to ~1 km, no name, building or price).
       const rows = must(await sb.from('listings').select('id,data').eq('status', 'published')) as Pick<ListingRow, 'id' | 'data'>[]
-      return rows.map((r) => ({ ...r.data, id: r.id }))
+      const teasers = (must(await sb.rpc('private_teasers')) ?? []) as { id: string; locality: string; city: string; segment: Property['segment']; lat: number; lng: number }[]
+      return [
+        ...rows.map((r) => ({ ...r.data, id: r.id })),
+        ...teasers.map((t): Property => ({
+          id: t.id, name: 'Off-market residence', locality: t.locality, city: t.city, segment: t.segment ?? 'Luxury Residences', lat: t.lat, lng: t.lng,
+          tagline: '', developer: '', possession: '', rera: '', totalFloors: 1, footprint: [6, 4], form: 'tower', confidential: true, amenities: [], residences: [],
+        })),
+      ]
+    },
+    async unlockPrivate(code) {
+      const { data, error } = await sb.rpc('unlock_private', { invite: code })
+      if (error) throw new Error(error.message)
+      const list = (data as Property[] | null) ?? []
+      return list.length ? list : null
+    },
+
+    async listLeads() {
+      const rows = must(await sb.from('leads').select('*').order('created_at', { ascending: false }).limit(300)) as Record<string, string>[]
+      return rows.map((r): Lead => ({ id: r.id, createdAt: r.created_at, name: r.name, phone: r.phone, channel: r.channel, intent: r.intent, budget: r.budget, forWhom: r.for_whom, note: r.note, page: r.page, utm: r.utm, status: r.status as Lead['status'], teamNote: r.team_note }))
+    },
+    async updateLead(id, patch) {
+      must(await sb.from('leads').update({ ...(patch.status ? { status: patch.status } : {}), ...(patch.teamNote !== undefined ? { team_note: patch.teamNote } : {}) }).eq('id', id))
     },
 
     async listDrafts() {
@@ -107,12 +129,4 @@ export function createSupabaseStore(): Store {
       return sb.storage.from('media').getPublicUrl(path).data.publicUrl
     },
   }
-}
-
-/** Off-market listings for a valid invite code (checked on the server). */
-export async function unlockPrivate(code: string): Promise<Property[]> {
-  const sb = createClient(import.meta.env.VITE_SUPABASE_URL as string, import.meta.env.VITE_SUPABASE_ANON_KEY as string)
-  const { data, error } = await sb.rpc('unlock_private', { invite: code })
-  if (error) return []
-  return (data as Property[]) ?? []
 }

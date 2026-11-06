@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { PROPERTIES } from './data/listings'
-import { DEMO_INVITE_CODES } from './config'
+import { PROPERTIES, setProperties, type Property } from './data/listings'
+import { getStore } from './data/store'
 import ExploreView from './components/ExploreView'
 import PropertyView from './components/PropertyView'
 
@@ -12,11 +12,33 @@ function parse(hash: string): Route {
   return { view: 'explore' }
 }
 
-const INVITE_KEY = 'luxarea-invite'
+const INVITE_KEY = 'luxarea-invite-code'
 
-function readInvite(): boolean {
+function savedCode(): string | null {
   try {
-    return sessionStorage.getItem(INVITE_KEY) === '1'
+    return sessionStorage.getItem(INVITE_KEY)
+  } catch {
+    return null
+  }
+}
+
+/** Swap teasers for the full listings once a code is accepted. */
+function mergePrivate(list: Property[]) {
+  const byId = new Map(list.map((p) => [p.id, p]))
+  setProperties([...PROPERTIES.filter((p) => !byId.has(p.id)), ...list])
+}
+
+async function tryUnlock(code: string): Promise<boolean> {
+  try {
+    const list = await (await getStore()).unlockPrivate(code)
+    if (!list) return false
+    mergePrivate(list)
+    try {
+      sessionStorage.setItem(INVITE_KEY, code.trim().toUpperCase())
+    } catch {
+      /* private mode: unlock lasts for this page only */
+    }
+    return true
   } catch {
     return false
   }
@@ -24,13 +46,15 @@ function readInvite(): boolean {
 
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parse(location.hash))
-  const [unlocked, setUnlocked] = useState<boolean>(readInvite)
+  const [unlocked, setUnlocked] = useState(false)
 
   useEffect(() => {
+    const code = savedCode()
+    if (code) tryUnlock(code).then((ok) => ok && setUnlocked(true))
     const onHash = () => {
       const inv = location.hash.match(/^#\/invite\/([\w-]+)/)
       if (inv) {
-        if (tryUnlock(inv[1])) setUnlocked(true)
+        tryUnlock(inv[1]).then((ok) => ok && setUnlocked(true))
         history.replaceState(null, '', '#/')
       }
       setRoute(parse(location.hash))
@@ -49,8 +73,8 @@ export default function App() {
     }
   }, [])
 
-  const unlock = useCallback((code: string) => {
-    const ok = tryUnlock(code)
+  const unlock = useCallback(async (code: string) => {
+    const ok = await tryUnlock(code)
     if (ok) setUnlocked(true)
     return ok
   }, [])
@@ -62,16 +86,4 @@ export default function App() {
     }
   }
   return <ExploreView unlocked={unlocked} unlock={unlock} go={go} />
-}
-
-function tryUnlock(code: string): boolean {
-  const ok = DEMO_INVITE_CODES.includes(code.trim().toUpperCase())
-  if (ok) {
-    try {
-      sessionStorage.setItem(INVITE_KEY, '1')
-    } catch {
-      /* private mode: unlock lasts for this page only */
-    }
-  }
-  return ok
 }

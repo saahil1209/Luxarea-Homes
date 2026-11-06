@@ -3,6 +3,7 @@ import { availableCount, bhkRange, formatCr, fromPrice, PROPERTIES, type Propert
 import { BRAND } from '../config'
 import { SampleBadge, SiteNav, Wordmark } from './Brand'
 import MapView from './MapView'
+import { DATA_MODE } from '../data/store'
 
 /** Area chips come from the listings themselves ("Carter Road, Bandra West" → "Bandra West"). */
 function localities(): string[] {
@@ -18,7 +19,7 @@ const BUDGETS = [
 
 interface Props {
   unlocked: boolean
-  unlock: (code: string) => boolean
+  unlock: (code: string) => Promise<boolean>
   go: (hash: string) => void
 }
 
@@ -143,12 +144,12 @@ export default function ExploreView({ unlocked, unlock, go }: Props) {
   )
 }
 
-function PrivateCard({ p, unlock, active, onHover }: { p: Property; unlock: (c: string) => boolean; active: boolean; onHover: (id: string | null) => void }) {
+function PrivateCard({ p, unlock, active, onHover }: { p: Property; unlock: (c: string) => Promise<boolean>; active: boolean; onHover: (id: string | null) => void }) {
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!unlock(code)) setError('That code didn’t match. Ask your Luxarea advisor for your invitation code.')
+    if (!(await unlock(code))) setError('That code didn’t match. Ask your Luxarea advisor for your invitation code.')
   }
   return (
     <li>
@@ -163,7 +164,7 @@ function PrivateCard({ p, unlock, active, onHover }: { p: Property; unlock: (c: 
             <input id={`code-${p.id}`} value={code} onChange={(e) => { setCode(e.target.value); setError('') }} placeholder="Invitation code" autoComplete="off" />
             <button type="submit">View</button>
           </form>
-          {error ? <span className="invite-error" role="alert">{error}</span> : <span className="invite-hint">Demo code: LUX-PRIVATE</span>}
+          {error ? <span className="invite-error" role="alert">{error}</span> : <span className="invite-hint">{DATA_MODE === 'local' ? 'Demo code: LUX-PRIVATE' : 'Your advisor shares this code with you.'}</span>}
         </span>
       </div>
     </li>

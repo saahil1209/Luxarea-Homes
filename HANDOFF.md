@@ -33,18 +33,50 @@ Everything a new Claude session (or developer) needs to pick this up. Written 5 
 - The share image is now the terrace photo from Luxarea's own Wix uploads. Confirm it's theirs to use.
 - New `privacy.html` and `terms.html` drafts for a lawyer to review. The old Terms page was copied from "Sai Realtors" (Khar office, RERA A51800039192), Luxarea has since confirmed A51800039192 is theirs, and it is now on the site.
 - The old site's testimonials are Wix template text (Jane Smith etc.) and were not reused. Its images are stock.
-- GitHub: `saahil1209/luxarea-website` (private). Vercel deploys from it with root directory `luxarea-explorer`.
+- GitHub: `saahil1209/Luxarea-Homes` (private), branch `site-v1` (the default branch). Vercel project `luxarea-homes` (MESA team) deploys it from root directory `luxarea-explorer`; live test site: https://luxarea-homes.vercel.app
 
 **Still open:**
 - Remaining placeholders: team photos, real listings, real client stories, the reply-time promise, the 48-hour shortlist promise and fee wording. Search the code for `TODO(Luxarea)`.
 - Section 5d (production).
 - Luxarea's vector (SVG) logo originals, if they exist.
 
- for the new account
+## 0b. Team backend and design pass (5 Nov 2026)
 
-Unzip this package into a folder, open that folder in Claude Code, attach the **two Luxarea logo images** (see section 6), then paste:
+- **Admin** at `/admin.html` (noindex), with four pages:
+  - **Inbox:** listing drafts from WhatsApp, the scan or pasted by hand, each with the facts read from it; Create listing, Add to existing or Reject.
+  - **Leads:** enquiries from the website form.
+  - **Listings:** map-pin picker, residence types, a floor-availability grid, photos you drag to reorder, and validation before publishing.
+  - **Website:** a structured drag-and-drop editor for the home page (reorder, show or hide, edit every text, list and team photo), with a live desktop and phone preview, an autosaved draft and **Publish**.
+- **Home page from data.** Content lives in `content/home.json` (or Supabase). `src/content/render.ts` builds static HTML and JSON-LD at build time, and the editor's preview uses the same renderer. `*asterisks*` in a heading set those words in copper italics.
+- **Data layer** (`src/data/store.ts`). Demo mode stores data in each browser (IndexedDB); Supabase mode shares it across the team. Schema: `supabase/migrations/001_init.sql`, `002_intake_leads.sql`.
+- **Design and motion** (`src/home/motion.ts`, `motion.css`):
+  - Lenis smooth scrolling on desktop.
+  - Masked word reveals in the hero, parallax on scroll and mouse, and a cursor glow.
+  - Card spotlights, a magnetic main button, a tilting Finder map and a count-up on "25 years".
+  - Process dots that fill, sliding tab underlines, smooth FAQ answers and an auto-hiding header.
+  - Everything respects reduced-motion settings and touch screens, and there's a no-JavaScript fallback.
+- **New favicon set:** SVG, ICO, an Apple touch icon, 192/512 icons and a web manifest.
 
-> I'm continuing a project from another Claude account. Read `HANDOFF.md` first, then `luxarea-explorer/docs/buyer-psychology.md`. The client is Luxarea Homes (luxarea.in), a luxury real-estate advisory in BKC, Mumbai. The Residence Finder (map + 3D tower) is built. Next, build the home page described in section 5 of HANDOFF.md, then do the SEO/AI-search work, then test both pages on desktop and mobile. The attached images are Luxarea's logos. Run `npm install` in `luxarea-explorer` first.
+## 0c. Intake, scan, leads (6 Nov 2026)
+
+Everything on the component map is built. What switches on with Luxarea's accounts is listed step by step in **`luxarea-explorer/docs/SETUP.md`**.
+
+- **WhatsApp intake** (`api/whatsapp.ts`, `api/_lib/intake.ts`). It checks Meta's signature and accepts team numbers only (`team_members.whatsapp`). Each message id is processed once, even when Meta retries. Photos sent within 15 minutes attach to the sender's last draft, and the sender gets a WhatsApp reply with a summary and a link.
+- **AI gap-filler** (`api/_lib/ai.ts`): Claude Opus 5.5 at low effort, structured output, with server-side refusal fallbacks. It fills only fields the rule reader left empty and never overwrites them. If the key is missing or the call fails, the draft is saved with rules only.
+- **Guard** (`api/_lib/guard.ts`): every number, name or place the AI returns must appear in the source text, allowing for crore/lakh and AED M/k rewrites (with the unit word required). Otherwise it's dropped and noted on the draft. The tests caught and fixed a case where "3200 sq ft" let an invented ₹32 Cr through.
+- **Daily scan** (`api/scan.ts`; `vercel.json` cron 00:30 UTC = 6:00 IST). It reads the allow-listed feeds (`api/_lib/scan-sources.ts`: ET Realty, HT real estate) and applies a relevance filter: a Luxarea locality plus a project, home or land signal, with legal, civic and affordable-housing stories excluded. Stories are deduped by link, and runs are logged in `scan_runs`. The live dry run on 6 Nov kept 4 of 44 stories, all relevant (`npm run scan:dry`). Not automated: broker portals, MahaRERA (no feed, captcha) and DLD (needs a key).
+- **Leads** (`api/lead.ts`, admin → Leads). The form saves the lead with a background request and still opens WhatsApp for WhatsApp-preferring visitors, or whenever saving fails. It includes a honeypot for spam. Leads have a status and a team note.
+- **Off-market:** in Supabase mode, invite codes are checked on the server (`unlock_private`). The public sees only teasers (`private_teasers`: area to about 1 km, no name or price). The code is remembered for the browser session.
+- **Tests:** `npm test` runs 13 server tests against stand-ins for WhatsApp, Supabase and Claude, plus two real feeds saved as fixtures. The browser checks (admin end to end, Finder unlock, Leads) also pass.
+- **Fixes along the way:** admin form hints are now linked as descriptions (screen readers had read them as part of each field's name), and `src/config.ts` no longer crashes the build config.
+
+---
+
+## 1. Starter prompt for the new account
+
+Open this folder in Claude Code and paste:
+
+> I'm continuing the Luxarea Homes website (luxarea.in, a luxury real-estate advisory in BKC, Mumbai). Read `HANDOFF.md` first (sections 0, 0b, 0c), then `luxarea-explorer/docs/SETUP.md` and `luxarea-explorer/docs/buyer-psychology.md`. Everything on the component map (`luxarea-explorer/docs/Luxarea-component-map.pdf`) is built. The next step is switching on Luxarea's accounts as described in SETUP.md. Run `npm install` in `luxarea-explorer`, then `npm test` and `npm run build`. Don't push or deploy without asking me first.
 
 ---
 

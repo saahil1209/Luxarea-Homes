@@ -33,6 +33,8 @@ export interface Extracted {
   floor?: number
   totalFloors?: number
   priceCr?: number | null
+  /** Dubai listings: price in dirhams. */
+  priceAed?: number
   possession?: string
   rera?: string
   offMarket?: boolean
@@ -56,6 +58,24 @@ export interface Draft {
   sample?: boolean
 }
 
+export type LeadStatus = 'new' | 'contacted' | 'qualified' | 'closed' | 'spam'
+
+export interface Lead {
+  id: string
+  createdAt: string
+  name: string
+  phone: string
+  channel?: string
+  intent?: string
+  budget?: string
+  forWhom?: string
+  note?: string
+  page?: string
+  utm?: string
+  status: LeadStatus
+  teamNote?: string
+}
+
 export interface User {
   email: string
   name: string
@@ -71,8 +91,13 @@ export interface Store {
   listListings(): Promise<Listing[]>
   saveListing(l: Listing): Promise<Listing>
   deleteListing(id: string): Promise<void>
-  /** Published listings, for the public Finder. */
+  /** Published listings, for the public Finder. Off-market ones appear only as teasers (area, no details). */
   listPublished(): Promise<Property[]>
+  /** Full off-market listings for a valid invitation code; null if the code is wrong. Checked on the server in Supabase mode. */
+  unlockPrivate(code: string): Promise<Property[] | null>
+
+  listLeads(): Promise<Lead[]>
+  updateLead(id: string, patch: Partial<Pick<Lead, 'status' | 'teamNote'>>): Promise<void>
 
   listDrafts(): Promise<Draft[]>
   saveDraft(d: Draft): Promise<Draft>

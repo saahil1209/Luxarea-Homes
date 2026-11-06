@@ -309,19 +309,14 @@ form.addEventListener('submit', async (e) => {
     .filter(Boolean)
     .join('\n')
 
-  if (LEAD_ENDPOINT) {
-    const btn = $<HTMLButtonElement>('button[type=submit]', form)!
-    btn.disabled = true
-    try {
-      const res = await fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...lead, message }) })
-      if (!res.ok) throw new Error(String(res.status))
-    } catch {
-      btn.disabled = false
-      errorEl.innerHTML = `Sorry, that didn't go through. Please message us on <a href="${BRAND.whatsappLink}" target="_blank" rel="noopener">WhatsApp</a> or call ${BRAND.phoneDisplay}.`
-      return
-    }
-  } else {
-    // No lead endpoint yet: hand the enquiry to WhatsApp, prefilled.
+  // Save the lead for the team (fire-and-forget, survives the page changing),
+  // and for WhatsApp, or whenever saving isn't possible, open WhatsApp prefilled
+  // so the enquiry can never be lost.
+  let saved = false
+  if (LEAD_ENDPOINT && navigator.sendBeacon) {
+    saved = navigator.sendBeacon(LEAD_ENDPOINT, new Blob([JSON.stringify(lead)], { type: 'application/json' }))
+  }
+  if (!saved || channel === 'WhatsApp') {
     window.open(`https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener')
   }
 

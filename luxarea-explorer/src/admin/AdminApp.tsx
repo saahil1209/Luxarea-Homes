@@ -5,14 +5,16 @@ import Inbox from './Inbox'
 import Listings from './Listings'
 import ListingEditor from './ListingEditor'
 import WebsiteEditor from './WebsiteEditor'
+import Leads from './Leads'
 
-type Route = { page: 'inbox' } | { page: 'listings' } | { page: 'listing'; id: string; fromDraft?: string } | { page: 'website' }
+type Route = { page: 'inbox' } | { page: 'listings' } | { page: 'listing'; id: string; fromDraft?: string } | { page: 'website' } | { page: 'leads' }
 
 function parse(hash: string): Route {
   const m = hash.match(/^#\/listings\/([\w-]+)(?:\?draft=([\w-]+))?/)
   if (m) return { page: 'listing', id: m[1], fromDraft: m[2] }
   if (hash.startsWith('#/listings')) return { page: 'listings' }
   if (hash.startsWith('#/website')) return { page: 'website' }
+  if (hash.startsWith('#/leads')) return { page: 'leads' }
   return { page: 'inbox' }
 }
 
@@ -62,6 +64,7 @@ export default function AdminApp() {
           </a>
           <nav aria-label="Admin">
             {nav('#/inbox', 'Inbox', route.page === 'inbox', newCount)}
+            {nav('#/leads', 'Leads', route.page === 'leads')}
             {nav('#/listings', 'Listings', route.page === 'listings' || route.page === 'listing')}
             {nav('#/website', 'Website', route.page === 'website')}
           </nav>
@@ -82,6 +85,7 @@ export default function AdminApp() {
           {route.page === 'listings' && <Listings store={store} go={go} />}
           {route.page === 'listing' && <ListingEditor key={route.id} store={store} id={route.id} fromDraft={route.fromDraft} go={go} user={user} />}
           {route.page === 'website' && <WebsiteEditor store={store} user={user} />}
+          {route.page === 'leads' && <Leads store={store} />}
         </main>
       </div>
     </ToastProvider>

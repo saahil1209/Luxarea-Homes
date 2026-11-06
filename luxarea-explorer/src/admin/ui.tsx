@@ -28,38 +28,41 @@ interface Base { label: string; hint?: string; required?: boolean }
 
 export function Text({ label, hint, required, value, onChange, multiline, type = 'text', placeholder }: Base & { value: string; onChange: (v: string) => void; multiline?: boolean; type?: string; placeholder?: string }) {
   const id = useId()
+  const hid = hint ? `${id}-hint` : undefined
   return (
-    <label className="f" htmlFor={id}>
-      <span>{label}{required && <span className="req"> *</span>}</span>
+    <div className="f">
+      <label htmlFor={id}><span>{label}{required && <span className="req"> *</span>}</span></label>
       {multiline
-        ? <textarea id={id} value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
-        : <input id={id} type={type} value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />}
-      {hint && <small>{hint}</small>}
-    </label>
+        ? <textarea id={id} value={value ?? ''} placeholder={placeholder} aria-describedby={hid} onChange={(e) => onChange(e.target.value)} />
+        : <input id={id} type={type} value={value ?? ''} placeholder={placeholder} aria-describedby={hid} onChange={(e) => onChange(e.target.value)} />}
+      {hint && <small id={hid}>{hint}</small>}
+    </div>
   )
 }
 
 export function Num({ label, hint, required, value, onChange, step = 1, placeholder }: Base & { value: number | null | undefined; onChange: (v: number | null) => void; step?: number; placeholder?: string }) {
   const id = useId()
+  const hid = hint ? `${id}-hint` : undefined
   return (
-    <label className="f" htmlFor={id}>
-      <span>{label}{required && <span className="req"> *</span>}</span>
-      <input id={id} type="number" inputMode="decimal" step={step} value={value ?? ''} placeholder={placeholder} onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))} />
-      {hint && <small>{hint}</small>}
-    </label>
+    <div className="f">
+      <label htmlFor={id}><span>{label}{required && <span className="req"> *</span>}</span></label>
+      <input id={id} type="number" inputMode="decimal" step={step} value={value ?? ''} placeholder={placeholder} aria-describedby={hid} onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))} />
+      {hint && <small id={hid}>{hint}</small>}
+    </div>
   )
 }
 
 export function Sel<T extends string>({ label, hint, value, onChange, options }: Base & { value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
   const id = useId()
+  const hid = hint ? `${id}-hint` : undefined
   return (
-    <label className="f" htmlFor={id}>
-      <span>{label}</span>
-      <select id={id} value={value} onChange={(e) => onChange(e.target.value as T)}>
+    <div className="f">
+      <label htmlFor={id}><span>{label}</span></label>
+      <select id={id} value={value} aria-describedby={hid} onChange={(e) => onChange(e.target.value as T)}>
         {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
-      {hint && <small>{hint}</small>}
-    </label>
+      {hint && <small id={hid}>{hint}</small>}
+    </div>
   )
 }
 

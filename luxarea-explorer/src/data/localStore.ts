@@ -1,8 +1,9 @@
 // Browser-only store for demos (IndexedDB). See store.ts.
 import { SAMPLE_PROPERTIES } from './listings'
+import { DEMO_INVITE_CODES } from '../config'
 import homeJson from '../../content/home.json'
 import type { HomeContent } from '../content/types'
-import { resizeImage, toProperty, type Draft, type Listing, type Store, type User } from './store'
+import { resizeImage, toProperty, type Draft, type Lead, type Listing, type Store, type User } from './store'
 
 const DB = 'luxarea-demo'
 const OS = 'kv'
@@ -130,6 +131,21 @@ export async function createLocalStore(): Promise<Store> {
     async listPublished() {
       const list = (await get<Listing[]>('listings')) ?? []
       return list.filter((l) => l.status === 'published').map(toProperty)
+    },
+
+    async unlockPrivate(code) {
+      // Demo only: the code is checked in the browser. Supabase mode checks it on the server.
+      if (!DEMO_INVITE_CODES.includes(code.trim().toUpperCase())) return null
+      const list = (await get<Listing[]>('listings')) ?? []
+      return list.filter((l) => l.status === 'published' && l.confidential).map(toProperty)
+    },
+
+    async listLeads() {
+      return (await get<Lead[]>('leads')) ?? []
+    },
+    async updateLead(id, patch) {
+      const list = (await get<Lead[]>('leads')) ?? []
+      await set('leads', list.map((l) => (l.id === id ? { ...l, ...patch } : l)))
     },
 
     async listDrafts() {

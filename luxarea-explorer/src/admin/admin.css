@@ -107,7 +107,7 @@ p { margin: 0; }
 .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 16px; }
 .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px 16px; }
 .f { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
-.f > span { font-size: 13px; font-weight: 700; color: #34413e; }
+.f > span, .f > label > span { font-size: 13px; font-weight: 700; color: #34413e; }
 .f > small, .hint { font-size: 12px; color: var(--muted); }
 .f input:not([type='checkbox']), .f select, .f textarea, .paste textarea {
   width: 100%; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 8px; background: #fff; font-size: 15px;

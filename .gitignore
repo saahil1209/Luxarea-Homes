@@ -2,3 +2,4 @@ node_modules/
 dist/
 transcript/
 .vercel/
+luxarea-explorer/test-build/
