@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import { BRAND } from './src/config'
 import { renderJsonLd, renderMain } from './src/content/render'
 import type { HomeContent } from './src/content/types'
+import { withNewSections } from './src/content/upgrade'
 
 function replaceBrand(html: string) {
   return html.replace(/%BRAND\.(\w+)%/g, (m, key: string) => {
@@ -26,7 +27,7 @@ async function loadHomeContent(env: Record<string, string>): Promise<HomeContent
         headers: { apikey: key, Authorization: `Bearer ${key}` },
       })
       const rows = (await res.json()) as { content: HomeContent | null }[]
-      if (res.ok && rows[0]?.content) return rows[0].content
+      if (res.ok && rows[0]?.content) return withNewSections(rows[0].content, JSON.parse(readFileSync(new URL('./content/home.json', import.meta.url), 'utf-8')))
       console.warn('[luxarea] No published content in Supabase yet; using content/home.json')
     } catch (e) {
       console.warn('[luxarea] Could not read content from Supabase; using content/home.json', e)

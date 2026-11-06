@@ -139,8 +139,8 @@ h2 { letter-spacing: -0.01em; }
 
 /* finder map tilt */
 .finder-map.tilt { perspective: 900px; }
-.finder-map.tilt svg { transform-style: preserve-3d; will-change: transform; transition: box-shadow 0.5s ease; }
-.finder-map.tilt:hover svg { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6); }
+.finder-map.tilt .map-frame { transform-style: preserve-3d; will-change: transform; transition: box-shadow 0.5s ease; }
+.finder-map.tilt:hover .map-frame { box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6); }
 .tpin circle.halo { transform-box: fill-box; transform-origin: center; }
 @media (prefers-reduced-motion: no-preference) {
   .finder-map.is-in .tpin circle.halo { animation: halo 3.2s var(--ease-out) infinite; }

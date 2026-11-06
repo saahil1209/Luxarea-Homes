@@ -70,6 +70,12 @@ Everything on the component map is built. What switches on with Luxarea's accoun
 - **Tests:** `npm test` runs 13 server tests against stand-ins for WhatsApp, Supabase and Claude, plus two real feeds saved as fixtures. The browser checks (admin end to end, Finder unlock, Leads) also pass.
 - **Fixes along the way:** admin form hints are now linked as descriptions (screen readers had read them as part of each field's name), and `src/config.ts` no longer crashes the build config.
 
+## 0d. Map, developers, sign-in (6 Nov 2026)
+
+- **Finder teaser:** the heading is now "Explore every residence, *floor by floor*", the copy is left-aligned on desktop, and the map is a real one. `scripts/render-teaser-map.mjs` renders OpenFreeMap/OSM data in brand colours to `public/maps/teaser-mumbai.webp` (34 KB) plus `src/content/teaserMap.ts` (bounds and projection). Pins are placed by real coordinates, listings outside the map (Dubai) are skipped, and the OSM credit is shown.
+- **Developers we work with:** a new `partners` section with 10 Mumbai developers, editable and draggable in admin → Website. **Luxarea must confirm** which of these it really works with directly before launch. Saved content gets new sections merged in automatically (`src/content/upgrade.ts`).
+- **Admin sign-in:** email and password, checked on the server (`api/admin-login.ts`, `api/admin-session.ts`, scrypt hash and HMAC session in Vercel env; see SETUP.md step 0). With Supabase it uses Supabase password accounts. The password is never stored in code or the repo.
+
 ---
 
 ## 1. Starter prompt for the new account

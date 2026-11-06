@@ -109,11 +109,62 @@
       "alsoNote": "We also advise on **leasing** premium homes and offices, **manage** properties for owners, connect buyers with banks for **home loans**, and provide **valuations** for sellers."
     },
     {
+      "id": "partners",
+      "type": "partners",
+      "visible": true,
+      "eyebrow": "Our developer partners",
+      "title": "Developers we work with *directly*",
+      "lede": "Direct relationships with Mumbai's leading developers mean earlier access to launches, homes that are offered before they are advertised, and someone negotiating on your side of the table.",
+      "items": [
+        {
+          "name": "Lodha",
+          "note": ""
+        },
+        {
+          "name": "Oberoi Realty",
+          "note": ""
+        },
+        {
+          "name": "Godrej Properties",
+          "note": ""
+        },
+        {
+          "name": "K Raheja Corp",
+          "note": ""
+        },
+        {
+          "name": "Hiranandani",
+          "note": ""
+        },
+        {
+          "name": "Piramal Realty",
+          "note": ""
+        },
+        {
+          "name": "Rustomjee",
+          "note": ""
+        },
+        {
+          "name": "Kalpataru",
+          "note": ""
+        },
+        {
+          "name": "Sunteck Realty",
+          "note": ""
+        },
+        {
+          "name": "Shapoorji Pallonji Real Estate",
+          "note": ""
+        }
+      ],
+      "fine": "Developer names are the trademarks of their owners and are listed to show where we work; they are not endorsements."
+    },
+    {
       "id": "finder",
       "type": "finder",
       "visible": true,
       "eyebrow": "Residence Finder",
-      "title": "Walk the register, *floor by floor*.",
+      "title": "Explore every residence, *floor by floor*.",
       "lede": "Search the homes on Luxarea's register on a map, open any tower in 3D, and see each floor's plan, carpet area and availability. Every floor has its own link, so you can send it to the family.",
       "areas": [
         "Worli",

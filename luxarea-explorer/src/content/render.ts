@@ -2,7 +2,8 @@
 // Used at build time (vite.config.ts) and by the admin's live preview, so
 // what the team sees is exactly what ships. All text is escaped.
 import type { HomeContent, Section } from './types'
-import { CONTACT_FORM, FINDER_MAP, HERO_STAGE, SKYLINE } from './decor'
+import { CONTACT_FORM, HERO_STAGE, SKYLINE } from './decor'
+import { TEASER_MAP } from './teaserMap'
 
 export function esc(s: string): string {
   return String(s ?? '')
@@ -66,7 +67,7 @@ function renderSection(s: Section): string {
         .join('')}</div>${s.alsoNote ? `<p class="also-note">${rich(s.alsoNote)}</p>` : ''}</section>`
 
     case 'finder':
-      return `<section class="section finder" id="finder" data-section="${sid}" aria-labelledby="${sid}-title"><div class="finder-copy reveal"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="${sid}-title" class="split">${splitTitle(s.title)}</h2><p class="section-lede">${esc(s.lede)}</p>${s.areas.length ? `<ul class="finder-areas">${s.areas.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}<a class="btn btn-gold btn-lg btn-arrow" href="/residences.html">${esc(s.cta)}</a>${s.note ? `<p class="fine">${esc(s.note)}</p>` : ''}</div>${FINDER_MAP.replace('class="finder-map reveal"', 'class="finder-map reveal tilt"')}</section>`
+      return `<section class="section finder" id="finder" data-section="${sid}" aria-labelledby="${sid}-title"><div class="finder-copy reveal"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="${sid}-title" class="split">${splitTitle(s.title)}</h2><p class="section-lede">${esc(s.lede)}</p>${s.areas.length ? `<ul class="finder-areas">${s.areas.map((a) => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}<a class="btn btn-gold btn-lg btn-arrow" href="/residences.html">${esc(s.cta)}</a>${s.note ? `<p class="fine">${esc(s.note)}</p>` : ''}</div><figure class="finder-map reveal tilt" aria-label="Map of Mumbai and Alibaug showing residences on Luxarea's register"><div class="map-frame"><img src="${TEASER_MAP.src}" width="${TEASER_MAP.width}" height="${TEASER_MAP.height}" alt="Map of Mumbai, the harbour and the Alibaug coast" loading="lazy" decoding="async" /><svg viewBox="0 0 ${TEASER_MAP.width} ${TEASER_MAP.height}" id="teaser-pins" role="group" aria-label="Residences"></svg><span class="map-credit">© OpenStreetMap contributors</span></div></figure></section>`
 
     case 'process':
       return `<section class="section process" id="process" data-section="${sid}" aria-labelledby="${sid}-title">${head(sid, s.eyebrow, s.title, s.lede)}<ol class="steps">${s.steps.map((st) => `<li class="step reveal"><span class="step-time">${esc(st.time)}</span><h3>${esc(st.title)}</h3><p>${esc(st.text)}</p></li>`).join('')}</ol></section>`
@@ -95,6 +96,11 @@ function renderSection(s: Section): string {
 
     case 'faq':
       return `<section class="section faq" id="faq" data-section="${sid}" aria-labelledby="${sid}-title">${head(sid, s.eyebrow, s.title)}<div class="faq-list">${s.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div></section>`
+
+    case 'partners':
+      return `<section class="section partners" id="partners" data-section="${sid}" aria-labelledby="${sid}-title">${head(sid, s.eyebrow, s.title, s.lede)}<ul class="partner-grid">${s.items
+        .map((p, i) => `<li class="partner reveal" style="--i:${i}"><span class="partner-name">${esc(p.name)}</span>${p.note ? `<span class="partner-note">${esc(p.note)}</span>` : ''}</li>`)
+        .join('')}</ul>${s.fine ? `<p class="fine partner-fine">${esc(s.fine)}</p>` : ''}</section>`
 
     case 'contact':
       return `<section class="section contact" id="contact" data-section="${sid}" aria-labelledby="contact-title"><div class="contact-copy reveal"><p class="eyebrow">${esc(s.eyebrow)}</p><h2 id="contact-title" class="split">${splitTitle(s.title)}</h2><p class="section-lede">${esc(s.lede)}</p><ul class="contact-direct"><li><a href="%BRAND.whatsappLink%" rel="noopener" target="_blank">WhatsApp %BRAND.phoneDisplay%</a></li><li><a href="%BRAND.phoneLink%">Call %BRAND.phoneDisplay%</a></li><li><a href="mailto:%BRAND.email%">%BRAND.email%</a></li></ul></div>${CONTACT_FORM.replace('{{REPLY_PROMISE}}', esc(s.replyPromise))}</section>`

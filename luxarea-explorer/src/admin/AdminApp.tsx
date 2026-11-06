@@ -94,14 +94,18 @@ export default function AdminApp() {
 
 function Login({ store, onIn }: { store: Store; onIn: (u: User) => void }) {
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [busy, setBusy] = useState(false)
   const [sent, setSent] = useState(false)
   const [err, setErr] = useState('')
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     setErr('')
     if (!/^\S+@\S+\.\S+$/.test(email)) return setErr('Enter your work email.')
+    if (!password && store.mode === 'local') return setErr('Enter your password.')
+    setBusy(true)
     try {
-      const r = await store.signIn(email.trim())
+      const r = await store.signIn(email.trim(), password)
       if (r === 'check-email') setSent(true)
       else {
         const u = await store.currentUser()
@@ -109,6 +113,8 @@ function Login({ store, onIn }: { store: Store; onIn: (u: User) => void }) {
       }
     } catch (x) {
       setErr(x instanceof Error ? x.message : 'Could not sign in.')
+    } finally {
+      setBusy(false)
     }
   }
   return (
@@ -119,15 +125,18 @@ function Login({ store, onIn }: { store: Store; onIn: (u: User) => void }) {
           <p>Check your inbox: we sent a sign-in link to <b>{email}</b>.</p>
         ) : (
           <>
-            <p className="muted">
-              {store.mode === 'local' ? 'Demo mode: any email works, and nothing leaves this browser.' : 'We will email you a one-time sign-in link. Only team members can get in.'}
-            </p>
+            <p className="muted">Sign in to edit listings, leads and the website.</p>
             <label className="f">
               <span>Work email</span>
-              <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@luxarea.in" autoFocus />
+              <input type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@luxarea.in" autoFocus />
+            </label>
+            <label className="f">
+              <span>Password</span>
+              <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              {store.mode === 'supabase' && <small>Forgot it? Leave it empty and we’ll email you a sign-in link.</small>}
             </label>
             {err && <p className="req" role="alert">{err}</p>}
-            <button className="b b-primary" type="submit">{store.mode === 'local' ? 'Enter the admin' : 'Email me a sign-in link'}</button>
+            <button className="b b-primary" type="submit" disabled={busy}>{busy ? 'Signing in…' : password || store.mode === 'local' ? 'Sign in' : 'Email me a sign-in link'}</button>
           </>
         )}
       </form>

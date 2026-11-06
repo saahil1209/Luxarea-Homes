@@ -130,7 +130,7 @@ export function initMotion() {
   const glow = $('.hero-glow')
   const magnet = $('.magnetic')
   const tilt = $('.finder-map.tilt')
-  const tiltSvg = tilt?.querySelector<SVGElement>('svg') ?? null
+  const tiltSvg = tilt?.querySelector<HTMLElement>('.map-frame') ?? null
   const steps = $('.steps')
   const stepEls = $$('.step')
   const speedEls = $$('[data-speed]').map((el) => ({ el, speed: Number(el.dataset.speed), top: 0, h: 0 }))

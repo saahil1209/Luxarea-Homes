@@ -4,6 +4,7 @@
 import { PROPERTIES, floorsOf, formatCr, fromPrice } from '../data/listings'
 import { BRAND, LEAD_ENDPOINT } from '../config'
 import { initMotion } from './motion'
+import { TEASER_MAP, projectTeaser } from '../content/teaserMap'
 
 function init() {
 const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document) => root.querySelector<T>(sel)
@@ -153,8 +154,6 @@ const pinLayer = $('#teaser-pins')
 const mapFig = $('.finder-map')
 if (pinLayer && mapFig) {
   const SVGNS = 'http://www.w3.org/2000/svg'
-  // Same projection the SVG coastline was drawn with.
-  const project = (lat: number, lng: number) => ({ x: 58 + (lng - 72.795) * 1091, y: (19.16 - lat) * 1154 })
   const el = (tag: string, attrs: Record<string, string | number>, parent?: Element) => {
     const n = document.createElementNS(SVGNS, tag)
     for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, String(v))
@@ -162,7 +161,10 @@ if (pinLayer && mapFig) {
     return n
   }
   PROPERTIES.forEach((p, i) => {
-    const { x, y } = project(p.lat, p.lng)
+    // Listings outside the map (e.g. Dubai) are simply not pinned here.
+    const at = projectTeaser(p.lat, p.lng)
+    if (!at) return
+    const { x, y } = at
     const locked = !!p.confidential
     const a = el('a', {
       href: locked ? '/residences.html' : `/residences.html#/p/${p.id}`,
@@ -172,7 +174,7 @@ if (pinLayer && mapFig) {
     }, pinLayer)
     el('circle', { class: 'halo', cx: x, cy: y, r: locked ? 16 : 11 }, a)
     el('circle', { class: 'dot', cx: x, cy: y, r: locked ? 4 : 5.5 }, a)
-    const flip = x > 150
+    const flip = x > TEASER_MAP.width - 140
     const lx = flip ? x - 124 : x + 12
     const g = el('g', { class: 'tlabel' }, a)
     el('rect', { x: lx, y: y - 22, width: 112, height: 36, rx: 6 }, g)

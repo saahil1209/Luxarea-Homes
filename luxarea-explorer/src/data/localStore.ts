@@ -3,6 +3,7 @@ import { SAMPLE_PROPERTIES } from './listings'
 import { DEMO_INVITE_CODES } from '../config'
 import homeJson from '../../content/home.json'
 import type { HomeContent } from '../content/types'
+import { withNewSections } from '../content/upgrade'
 import { resizeImage, toProperty, type Draft, type Lead, type Listing, type Store, type User } from './store'
 
 const DB = 'luxarea-demo'
@@ -40,6 +41,26 @@ async function set(key: string, value: unknown): Promise<void> {
 export const DEMO_CONTENT_FLAG = 'luxarea-demo-content'
 
 const USER_KEY = 'luxarea-demo-user'
+const TOKEN_KEY = 'luxarea-admin-token'
+
+const readLS = (k: string) => {
+  try {
+    return localStorage.getItem(k)
+  } catch {
+    return null
+  }
+}
+const writeLS = (k: string, v: string | null) => {
+  try {
+    if (v == null) localStorage.removeItem(k)
+    else localStorage.setItem(k, v)
+  } catch {
+    /* private mode: signed in for this page only */
+  }
+}
+
+/** On a local dev server there is no /api, so any email works there (and only there). */
+const devFallbackAllowed = () => import.meta.env.DEV
 
 function now() {
   return new Date().toISOString()
@@ -88,28 +109,47 @@ export async function createLocalStore(): Promise<Store> {
     mode: 'local',
 
     async currentUser() {
-      try {
-        const raw = localStorage.getItem(USER_KEY)
-        return raw ? (JSON.parse(raw) as User) : null
-      } catch {
-        return null
+      const token = readLS(TOKEN_KEY)
+      if (token) {
+        // The server checks the token's signature and expiry.
+        try {
+          const res = await fetch('/api/admin-session', { headers: { Authorization: `Bearer ${token}` } })
+          if (res.ok) {
+            const s = (await res.json()) as { email: string; name: string }
+            return { email: s.email, name: s.name, role: 'admin' }
+          }
+          if (res.status === 401) writeLS(TOKEN_KEY, null)
+        } catch {
+          /* offline: fall through */
+        }
       }
+      const raw = devFallbackAllowed() ? readLS(USER_KEY) : null
+      return raw ? (JSON.parse(raw) as User) : null
     },
-    async signIn(email) {
-      const name = email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+    async signIn(email, password) {
+      let res: Response | null = null
       try {
-        localStorage.setItem(USER_KEY, JSON.stringify({ email, name, role: 'admin' } satisfies User))
+        res = await fetch('/api/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) })
       } catch {
-        /* private mode: signed in for this page only */
+        res = null
       }
-      return 'signed-in'
+      if (res?.ok) {
+        const s = (await res.json()) as { token: string }
+        writeLS(TOKEN_KEY, s.token)
+        return 'signed-in'
+      }
+      if (res?.status === 401) throw new Error('That email and password don’t match.')
+      if (devFallbackAllowed()) {
+        // Local development only: no server, so sign in without a check.
+        const name = email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+        writeLS(USER_KEY, JSON.stringify({ email, name, role: 'admin' } satisfies User))
+        return 'signed-in'
+      }
+      throw new Error('Sign-in isn’t set up on this site yet. Add the admin settings in Vercel (see docs/SETUP.md).')
     },
     async signOut() {
-      try {
-        localStorage.removeItem(USER_KEY)
-      } catch {
-        /* ignore */
-      }
+      writeLS(TOKEN_KEY, null)
+      writeLS(USER_KEY, null)
     },
 
     async listListings() {
@@ -162,7 +202,9 @@ export async function createLocalStore(): Promise<Store> {
     },
 
     async getContent() {
-      return (await get<{ draft: HomeContent; published: HomeContent }>('content'))!
+      const c = (await get<{ draft: HomeContent; published: HomeContent }>('content'))!
+      const d = homeJson as unknown as HomeContent
+      return { draft: withNewSections(c.draft, d), published: withNewSections(c.published, d) }
     },
     async saveContentDraft(c) {
       const cur = (await get<{ draft: HomeContent; published: HomeContent }>('content'))!
@@ -199,5 +241,5 @@ export async function readLocalPublished(): Promise<HomeContent | null> {
     return null
   }
   const c = await get<{ published: HomeContent }>('content')
-  return c?.published ?? null
+  return c?.published ? withNewSections(c.published, homeJson as unknown as HomeContent) : null
 }

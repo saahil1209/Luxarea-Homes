@@ -21,11 +21,13 @@ export interface Quote { text: string; by: string; sample: boolean }
 export interface VoicesSection { type: 'voices'; eyebrow: string; title: string; quotes: Quote[] }
 export interface Faq { q: string; a: string }
 export interface FaqSection { type: 'faq'; eyebrow: string; title: string; items: Faq[] }
+export interface Partner { name: string; note: string }
+export interface PartnersSection { type: 'partners'; eyebrow: string; title: string; lede: string; items: Partner[]; fine: string }
 export interface ContactSection { type: 'contact'; eyebrow: string; title: string; lede: string; replyPromise: string }
 
 export type SectionData =
   | HeroSection | ProofSection | ServicesSection | FinderSection | ProcessSection | VerifySection
-  | DiscretionSection | AboutSection | VoicesSection | FaqSection | ContactSection
+  | DiscretionSection | AboutSection | VoicesSection | FaqSection | PartnersSection | ContactSection
 
 export type SectionType = SectionData['type']
 
@@ -157,6 +159,20 @@ export const SECTION_META: Record<SectionType, SectionMeta> = {
   faq: {
     name: 'Questions (FAQ)',
     fields: [...head, { key: 'items', label: 'Questions', kind: 'list', itemLabel: 'Question', fields: [{ key: 'q', label: 'Question', kind: 'text' }, { key: 'a', label: 'Answer', kind: 'textarea' }], newItem: () => ({ q: '', a: '' }), hint: 'These also appear in Google results, so keep answers accurate.' }],
+  },
+  partners: {
+    name: 'Developers we work with',
+    fields: [
+      ...head,
+      { key: 'lede', label: 'Introduction', kind: 'textarea' },
+      {
+        key: 'items', label: 'Developers', kind: 'list', itemLabel: 'Developer',
+        fields: [{ key: 'name', label: 'Developer name', kind: 'text' }, { key: 'note', label: 'Areas or projects (optional)', kind: 'text', hint: 'e.g. Worli · Lower Parel' }],
+        newItem: () => ({ name: 'New developer', note: '' }),
+        hint: 'List only developers Luxarea really works with directly. Drag to reorder.',
+      },
+      { key: 'fine', label: 'Small print', kind: 'textarea' },
+    ],
   },
   contact: {
     name: 'Contact form',

@@ -6,6 +6,20 @@ Where a step says **Vercel env**, that means Vercel → the project → Settings
 
 ---
 
+## 0. Admin sign-in (works now, before the database): 2 minutes
+
+Vercel env (all **secret**):
+| Variable | Value |
+|---|---|
+| `ADMIN_EMAIL` | the admin's email, e.g. `viivek@luxarea.in` |
+| `ADMIN_NAME` | name shown in the admin, e.g. `Viivek` |
+| `ADMIN_PASSWORD_HASH` | output of `npm run hash-password` (asks for the password; never put the password itself anywhere) |
+| `ADMIN_SESSION_SECRET` | any 32+ random characters; changing it signs everyone out |
+
+For several people, use `ADMIN_ACCOUNTS` instead, one per line: `email|Name|hash`. Sessions last 12 hours.
+
+Until step 1 is done, the admin works in demo mode: edits are saved in that browser only. Publishing to the live site for everyone needs the shared database.
+
 ## 1. Shared database (Supabase): about 20 minutes
 
 Turns on: team logins, shared listings, inbox, website publishing, server-checked invite codes.
@@ -21,12 +35,12 @@ Turns on: team logins, shared listings, inbox, website publishing, server-checke
    | `SUPABASE_SERVICE_ROLE_KEY` | service_role key (**secret, server only**) |
    | `SITE_URL` | `https://www.luxarea.in` (or the vercel.app address while testing) |
 4. Supabase → Authentication → URL configuration: add the site URL and `<site>/admin.html` to the redirect URLs.
-5. Open `/admin.html`, sign in with your email (a link arrives), then in the SQL editor make yourself admin:
+5. Supabase → Authentication → Users → **Add user** with your email and a password. Then make yourself admin in the SQL editor:
    ```sql
    insert into public.team_members (user_id, email, name, role)
    select id, email, 'Your name', 'admin' from auth.users where email = 'you@luxarea.in';
    ```
-   Repeat for each team member (`role` = `editor` for non-admins).
+   Repeat for each team member (`role` = `editor` for non-admins). From now on, sign-in at `/admin.html` uses these Supabase accounts; the `ADMIN_*` settings from step 0 are no longer used.
 6. Invite codes for off-market homes:
    ```sql
    insert into public.invite_codes (code, note, expires_at) values ('LUX-SHAH-2026', 'Shah family', now() + interval '60 days');

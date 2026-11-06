@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit && tsc --noEmit -p api",
     "test": "node scripts/run-tests.mjs",
-    "scan:dry": "esbuild scripts/scan-dry-run.ts --bundle --platform=node --format=esm --packages=external --define:import.meta.env={} --log-level=error --outfile=test-build/scan-dry-run.mjs && node test-build/scan-dry-run.mjs"
+    "scan:dry": "esbuild scripts/scan-dry-run.ts --bundle --platform=node --format=esm --packages=external --define:import.meta.env={} --log-level=error --outfile=test-build/scan-dry-run.mjs && node test-build/scan-dry-run.mjs",
+    "hash-password": "node scripts/hash-password.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.1.0",

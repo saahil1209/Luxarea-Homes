@@ -6,6 +6,7 @@ import { createClient } from '@supabase/supabase-js'
 import type { Property } from './listings'
 import type { HomeContent } from '../content/types'
 import homeJson from '../../content/home.json'
+import { withNewSections } from '../content/upgrade'
 import { newId, resizeImage, toProperty, type Draft, type Lead, type Listing, type Store, type User } from './store'
 
 interface ListingRow { id: string; data: Property; status: Listing['status']; confidential: boolean; source_draft_id: string | null; updated_at: string; updated_by: string | null }
@@ -36,8 +37,17 @@ export function createSupabaseStore(): Store {
   return {
     mode: 'supabase',
     currentUser: me,
-    async signIn(email) {
-      must(await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}/admin.html`, shouldCreateUser: true } }))
+    async signIn(email, password) {
+      if (password) {
+        const { error } = await sb.auth.signInWithPassword({ email, password })
+        if (error) throw new Error('That email and password don’t match.')
+        if (!(await me())) {
+          await sb.auth.signOut()
+          throw new Error('This account isn’t on the Luxarea team yet. Ask an admin to add you.')
+        }
+        return 'signed-in'
+      }
+      must(await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}/admin.html`, shouldCreateUser: false } }))
       return 'check-email'
     },
     async signOut() {
@@ -99,7 +109,7 @@ export function createSupabaseStore(): Store {
       const fallback = homeJson as unknown as HomeContent
       const published = rows.find((r) => r.id === 'home:published')?.content ?? fallback
       const draft = rows.find((r) => r.id === 'home:draft')?.content ?? published
-      return { draft, published }
+      return { draft: withNewSections(draft, fallback), published: withNewSections(published, fallback) }
     },
     async saveContentDraft(c) {
       const user = await me()

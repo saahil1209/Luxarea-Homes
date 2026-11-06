@@ -85,7 +85,8 @@ export interface User {
 export interface Store {
   mode: 'local' | 'supabase'
   currentUser(): Promise<User | null>
-  signIn(email: string): Promise<'signed-in' | 'check-email'>
+  /** Email + password. In Supabase mode, an empty password emails a sign-in link instead. */
+  signIn(email: string, password: string): Promise<'signed-in' | 'check-email'>
   signOut(): Promise<void>
 
   listListings(): Promise<Listing[]>
