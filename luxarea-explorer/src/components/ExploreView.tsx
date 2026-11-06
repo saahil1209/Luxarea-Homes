@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react'
-import { availableCount, bhkRange, formatCr, fromPrice, PROPERTIES, type Property } from '../data/listings'
+import { availableCount, bhkRange, formatCr, fromPrice, googleMapsUrl, PROPERTIES, type Property } from '../data/listings'
 import { BRAND } from '../config'
 import { SampleBadge, SiteNav, Wordmark } from './Brand'
 import MapView from './MapView'
@@ -119,6 +119,9 @@ export default function ExploreView({ unlocked, unlock, go }: Props) {
                       </span>
                     </span>
                   </button>
+                  <a className="card-maps" href={googleMapsUrl(p)} target="_blank" rel="noopener noreferrer" aria-label={`Open the location of ${p.name} in Google Maps`}>
+                    <PinIcon /> View on Google Maps <span aria-hidden="true">↗</span>
+                  </a>
                 </li>
               ),
             )}
@@ -143,6 +146,16 @@ export default function ExploreView({ unlocked, unlock, go }: Props) {
     </div>
   )
 }
+
+function PinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
+    </svg>
+  )
+}
+
+export { PinIcon }
 
 function PrivateCard({ p, unlock, active, onHover }: { p: Property; unlock: (c: string) => Promise<boolean>; active: boolean; onHover: (id: string | null) => void }) {
   const [code, setCode] = useState('')

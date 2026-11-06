@@ -379,3 +379,25 @@ p { margin: 0; }
 
 .ph-photo { background-size: cover; background-position: center; }
 .ph-more { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0, 0, 0, 0.45); font-weight: 700; font-size: 18px; }
+
+/* Google Maps links */
+.card-maps {
+  display: inline-flex; align-items: center; gap: 6px; margin: 6px 0 2px 16px;
+  font-size: 12.5px; font-weight: 600; color: var(--green); text-decoration: none;
+  padding: 4px 2px; border-radius: 6px;
+}
+.card-maps:hover { text-decoration: underline; text-underline-offset: 3px; }
+.maps-link {
+  display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+  font-size: 13px; font-weight: 600; color: var(--gold-soft); text-decoration: none;
+  border: 1px solid var(--night-rule); border-radius: 999px; padding: 7px 13px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.maps-link:hover { border-color: var(--gold); color: var(--night-text); }
+
+/* Shown in place of the 3D tower when WebGL is unavailable */
+.no3d { position: absolute; z-index: 5; left: 50%; top: 42%; transform: translate(-50%, -50%); width: min(380px, calc(100% - 40px)); padding: 18px 20px; border-radius: 14px; background: var(--glass); border: 1px solid var(--night-rule); color: var(--night-text); font-size: 14px; display: flex; flex-direction: column; gap: 8px; text-align: center; }
+.no3d p:last-child { color: var(--night-muted); font-size: 13px; }
+@media (min-width: 861px) { .no3d { left: calc(50% + 190px); } }
+@media (max-width: 860px) { .no3d { top: 30%; } }
+.btn-maps { display: inline-flex; align-items: center; justify-content: center; gap: 7px; text-decoration: none; text-align: center; }

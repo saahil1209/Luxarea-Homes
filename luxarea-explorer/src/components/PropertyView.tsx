@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { TowerScene } from '../three/TowerScene'
-import { floorsOf, formatCr, type FloorInfo, type Property, type Status } from '../data/listings'
+import { floorsOf, formatCr, type FloorInfo, type Property, type Status, googleMapsUrl } from '../data/listings'
 import { SampleBadge } from './Brand'
+import { PinIcon } from './ExploreView'
 import EnquirySheet from './EnquirySheet'
 
 interface Props {
@@ -21,6 +22,8 @@ export default function PropertyView({ property: p, floor, go }: Props) {
   const [hovered, setHovered] = useState<number | null>(null)
   const [enquire, setEnquire] = useState(false)
   const [copied, setCopied] = useState(false)
+  // Some devices and browsers have WebGL switched off; the page must still work without the 3D tower.
+  const [no3d, setNo3d] = useState(false)
   const floors = useMemo(() => floorsOf(p), [p])
   const byFloor = useMemo(() => new Map(floors.map((f) => [f.floor, f])), [floors])
   const selected = floor != null ? byFloor.get(floor) ?? null : null
@@ -31,10 +34,17 @@ export default function PropertyView({ property: p, floor, go }: Props) {
 
   useEffect(() => {
     if (!stage.current || !tip.current) return
-    const s = new TowerScene(stage.current, tip.current, p, floors, {
-      onHover: setHovered,
-      onSelect: (f) => openFloor(f),
-    })
+    let s: TowerScene
+    try {
+      s = new TowerScene(stage.current, tip.current, p, floors, {
+        onHover: setHovered,
+        onSelect: (f) => openFloor(f),
+      })
+    } catch (e) {
+      console.warn('[luxarea] 3D view unavailable:', e)
+      setNo3d(true)
+      return
+    }
     scene.current = s
     return () => {
       s.dispose()
@@ -114,6 +124,12 @@ export default function PropertyView({ property: p, floor, go }: Props) {
   return (
     <div className={`property${selected ? ' has-floor' : ''}`}>
       <div ref={stage} className="stage" aria-label={`3D model of ${p.name}. Use the floor list to choose a floor.`} />
+      {no3d && !selected && (
+        <div className="no3d" role="note">
+          <p>The 3D view needs graphics acceleration, which is turned off on this device or browser.</p>
+          <p>Choose a residence or a floor from the list to see its plan, size, price and availability.</p>
+        </div>
+      )}
 
       <div ref={tip} className="tower-tip" aria-hidden="true">
         {hoverInfo && <TipContent f={hoverInfo} villa={isVilla} />}
@@ -142,6 +158,9 @@ export default function PropertyView({ property: p, floor, go }: Props) {
             <div><dt>Developer</dt><dd>{p.developer}</dd></div>
             <div><dt>MahaRERA</dt><dd>{p.rera}</dd></div>
           </dl>
+          <a className="maps-link" href={googleMapsUrl(p)} target="_blank" rel="noopener noreferrer">
+            <PinIcon /> View {p.locality} on Google Maps <span aria-hidden="true">↗</span>
+          </a>
           <h2 className="types-head">{isVilla ? 'Levels' : 'Residences'}</h2>
           <ul className="types">
             {p.residences.map((r) => {
@@ -247,6 +266,7 @@ export default function PropertyView({ property: p, floor, go }: Props) {
               <button type="button" className="btn-gold" onClick={() => setEnquire(true)}>Ask about similar homes</button>
             )}
             <button type="button" className="btn-ghost" onClick={share}>{copied ? 'Link copied' : 'Copy link to this floor'}</button>
+            <a className="btn-ghost btn-maps" href={googleMapsUrl(p)} target="_blank" rel="noopener noreferrer"><PinIcon /> View location on Google Maps</a>
           </div>
           <p className="fine">Floor plan is indicative and not to scale. Prices exclude stamp duty, registration and GST.</p>
         </aside>

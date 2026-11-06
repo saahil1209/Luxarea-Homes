@@ -244,6 +244,14 @@ export function availableCount(p: Property): number {
   return floorsOf(p).filter((f) => f.status === 'available').length
 }
 
+/**
+ * Opens the residence's location in Google Maps (the app on phones). Uses the
+ * map pin, so it works without an API key and without exposing a street address.
+ */
+export function googleMapsUrl(p: Pick<Property, 'lat' | 'lng'>): string {
+  return `https://www.google.com/maps/search/?api=1&query=${p.lat.toFixed(5)},${p.lng.toFixed(5)}`
+}
+
 export function formatCr(cr: number | null): string {
   if (cr == null) return 'Price on request'
   return `₹${cr.toFixed(cr % 1 === 0 ? 0 : 1)} Cr`
